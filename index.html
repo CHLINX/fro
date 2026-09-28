@@ -3,46 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
     <title>巡田最速適</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
         body {
             margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont,
-                         "Microsoft JhengHei", sans-serif;
+            padding: 0;
+            min-height: 100%;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Microsoft JhengHei",
+                "Noto Sans TC",
+                Arial,
+                sans-serif;
             background: #f5f5f5;
             color: #222;
         }
 
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
         .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            width: 100%;
+            max-width: 480px;
         }
 
         .card {
-            background: white;
-            border-radius: 18px;
-            padding: 30px 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            background: #fff;
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
             text-align: center;
         }
 
         h1 {
-            margin-top: 0;
+            margin: 0;
             font-size: 32px;
+            font-weight: 700;
         }
 
-        p {
-            font-size: 17px;
-            line-height: 1.8;
+        .subtitle {
+            margin-top: 8px;
+            font-size: 16px;
+            color: #666;
         }
 
-        .status {
-            margin-top: 24px;
-            padding: 14px;
+        .description {
+            margin: 24px 0 20px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin-top: 12px;
+
+            border: 1px solid #bbb;
             border-radius: 12px;
-            background: #eef7ee;
+
+            background: #fafafa;
+            color: #222;
+
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 700;
+
+            transition:
+                background 0.15s ease,
+                transform 0.05s ease;
+        }
+
+        .button:hover {
+            background: #f0f0f0;
+        }
+
+        .button:active {
+            transform: scale(0.99);
+        }
+
+        .footer {
+            margin-top: 22px;
+            font-size: 12px;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 14px;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+
+            .card {
+                padding: 28px 18px;
+            }
+
+            h1 {
+                font-size: 29px;
+            }
         }
     </style>
 </head>
@@ -54,17 +130,26 @@
 
         <h1>巡田最速適</h1>
 
-        <p>
+        <div class="subtitle">
             Field Route Optimizer
-        </p>
-
-        <div class="status">
-            GitHub Pages 測試成功
         </div>
 
-        <p>
-            後續將整合外勤路線、勘查點與手機地圖。
-        </p>
+        <div class="description">
+            農地外勤勘查路線系統
+        </div>
+
+        <a class="button" href="route_MOTOR_map.html">
+            🏍️ MOTOR｜機車地圖
+        </a>
+
+        <a class="button" href="route_CAR_map.html">
+            🚗 CAR｜汽車地圖
+        </a>
+
+        <div class="footer">
+            路線資料由巡田最速適系統產生<br>
+            請依實際道路狀況行駛
+        </div>
 
     </div>
 </div>
