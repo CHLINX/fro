@@ -1,0 +1,182 @@
+巡田最速適｜Cell4 第2日 27-29 排序 + Cell3 地籍幾何唯讀鑑識
+RUN_ID=20261031_141945
+SCOPE=READ_ONLY; NO CELL2/CELL3/CELL4/CELL5 EXECUTION; NO SOURCE MODIFICATION
+
+[CELL4]
+STATUS=ANALYZED
+{
+  "start_idx": 0,
+  "visit_count": 30,
+  "target_positions_day2": {
+    "P27": 27,
+    "P28": 28,
+    "P29": 29
+  },
+  "target_order": [
+    "P27",
+    "P28",
+    "P29"
+  ],
+  "context_around_targets": [
+    {
+      "day_sequence": 23,
+      "work_idx": 53,
+      "target": "",
+      "名稱": "桃園市新屋區下田心子段下田心子小段04510000",
+      "地段": "下田心子段下田心子小段",
+      "地號": "4510000.0"
+    },
+    {
+      "day_sequence": 24,
+      "work_idx": 55,
+      "target": "",
+      "名稱": "桃園市新屋區下田心子段下田心子小段08500001",
+      "地段": "下田心子段下田心子小段",
+      "地號": "8500001.0"
+    },
+    {
+      "day_sequence": 25,
+      "work_idx": 56,
+      "target": "",
+      "名稱": "桃園市新屋區下田心子段下田心子小段09880000",
+      "地段": "下田心子段下田心子小段",
+      "地號": "9880000.0"
+    },
+    {
+      "day_sequence": 26,
+      "work_idx": 85,
+      "target": "",
+      "名稱": "桃園市新屋區槺榔段上槺榔小段08160000",
+      "地段": "槺榔段上槺榔小段",
+      "地號": "8160000.0"
+    },
+    {
+      "day_sequence": 27,
+      "work_idx": 60,
+      "target": "P27",
+      "名稱": "桃園市新屋區石牌嶺段14410000",
+      "地段": "石牌嶺段",
+      "地號": "14410000.0"
+    },
+    {
+      "day_sequence": 28,
+      "work_idx": 59,
+      "target": "P28",
+      "名稱": "桃園市新屋區大牛欄段後湖小段05370000",
+      "地段": "大牛欄段後湖小段",
+      "地號": "5370000.0"
+    },
+    {
+      "day_sequence": 29,
+      "work_idx": 61,
+      "target": "P29",
+      "名稱": "桃園市新屋區石牌嶺段14600000",
+      "地段": "石牌嶺段",
+      "地號": "14600000.0"
+    },
+    {
+      "day_sequence": 30,
+      "work_idx": 58,
+      "target": "",
+      "名稱": "桃園市新屋區大牛欄段下埔頂小段00370002",
+      "地段": "大牛欄段下埔頂小段",
+      "地號": "370002.0"
+    }
+  ],
+  "swap_test": {
+    "candidate": {
+      "drive_min": 194.42170245892962,
+      "distance_km": 97.21085122946484
+    },
+    "swap_position0_in_order_including_start": [
+      28,
+      29
+    ],
+    "baseline": {
+      "drive_min": 194.34159197617265,
+      "distance_km": 97.17079598808637
+    },
+    "delta_candidate_minus_baseline_min": 0.08011048275696453,
+    "delta_candidate_minus_baseline_km": 0.04005524137847533,
+    "baseline_constraints": {
+      "physical_feasible": true,
+      "physical_crossing_count": 0,
+      "physical_crossings": [],
+      "virtual_anchor_feasible": true,
+      "virtual_anchor_crossing_count": 0,
+      "virtual_anchor_crossings": [],
+      "path_errors": [],
+      "virtual_anchor_node_map_count": 75,
+      "note": "依 GraphML 中的 virtual_source_index / virtual_anchor_* 屬性重建；若屬性未完整保留，VA 檢查需以 Cell4 原始執行 trace 補驗。"
+    },
+    "candidate_constraints": {
+      "physical_feasible": true,
+      "physical_crossing_count": 0,
+      "physical_crossings": [],
+      "virtual_anchor_feasible": true,
+      "virtual_anchor_crossing_count": 0,
+      "virtual_anchor_crossings": [],
+      "path_errors": [],
+      "virtual_anchor_node_map_count": 75,
+      "note": "依 GraphML 中的 virtual_source_index / virtual_anchor_* 屬性重建；若屬性未完整保留，VA 檢查需以 Cell4 原始執行 trace 補驗。"
+    },
+    "verdict": "CURRENT_ORDER_NOT_SLOWER_BY_MORE_THAN_0.01_MIN"
+  }
+}
+
+[CELL3]
+STATUS=ANALYZED
+[CELL3_CELL4_CELL5_IDENTITY_ALIGNMENT]
+[
+  {
+    "target": "P27",
+    "lot": "14410000",
+    "cell4_identity_matches": 1,
+    "cell3_identity_matches": 1,
+    "cell5_exact_identity_match_count": 1,
+    "matches": [
+      {
+        "cell3_row_index": "60",
+        "cell3_old_point_index": 60,
+        "cell4_work_idx": 60,
+        "cell4_name": "桃園市新屋區石牌嶺段14410000"
+      }
+    ],
+    "status": "PASS_UNIQUE"
+  },
+  {
+    "target": "P28",
+    "lot": "05370000",
+    "cell4_identity_matches": 1,
+    "cell3_identity_matches": 1,
+    "cell5_exact_identity_match_count": 1,
+    "matches": [
+      {
+        "cell3_row_index": "59",
+        "cell3_old_point_index": 59,
+        "cell4_work_idx": 59,
+        "cell4_name": "桃園市新屋區大牛欄段後湖小段05370000"
+      }
+    ],
+    "status": "PASS_UNIQUE"
+  },
+  {
+    "target": "P29",
+    "lot": "14600000",
+    "cell4_identity_matches": 1,
+    "cell3_identity_matches": 1,
+    "cell5_exact_identity_match_count": 1,
+    "matches": [
+      {
+        "cell3_row_index": "61",
+        "cell3_old_point_index": 61,
+        "cell4_work_idx": 61,
+        "cell4_name": "桃園市新屋區石牌嶺段14600000"
+      }
+    ],
+    "status": "PASS_UNIQUE"
+  }
+]
+{"target": "P27", "地號": "14410000", "identity_keywords": ["石牌嶺"], "gdf_wgs84_match_count": 1, "gdf_twd97_match_count": 1, "source_df_match_count": 1, "案件ID": "HD_0655_14410000", "縣市": "桃園市", "鄉鎮市區": "新屋區", "地段": "石牌嶺段", "GeometryType": "Polygon", "解析度分類": "一般", "寬像素": null, "高像素": null, "定位點位於宗地": "True", "中心偏移_m": "4.351885774249038", "幾何狀態": "Valid", "TWD97_面積平方公尺": 1312.8557129485475, "WGS84_bounds": [121.04697436094285, 24.998237642970118, 121.04736328125, 24.998658195178816], "TWD97_crs": "EPSG:3826", "CRS_roundtrip_symdiff_m2": 6.538403044525486e-09, "CRS_roundtrip_relative_diff": 4.980290659534605e-12, "地籍圖檔案": "061_HD_0655_14410000.png", "image_selection_method": "CELL2_QUERY_POINT_IN_IMAGE_BBOX", "image_record_count": "3", "selected_image_index": "2", "image_exists": true, "PNG_width": 145, "PNG_height": 173, "PNG_channel_count": 4, "alpha_min": 0, "alpha_max": 127, "alpha_nonzero_pct": 71.76400239186765, "mask_foreground_pct": 71.76400239186765, "mask_connected_components": 1, "mask_largest_component_pct": 71.76400239186765, "mask_contour_count": 1, "mask_vs_saved_symdiff_m2": 0.0, "mask_vs_saved_relative_diff": 0.0, "rebuilt_geometry_valid": true, "rebuilt_geometry_type": "Polygon", "png_vector_overlay": "P27_14410000_PNG_VECTOR_OVERLAY.png", "alpha_mask_image": "P27_14410000_ALPHA_MASK.png", "status": "ANALYZED"}
+{"target": "P28", "地號": "05370000", "identity_keywords": ["大牛欄", "後湖"], "gdf_wgs84_match_count": 1, "gdf_twd97_match_count": 1, "source_df_match_count": 1, "案件ID": "HD_0654_05370000", "縣市": "桃園市", "鄉鎮市區": "新屋區", "地段": "大牛欄段後湖小段", "GeometryType": "Polygon", "解析度分類": "一般", "寬像素": null, "高像素": null, "定位點位於宗地": "True", "中心偏移_m": "5.434613908238948", "幾何狀態": "Valid", "TWD97_面積平方公尺": 657.1735267332093, "WGS84_bounds": [121.04336142539978, 24.998755432478834, 121.0436323285103, 24.999175982915375], "TWD97_crs": "EPSG:3826", "CRS_roundtrip_symdiff_m2": 9.870134384513973e-09, "CRS_roundtrip_relative_diff": 1.5019068758785172e-11, "地籍圖檔案": "060_HD_0654_05370000.png", "image_selection_method": "CELL2_QUERY_POINT_IN_IMAGE_BBOX", "image_record_count": "2", "selected_image_index": "1", "image_exists": true, "PNG_width": 101, "PNG_height": 173, "PNG_channel_count": 4, "alpha_min": 0, "alpha_max": 127, "alpha_nonzero_pct": 51.79419676071654, "mask_foreground_pct": 51.79419676071654, "mask_connected_components": 1, "mask_largest_component_pct": 51.79419676071654, "mask_contour_count": 1, "mask_vs_saved_symdiff_m2": 0.0, "mask_vs_saved_relative_diff": 0.0, "rebuilt_geometry_valid": true, "rebuilt_geometry_type": "Polygon", "png_vector_overlay": "P28_05370000_PNG_VECTOR_OVERLAY.png", "alpha_mask_image": "P28_05370000_ALPHA_MASK.png", "status": "ANALYZED"}
+{"target": "P29", "地號": "14600000", "identity_keywords": ["石牌嶺"], "gdf_wgs84_match_count": 1, "gdf_twd97_match_count": 1, "source_df_match_count": 1, "案件ID": "HD_0655_14600000", "縣市": "桃園市", "鄉鎮市區": "新屋區", "地段": "石牌嶺段", "GeometryType": "Polygon", "解析度分類": "一般", "寬像素": null, "高像素": null, "定位點位於宗地": "True", "中心偏移_m": "0.3045005104294256", "幾何狀態": "Valid", "TWD97_面積平方公尺": 1938.0214058047382, "WGS84_bounds": [121.04459792375566, 24.999086038723355, 121.04532748460771, 24.999739955807883], "TWD97_crs": "EPSG:3826", "CRS_roundtrip_symdiff_m2": 3.1952867045182526e-08, "CRS_roundtrip_relative_diff": 1.6487365386806195e-11, "地籍圖檔案": "062_HD_0655_14600000.png", "image_selection_method": "CELL2_QUERY_POINT_IN_IMAGE_BBOX", "image_record_count": "1", "selected_image_index": "1", "image_exists": true, "PNG_width": 272, "PNG_height": 269, "PNG_channel_count": 4, "alpha_min": 0, "alpha_max": 127, "alpha_nonzero_pct": 36.54739776951673, "mask_foreground_pct": 36.54739776951673, "mask_connected_components": 1, "mask_largest_component_pct": 36.54739776951673, "mask_contour_count": 1, "mask_vs_saved_symdiff_m2": 0.0, "mask_vs_saved_relative_diff": 0.0, "rebuilt_geometry_valid": true, "rebuilt_geometry_type": "Polygon", "png_vector_overlay": "P29_14600000_PNG_VECTOR_OVERLAY.png", "alpha_mask_image": "P29_14600000_ALPHA_MASK.png", "status": "ANALYZED"}
