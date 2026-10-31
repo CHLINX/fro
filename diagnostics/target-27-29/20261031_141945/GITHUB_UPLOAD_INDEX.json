@@ -244,6 +244,54 @@
       "sha256": "5ac3dfba6693c1f04ae6f8d923f8584583cf71a208c4f09377fb4a34321e12df",
       "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_AUDIT/TILE_STITCH_DIAGNOSTIC.json",
       "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_AUDIT/TILE_STITCH_DIAGNOSTIC.json"
+    },
+    {
+      "name": "P27_TILE_STITCH_DIAGNOSTIC.png",
+      "path": "diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/P27_TILE_STITCH_DIAGNOSTIC.png",
+      "size_bytes": 136139,
+      "sha256": "5a0a424e3a6a7aaba947a2ae22f09bd5a3e0ad9ae4632723f592a8911e962942",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/P27_TILE_STITCH_DIAGNOSTIC.png",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/P27_TILE_STITCH_DIAGNOSTIC.png"
+    },
+    {
+      "name": "P28_TILE_STITCH_DIAGNOSTIC.png",
+      "path": "diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/P28_TILE_STITCH_DIAGNOSTIC.png",
+      "size_bytes": 142267,
+      "sha256": "65aac894f47f04d59610ac13f9a7c9486a55b620efb3cd08d1ba38ea7f01c706",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/P28_TILE_STITCH_DIAGNOSTIC.png",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/P28_TILE_STITCH_DIAGNOSTIC.png"
+    },
+    {
+      "name": "TILE_STITCH_METRICS.csv",
+      "path": "diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_METRICS.csv",
+      "size_bytes": 1212,
+      "sha256": "635b6c0fca8a029c605364d2115c741647be417ea5b53405541dac0e2eb57926",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_METRICS.csv",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_METRICS.csv"
+    },
+    {
+      "name": "TILE_STITCH_PRECISION_COMPARISON.csv",
+      "path": "diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_PRECISION_COMPARISON.csv",
+      "size_bytes": 3456,
+      "sha256": "aa5d16bb0c4f0819bde664b4eb0710fa265f6d13f050e3437b99483b2a9b1551",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_PRECISION_COMPARISON.csv",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_PRECISION_COMPARISON.csv"
+    },
+    {
+      "name": "TILE_STITCH_GEOMETRY.geojson",
+      "path": "diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_GEOMETRY.geojson",
+      "size_bytes": 34464,
+      "sha256": "7222c858ad4db0e5a994b3081c389d24d355572a27f4175de6c4e95800c3fafd",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_GEOMETRY.geojson",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_GEOMETRY.geojson"
+    },
+    {
+      "name": "TILE_STITCH_DIAGNOSTIC.json",
+      "path": "diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_DIAGNOSTIC.json",
+      "size_bytes": 21697,
+      "sha256": "56b9fb201d8c5ab1645ce4466b0e4d76b1e7440b184ad8d668b7d058e807a9ac",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_DIAGNOSTIC.json",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/TILE_STITCH_PRECISION_AUDIT_V2/TILE_STITCH_DIAGNOSTIC.json"
     }
   ],
   "scope_note": "Only the three target parcels are included; no full pickles, full GraphML, OSM caches, or full case dataset are uploaded.",
@@ -253,7 +301,7 @@
     "folder": "diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS",
     "note": "Only decoded candidate PNGs and summarized bbox metadata were uploaded; raw response text was not uploaded."
   },
-  "updated_utc": "2026-10-31T18:44:06.492221+00:00",
+  "updated_utc": "2026-10-31T18:49:19.527142+00:00",
   "tile_stitch_audit": {
     "status": "UPLOADED",
     "targets": [
@@ -261,5 +309,24 @@
       "P28"
     ],
     "purpose": "Read-only check of adjacent NLSC image records and polygon-mask continuity; P29 excluded."
+  },
+  "tile_stitch_precision_audit": {
+    "status": "UPLOADED",
+    "version": "V2_PRECISION_GRID",
+    "targets": [
+      "P27",
+      "P28"
+    ],
+    "precision_grid_sizes_m": [
+      1e-09,
+      1e-08,
+      1e-07,
+      1e-06,
+      1e-05,
+      0.0001,
+      0.001,
+      0.01
+    ],
+    "purpose": "Read-only comparison of exact and precision-grid unions; no Cell3 geometry or handoff modification."
   }
 }
