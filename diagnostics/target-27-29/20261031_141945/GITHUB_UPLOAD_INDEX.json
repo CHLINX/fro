@@ -132,7 +132,86 @@
       "github_blob_sha": "ae8698ba5e4553541acd1ce88bfa74969f95a03f",
       "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/CELL3_TARGETS_SOURCE_IMAGE_BBOX.csv",
       "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/CELL3_TARGETS_SOURCE_IMAGE_BBOX.csv"
+    },
+    {
+      "name": "P27_14410000_RECORD_01.png",
+      "path": "diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P27_14410000_RECORD_01.png",
+      "size_bytes": 489,
+      "sha256": "ee103aeef0d31379077cb96a75275c8c326abb4cd0cd2847b3ecb5f024a7e5a1",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P27_14410000_RECORD_01.png",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P27_14410000_RECORD_01.png"
+    },
+    {
+      "name": "P27_14410000_RECORD_02.png",
+      "path": "diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P27_14410000_RECORD_02.png",
+      "size_bytes": 1205,
+      "sha256": "563c28b73f0a16732307bcac131397d35609348d76d8557fd92a0afff021f737",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P27_14410000_RECORD_02.png",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P27_14410000_RECORD_02.png"
+    },
+    {
+      "name": "P27_14410000_RECORD_03.png",
+      "path": "diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P27_14410000_RECORD_03.png",
+      "size_bytes": 538,
+      "sha256": "ef5b3d1618b894d149481c849208eee1c74af0a109380628f27d78214f049f76",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P27_14410000_RECORD_03.png",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P27_14410000_RECORD_03.png"
+    },
+    {
+      "name": "P28_05370000_RECORD_01.png",
+      "path": "diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P28_05370000_RECORD_01.png",
+      "size_bytes": 1118,
+      "sha256": "2dc8973625e70088d0ee7c499414326075f09c2689cd4ef76a881ecf4c4d7ee8",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P28_05370000_RECORD_01.png",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P28_05370000_RECORD_01.png"
+    },
+    {
+      "name": "P28_05370000_RECORD_02.png",
+      "path": "diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P28_05370000_RECORD_02.png",
+      "size_bytes": 896,
+      "sha256": "c1fb1dc70f7076db525ee74265319ddbc96f974940e78102600fb0684f4e179a",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P28_05370000_RECORD_02.png",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P28_05370000_RECORD_02.png"
+    },
+    {
+      "name": "P29_14600000_RECORD_01.png",
+      "path": "diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P29_14600000_RECORD_01.png",
+      "size_bytes": 2172,
+      "sha256": "9d3547171c60ea41f73182ed9907451c5f3b604a444b7f7bfbdf1a44816eb4d6",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P29_14600000_RECORD_01.png",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/P29_14600000_RECORD_01.png"
+    },
+    {
+      "name": "RAW_IMAGE_RECORDS_METADATA.csv",
+      "path": "diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/RAW_IMAGE_RECORDS_METADATA.csv",
+      "size_bytes": 2098,
+      "sha256": "5a06f7dda3bd879e24a8fccfe6097f76e118b4a9f1762f4240e04822cb11186f",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/RAW_IMAGE_RECORDS_METADATA.csv",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/RAW_IMAGE_RECORDS_METADATA.csv"
+    },
+    {
+      "name": "RAW_IMAGE_RECORDS_METADATA.json",
+      "path": "diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/RAW_IMAGE_RECORDS_METADATA.json",
+      "size_bytes": 7843,
+      "sha256": "dfaed6ed4e7c0e75e9552e0fbe759c33cc0987d7c79b3fee7f79ceb6eb9ded0b",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/RAW_IMAGE_RECORDS_METADATA.json",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/RAW_IMAGE_RECORDS_METADATA.json"
+    },
+    {
+      "name": "RAW_IMAGE_RECORDS_CONTACT_SHEET.png",
+      "path": "diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/RAW_IMAGE_RECORDS_CONTACT_SHEET.png",
+      "size_bytes": 32188,
+      "sha256": "97dffc26d7b9e340647613b7f35a812ec6075fb03e44c3c1ab9463a8f3cc8e7b",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/RAW_IMAGE_RECORDS_CONTACT_SHEET.png",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS/RAW_IMAGE_RECORDS_CONTACT_SHEET.png"
     }
   ],
-  "scope_note": "Only the three target parcels are included; no full pickles, full GraphML, OSM caches, or full case dataset are uploaded."
+  "scope_note": "Only the three target parcels are included; no full pickles, full GraphML, OSM caches, or full case dataset are uploaded.",
+  "raw_image_record_audit": {
+    "status": "UPLOADED",
+    "candidate_record_count": 6,
+    "folder": "diagnostics/target-27-29/20261031_141945/RAW_IMAGE_RECORDS",
+    "note": "Only decoded candidate PNGs and summarized bbox metadata were uploaded; raw response text was not uploaded."
+  },
+  "updated_utc": "2026-10-31T18:28:15.789914+00:00"
 }
