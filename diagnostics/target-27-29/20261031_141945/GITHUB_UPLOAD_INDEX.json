@@ -1,0 +1,138 @@
+{
+  "project": "巡田最速適 / Field Route Optimizer",
+  "purpose": "P27/P28/P29 Cell3 original NLSC image, alpha mask, polygon overlay, diagnostics, and WGS84 geometry inspection",
+  "run_id": "20261031_141945",
+  "repository": "https://github.com/CHLINX/fro",
+  "branch": "diagnostic/target-27-29-20261031_141945",
+  "directory": "diagnostics/target-27-29/20261031_141945",
+  "created_utc": "2026-10-31T17:55:29.852669+00:00",
+  "files": [
+    {
+      "name": "P27_14410000_ORIGINAL_NLSC.png",
+      "path": "diagnostics/target-27-29/20261031_141945/P27_14410000_ORIGINAL_NLSC.png",
+      "size_bytes": 1205,
+      "sha256": "563c28b73f0a16732307bcac131397d35609348d76d8557fd92a0afff021f737",
+      "github_blob_sha": "69cbf6c0333af40ec720923844de49be1a287bf8",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P27_14410000_ORIGINAL_NLSC.png",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P27_14410000_ORIGINAL_NLSC.png"
+    },
+    {
+      "name": "P27_14410000_PNG_VECTOR_OVERLAY.png",
+      "path": "diagnostics/target-27-29/20261031_141945/P27_14410000_PNG_VECTOR_OVERLAY.png",
+      "size_bytes": 1239,
+      "sha256": "231a06e9d2e2d4749b0955283c5524a221e0112d4d9b41667e41a06f1e7ffff7",
+      "github_blob_sha": "3ba32da5b41ada8f1b4526f4fa522f6e9259dc30",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P27_14410000_PNG_VECTOR_OVERLAY.png",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P27_14410000_PNG_VECTOR_OVERLAY.png"
+    },
+    {
+      "name": "P27_14410000_ALPHA_MASK.png",
+      "path": "diagnostics/target-27-29/20261031_141945/P27_14410000_ALPHA_MASK.png",
+      "size_bytes": 806,
+      "sha256": "9ee58c898d43399c5b41c8322a7e2f255c1a04cb504477475c73bbb2fdc29f0d",
+      "github_blob_sha": "95e4182669d56768cc3cdea6129921721c8db7c4",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P27_14410000_ALPHA_MASK.png",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P27_14410000_ALPHA_MASK.png"
+    },
+    {
+      "name": "P28_05370000_ORIGINAL_NLSC.png",
+      "path": "diagnostics/target-27-29/20261031_141945/P28_05370000_ORIGINAL_NLSC.png",
+      "size_bytes": 1118,
+      "sha256": "2dc8973625e70088d0ee7c499414326075f09c2689cd4ef76a881ecf4c4d7ee8",
+      "github_blob_sha": "4cf36f075d4a471dcbd1e49384660ac8f8b4b526",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P28_05370000_ORIGINAL_NLSC.png",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P28_05370000_ORIGINAL_NLSC.png"
+    },
+    {
+      "name": "P28_05370000_PNG_VECTOR_OVERLAY.png",
+      "path": "diagnostics/target-27-29/20261031_141945/P28_05370000_PNG_VECTOR_OVERLAY.png",
+      "size_bytes": 1143,
+      "sha256": "6f4501246728eb23fc9e18e984cba1c31dfcdc7e6eae23a0f79c52e9ee45474d",
+      "github_blob_sha": "4e6ea5e211ab095e899021967b39771466c99c57",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P28_05370000_PNG_VECTOR_OVERLAY.png",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P28_05370000_PNG_VECTOR_OVERLAY.png"
+    },
+    {
+      "name": "P28_05370000_ALPHA_MASK.png",
+      "path": "diagnostics/target-27-29/20261031_141945/P28_05370000_ALPHA_MASK.png",
+      "size_bytes": 728,
+      "sha256": "50473b3caa2f24c75b62a851fe00461bda35309c39cb1ee277646f7237c95ff7",
+      "github_blob_sha": "43c2ebf6d8757f46c2f941f1e25fad56d136a342",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P28_05370000_ALPHA_MASK.png",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P28_05370000_ALPHA_MASK.png"
+    },
+    {
+      "name": "P29_14600000_ORIGINAL_NLSC.png",
+      "path": "diagnostics/target-27-29/20261031_141945/P29_14600000_ORIGINAL_NLSC.png",
+      "size_bytes": 2172,
+      "sha256": "9d3547171c60ea41f73182ed9907451c5f3b604a444b7f7bfbdf1a44816eb4d6",
+      "github_blob_sha": "0ae538f1076880538dbf753f4433132139194d4b",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P29_14600000_ORIGINAL_NLSC.png",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P29_14600000_ORIGINAL_NLSC.png"
+    },
+    {
+      "name": "P29_14600000_PNG_VECTOR_OVERLAY.png",
+      "path": "diagnostics/target-27-29/20261031_141945/P29_14600000_PNG_VECTOR_OVERLAY.png",
+      "size_bytes": 2759,
+      "sha256": "7c0f0d3c10e7f3255982dc68a0344626ae605d607253b586fac9bd4efc25f0cb",
+      "github_blob_sha": "9441c05ac3e9c71098cf079485f2624fbdec5642",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P29_14600000_PNG_VECTOR_OVERLAY.png",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P29_14600000_PNG_VECTOR_OVERLAY.png"
+    },
+    {
+      "name": "P29_14600000_ALPHA_MASK.png",
+      "path": "diagnostics/target-27-29/20261031_141945/P29_14600000_ALPHA_MASK.png",
+      "size_bytes": 1562,
+      "sha256": "e26065d9d9fa8139cde20acb9d8eacc0f9095d57623e76962d381e299b83aaad",
+      "github_blob_sha": "7c7a6b8031da50abbcde0755ee1c011d5048f9e9",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P29_14600000_ALPHA_MASK.png",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/P29_14600000_ALPHA_MASK.png"
+    },
+    {
+      "name": "CELL3_TARGET_GEOMETRY_DIAGNOSTIC.csv",
+      "path": "diagnostics/target-27-29/20261031_141945/CELL3_TARGET_GEOMETRY_DIAGNOSTIC.csv",
+      "size_bytes": 2624,
+      "sha256": "6d4f1c2a2d944608eaf7b2061ce6e2a52d5e3317d95917a719c0d93d8261cb8a",
+      "github_blob_sha": "db82874cccb234170cd10670ac5e0dfbb819141f",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/CELL3_TARGET_GEOMETRY_DIAGNOSTIC.csv",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/CELL3_TARGET_GEOMETRY_DIAGNOSTIC.csv"
+    },
+    {
+      "name": "FRO_TARGET_27_29_FORENSIC.json",
+      "path": "diagnostics/target-27-29/20261031_141945/FRO_TARGET_27_29_FORENSIC.json",
+      "size_bytes": 12557,
+      "sha256": "a59faecbca2d8ea96d74af632d2d19d7e92d6e90844396365471bc97c05f0b25",
+      "github_blob_sha": "3f4c6c20c8a1a1f0426f00344b645eb247e6bc54",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/FRO_TARGET_27_29_FORENSIC.json",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/FRO_TARGET_27_29_FORENSIC.json"
+    },
+    {
+      "name": "FRO_TARGET_27_29_FORENSIC_REPORT.txt",
+      "path": "diagnostics/target-27-29/20261031_141945/FRO_TARGET_27_29_FORENSIC_REPORT.txt",
+      "size_bytes": 9414,
+      "sha256": "8b148121ac9a0750cbd28da050c36792d155388c5577836aaf607380542d1b2d",
+      "github_blob_sha": "dd059ab4a9d6dad2b0c980bf8dfd9bbc5a965f56",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/FRO_TARGET_27_29_FORENSIC_REPORT.txt",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/FRO_TARGET_27_29_FORENSIC_REPORT.txt"
+    },
+    {
+      "name": "CELL3_TARGETS_P27_P28_P29_WGS84.geojson",
+      "path": "diagnostics/target-27-29/20261031_141945/CELL3_TARGETS_P27_P28_P29_WGS84.geojson",
+      "size_bytes": 15853,
+      "sha256": "2a9f04fb41b4c40de2ee13c062ad5c550476c645723e7f2ca3e2ab97fa2e710d",
+      "github_blob_sha": "488bbe16884c91d3a5048fba26473df29a7e2e63",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/CELL3_TARGETS_P27_P28_P29_WGS84.geojson",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/CELL3_TARGETS_P27_P28_P29_WGS84.geojson"
+    },
+    {
+      "name": "CELL3_TARGETS_SOURCE_IMAGE_BBOX.csv",
+      "path": "diagnostics/target-27-29/20261031_141945/CELL3_TARGETS_SOURCE_IMAGE_BBOX.csv",
+      "size_bytes": 668,
+      "sha256": "497eb7b8ec51e1df9aa338654a7a12d4497f5c32f66e3b9ff953088c26fba353",
+      "github_blob_sha": "ae8698ba5e4553541acd1ce88bfa74969f95a03f",
+      "html_url": "https://github.com/CHLINX/fro/blob/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/CELL3_TARGETS_SOURCE_IMAGE_BBOX.csv",
+      "raw_url": "https://raw.githubusercontent.com/CHLINX/fro/diagnostic/target-27-29-20261031_141945/diagnostics/target-27-29/20261031_141945/CELL3_TARGETS_SOURCE_IMAGE_BBOX.csv"
+    }
+  ],
+  "scope_note": "Only the three target parcels are included; no full pickles, full GraphML, OSM caches, or full case dataset are uploaded."
+}
