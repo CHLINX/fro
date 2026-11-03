@@ -1,0 +1,154 @@
+name: Audit Cell4 pickle handoff
+
+on:
+  push:
+    branches:
+      - audit/cell4-pkl-20261103
+    paths:
+      - cell4_map_data.pkl
+      - .github/workflows/cell4-pkl-audit.yml
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: audit/cell4-pkl-20261103
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install data readers
+        run: python -m pip install --disable-pip-version-check pandas numpy networkx shapely geopandas
+      - name: Inspect handoff without modifying source data
+        run: |
+          cat > /tmp/audit_pickle.py <<'PY'
+          import json, pickle, math
+          from pathlib import Path
+          import pandas as pd
+
+          src = Path("cell4_map_data.pkl")
+          out = Path("cell4_map_data_audit.json")
+          report = {
+              "file": src.name,
+              "bytes": src.stat().st_size,
+              "sha256": __import__("hashlib").sha256(src.read_bytes()).hexdigest(),
+              "root_type": None,
+              "tree": {},
+              "dataframes": []
+          }
+
+          def safe(v):
+              if v is None or isinstance(v, (str, int, bool)):
+                  return v
+              if isinstance(v, float):
+                  return v if math.isfinite(v) else str(v)
+              if hasattr(v, "isoformat"):
+                  try: return v.isoformat()
+                  except Exception: pass
+              if hasattr(v, "wkt"):
+                  try: return str(v.wkt)[:500]
+                  except Exception: pass
+              if isinstance(v, dict):
+                  return {str(k): safe(val) for k, val in list(v.items())[:30]}
+              if isinstance(v, (list, tuple)):
+                  return [safe(x) for x in list(v)[:30]]
+              try:
+                  import numpy as np
+                  if isinstance(v, np.generic): return safe(v.item())
+              except Exception: pass
+              return str(v)[:300]
+
+          def df_summary(df, path):
+              cols = [str(c) for c in df.columns]
+              lower = {c: c.lower() for c in cols}
+              wanted = [c for c in cols if any(t in lower[c] for t in (
+                  "day", "日期", "日別", "route", "順序", "sequence", "seq",
+                  "地號", "lot", "段", "point", "name", "名稱", "address",
+                  "地址", "lat", "lon", "lng", "經度", "緯度", "vehicle", "交通"
+              ))]
+              if not wanted:
+                  wanted = cols[:min(12, len(cols))]
+              sample = []
+              for _, row in df[wanted].head(120).iterrows():
+                  sample.append({str(k): safe(v) for k, v in row.items()})
+              groupings = {}
+              for c in cols:
+                  lc = lower[c]
+                  if any(t in lc for t in ("day", "日期", "日別", "route_day", "work_day")):
+                      try:
+                          vc = df[c].astype(str).value_counts(dropna=False).head(30)
+                          groupings[c] = {str(k): int(v) for k, v in vc.items()}
+                      except Exception:
+                          pass
+              item = {
+                  "path": path, "shape": [int(df.shape[0]), int(df.shape[1])],
+                  "columns": cols, "dtypes": {str(k): str(v) for k, v in df.dtypes.items()},
+                  "candidate_columns": wanted, "day_value_counts": groupings,
+                  "sample_rows": sample
+              }
+              report["dataframes"].append(item)
+              return {"type": type(df).__name__, "shape": item["shape"], "columns": cols}
+
+          seen = set()
+          def walk(obj, path="$", depth=0):
+              oid = id(obj)
+              if oid in seen: return {"type": type(obj).__name__, "cycle_or_shared": True}
+              if depth > 5: return {"type": type(obj).__name__, "depth_limit": True}
+              if isinstance(obj, pd.DataFrame):
+                  seen.add(oid)
+                  return df_summary(obj, path)
+              if isinstance(obj, dict):
+                  seen.add(oid)
+                  result = {"type": type(obj).__name__, "len": len(obj), "items": {}}
+                  for i, (k, v) in enumerate(obj.items()):
+                      if i >= 80:
+                          result["truncated_items"] = len(obj) - 80
+                          break
+                      result["items"][str(k)] = walk(v, path + "." + str(k), depth + 1)
+                  return result
+              if isinstance(obj, (list, tuple)):
+                  seen.add(oid)
+                  return {"type": type(obj).__name__, "len": len(obj),
+                          "sample": [walk(x, f"{path}[{i}]", depth + 1)
+                                     for i, x in enumerate(obj[:8])]}
+              if hasattr(obj, "nodes") and hasattr(obj, "edges"):
+                  try:
+                      return {"type": type(obj).__name__, "nodes": int(obj.number_of_nodes()),
+                              "edges": int(obj.number_of_edges())}
+                  except Exception: pass
+              if hasattr(obj, "shape") and hasattr(obj, "columns"):
+                  try: return df_summary(obj, path)
+                  except Exception: pass
+              return {"type": type(obj).__name__, "value": safe(obj)}
+
+          print("PICKLE_LOAD_START")
+          with src.open("rb") as f:
+              obj = pickle.load(f)
+          report["root_type"] = type(obj).__name__
+          report["tree"] = walk(obj)
+          out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+          print("PICKLE_LOAD_OK")
+          print("ROOT_TYPE:", report["root_type"])
+          print("DATAFRAME_COUNT:", len(report["dataframes"]))
+          for d in report["dataframes"]:
+              print("DATAFRAME:", d["path"], "SHAPE:", d["shape"])
+              print("COLUMNS:", ", ".join(d["columns"]))
+              if d["day_value_counts"]:
+                  print("DAY_COUNTS:", json.dumps(d["day_value_counts"], ensure_ascii=False))
+          print("AUDIT_JSON_BYTES:", out.stat().st_size)
+          PY
+          python /tmp/audit_pickle.py
+      - name: Save audit summary on temporary branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cell4_map_data_audit.json
+          git commit -m "Add read-only Cell4 pickle audit summary" || true
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" HEAD:audit/cell4-pkl-20261103
