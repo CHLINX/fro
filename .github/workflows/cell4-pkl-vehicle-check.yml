@@ -1,0 +1,76 @@
+name: Compare Cell4 MOTOR and CAR handoff
+
+on:
+  push:
+    branches:
+      - audit/cell4-pkl-20261103
+    paths:
+      - .github/workflows/cell4-pkl-vehicle-check.yml
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: audit/cell4-pkl-20261103
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install readers
+        run: python -m pip install --disable-pip-version-check pandas numpy
+      - name: Compare vehicle handoff data
+        run: |
+          cat > /tmp/vehicles.py <<'PY'
+          import pickle,json,hashlib
+          from pathlib import Path
+          p=Path("cell4_map_data.pkl")
+          root=pickle.loads(p.read_bytes())
+          out={"sha256":hashlib.sha256(p.read_bytes()).hexdigest(),"vehicles":{}}
+          for mode in ["MOTOR","CAR"]:
+              v=root[mode]
+              df=v["route_order_df"]
+              batches=[]
+              for i,b in enumerate(v.get("actual_batches",[]),1):
+                  batches.append({"day":i,"outbound_km":round(float(b.get("distance",0))/1000,3),
+                    "return_km":round(float(b.get("return_distance",0))/1000,3),
+                    "closed_km":round((float(b.get("distance",0))+float(b.get("return_distance",0)))/1000,3),
+                    "duration_min":round(float(b.get("duration",0)),3)})
+              roles={str(k):int(n) for k,n in df["角色"].value_counts(dropna=False).items()}
+              day_counts={str(k):int(n) for k,n in df[df["角色"]=="查核點"].groupby("工作日").size().items()}
+              day_rows=[]
+              for day,g in df[df["角色"]=="查核點"].groupby("工作日",sort=True):
+                  day_rows.append({"day":int(day),"count":int(len(g)),
+                    "first":str(g.iloc[0]["名稱"]),"last":str(g.iloc[-1]["名稱"]),
+                    "lots":[str(x) for x in g["名稱"].head(3).tolist()]})
+              out["vehicles"][mode]={
+                "route_order_shape":[int(x) for x in df.shape],
+                "role_counts":roles,"day_counts":day_counts,"day_rows":day_rows,
+                "batches":batches,
+                "closed_route_km_sum":round(sum(x["closed_km"] for x in batches),3),
+                "one_shot_distance_km":round(float(v.get("all_in_one_actual_distance",0))/1000,3),
+                "one_shot_drive_min":round(float(v.get("all_in_one_actual_drive_min",0)),3),
+                "one_shot_drive_hr":round(float(v.get("all_in_one_actual_drive_min",0))/60,3),
+                "start_name":v.get("start_name")
+              }
+          Path("cell4_map_data_vehicle_check.json").write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding="utf-8")
+          for mode,x in out["vehicles"].items():
+              print("MODE:",mode)
+              print("DAY_COUNTS:",json.dumps(x["day_counts"],ensure_ascii=False))
+              print("BATCHES:",json.dumps(x["batches"],ensure_ascii=False))
+              print("CLOSED_ROUTE_KM_SUM:",x["closed_route_km_sum"])
+              print("ONE_SHOT:",x["one_shot_distance_km"],"km",x["one_shot_drive_hr"],"hr")
+          PY
+          python /tmp/vehicles.py
+      - name: Commit comparison JSON on isolated branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cell4_map_data_vehicle_check.json
+          git commit -m "Add MOTOR and CAR handoff comparison" || true
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" HEAD:audit/cell4-pkl-20261103
