@@ -1,0 +1,118 @@
+name: Detailed Cell4 route-order audit
+
+on:
+  push:
+    branches:
+      - audit/cell4-pkl-20261103
+    paths:
+      - .github/workflows/cell4-pkl-detail.yml
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: audit/cell4-pkl-20261103
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install readers
+        run: python -m pip install --disable-pip-version-check pandas numpy
+      - name: Extract day allocation and cross-day neighbors
+        run: |
+          cat > /tmp/detail.py <<'PY'
+          import pickle, json, hashlib, math
+          from pathlib import Path
+          import pandas as pd
+
+          p=Path("cell4_map_data.pkl")
+          obj=pickle.loads(p.read_bytes())
+          m=obj["MOTOR"]
+          df=m["route_order_df"].copy()
+          out={"file_bytes":p.stat().st_size,
+               "sha256":hashlib.sha256(p.read_bytes()).hexdigest(),
+               "route_order_columns":[str(c) for c in df.columns],
+               "shape":[int(x) for x in df.shape],
+               "unique_role_counts":{}, "day_counts_including_start":{},
+               "day_role_counts":{}, "day_rows":[],
+               "actual_batches":[],"cross_day_pairs":[],"cross_day_summary":{}}
+          for col in ["角色","工作日","批次"]:
+              if col in df:
+                  out["unique_role_counts"][col]={str(k):int(v) for k,v in df[col].fillna("<NA>").value_counts(dropna=False).items()}
+          if "工作日" in df:
+              out["day_counts_including_start"]={str(k):int(v) for k,v in df["工作日"].fillna("<NA>").value_counts(dropna=False).items()}
+          if "工作日" in df and "角色" in df:
+              g=df.groupby(["工作日","角色"],dropna=False).size()
+              out["day_role_counts"]=[{"day":str(k[0]),"role":str(k[1]),"count":int(v)} for k,v in g.items()]
+          show=[c for c in ["總路線序號","工作日","批次","日內序號","角色","點索引","名稱","縣市","鄉鎮市區","地段","地號","經度","緯度"] if c in df]
+          for _,r in df[show].iterrows():
+              out["day_rows"].append({str(k):(None if pd.isna(v) else (v.item() if hasattr(v,"item") else v)) for k,v in r.items()})
+          for i,b in enumerate(m.get("actual_batches",[]),1):
+              out["actual_batches"].append({
+                 "batch":i,
+                 "outbound_distance_km":round(float(b.get("distance",0))/1000,3),
+                 "return_distance_km":round(float(b.get("return_distance",0))/1000,3),
+                 "batch_duration_min":round(float(b.get("duration",0)),3),
+                 "geometry_points":len(b.get("geometry",[]) or []),
+                 "return_geometry_points":len(b.get("return_geometry",[]) or [])
+              })
+          # Build distance pairs using route-order point coordinates and day labels.
+          point=df.copy()
+          if "角色" in point:
+              point=point[~point["角色"].astype(str).str.contains("start|起點|出發|固定",case=False,regex=True)]
+          if all(c in point for c in ["工作日","經度","緯度"]):
+              rows=[]
+              for _,r in point.iterrows():
+                  try:
+                      lon=float(r["經度"]); lat=float(r["緯度"])
+                      if not (math.isfinite(lon) and math.isfinite(lat)): continue
+                      rows.append({"day":str(r["工作日"]),"name":str(r.get("名稱","")),
+                                   "lot":str(r.get("地號","")),"sect":str(r.get("地段","")),
+                                   "town":str(r.get("鄉鎮市區","")),"lon":lon,"lat":lat})
+                  except Exception: pass
+              def hav(a,b):
+                  R=6371000
+                  p1,p2=math.radians(a["lat"]),math.radians(b["lat"])
+                  dp=p2-p1; dl=math.radians(b["lon"]-a["lon"])
+                  z=math.sin(dp/2)**2+math.cos(p1)*math.cos(p2)*math.sin(dl/2)**2
+                  return 2*R*math.asin(min(1,math.sqrt(z)))
+              pairs=[]
+              for i,a in enumerate(rows):
+                  for b in rows[i+1:]:
+                      if a["day"]==b["day"]: continue
+                      d=hav(a,b)
+                      pairs.append({"distance_m":round(d,1),"day_a":a["day"],"name_a":a["name"],
+                                    "town_a":a["town"],"sect_a":a["sect"],"lot_a":a["lot"],
+                                    "day_b":b["day"],"name_b":b["name"],"town_b":b["town"],
+                                    "sect_b":b["sect"],"lot_b":b["lot"]})
+              pairs.sort(key=lambda x:x["distance_m"])
+              out["cross_day_summary"]={str(t):{"pair_count":sum(x["distance_m"]<=t for x in pairs),
+                 "unique_points":len({(x["day_a"],x["name_a"]) for x in pairs if x["distance_m"]<=t} |
+                                     {(x["day_b"],x["name_b"]) for x in pairs if x["distance_m"]<=t})}
+                 for t in [250,500,1000]}
+              out["cross_day_pairs"]=pairs[:100]
+          Path("cell4_map_data_detail_audit.json").write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding="utf-8")
+          print("DETAIL_AUDIT_OK")
+          print("ROUTE_ORDER_SHAPE:",out["shape"])
+          print("ROLE_COUNTS:",json.dumps(out["unique_role_counts"],ensure_ascii=False))
+          print("DAY_COUNTS:",json.dumps(out["day_counts_including_start"],ensure_ascii=False))
+          print("DAY_ROLE_COUNTS:",json.dumps(out["day_role_counts"],ensure_ascii=False))
+          print("BATCH_METRICS:",json.dumps(out["actual_batches"],ensure_ascii=False))
+          print("CROSS_DAY_PROXIMITY:",json.dumps(out["cross_day_summary"],ensure_ascii=False))
+          print("CLOSEST_CROSS_DAY_PAIRS:")
+          for x in out["cross_day_pairs"][:25]: print(json.dumps(x,ensure_ascii=False))
+          PY
+          python /tmp/detail.py
+      - name: Commit audit JSON on isolated branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cell4_map_data_detail_audit.json
+          git commit -m "Add detailed Cell4 route-order audit" || true
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" HEAD:audit/cell4-pkl-20261103
