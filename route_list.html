@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh-Hant">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>巡田最速適｜分日勘查清單</title>
+<style type="text/css">
+body { font-family: Arial, "Microsoft JhengHei", sans-serif; font-size: 14px; margin: 8px; color: #202124; background: #ffffff; }
+h1 { font-size: 20px; line-height: 1.35; margin: 4px 0 12px 0; }
+.meta { color: #555555; font-size: 12px; margin: 8px 0 12px 0; word-wrap: break-word; }
+.control { margin: 10px 0; }
+.control label { display: block; margin: 7px 0 4px 0; font-weight: bold; }
+select, input { font-size: 16px; padding: 7px; border: 1px solid #999999; background: #ffffff; color: #222222; max-width: 100%; }
+select { width: 100%; }
+#search { width: 96%; }
+.count { margin: 10px 0; color: #555555; }
+.table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid #cccccc; }
+table { border-collapse: collapse; width: 100%; min-width: 620px; table-layout: auto; }
+th, td { border: 1px solid #dddddd; padding: 6px 5px; text-align: left; vertical-align: top; line-height: 1.35; }
+th { background: #eeeeee; font-weight: bold; white-space: nowrap; }
+td.day, td.seq, td.num, td.check { white-space: nowrap; }
+td.num { text-align: right; }
+td.point { min-width: 180px; word-break: break-all; }
+td.check, th.check { text-align: center; width: 38px; }
+input.row-check { width: 20px; height: 20px; margin: 0; vertical-align: middle; }
+a.point-link { color: #0645ad; text-decoration: underline; font-weight: bold; }
+.note { color: #555555; font-size: 12px; margin: 8px 0; }
+@media print {
+  .control { display: none; }
+  body { margin: 5mm; }
+  .table-wrap { overflow: visible; border: none; }
+  table { min-width: 0; width: 100%; font-size: 9pt; }
+  th, td { padding: 4px; }
+}
+</style>
+</head>
+<body>
+<h1>巡田最速適｜分日勘查清單</h1>
+<div class="meta">Cell 2：/content/result.xlsx（SHA256：7489cae037b8a7786641714e69680a9c1e0b6420cdfb1114163991cb28d97dce）<br>
+Cell 4來源：記憶體 CELL4_RESULTS；磁碟交接檔：/content/cell4_map_data.pkl<br>Cell 4磁碟交接檔 SHA256：a206fc3b981975b5f1398c799d0b58114d8a162cb8c1ae603acbb753e7a49bc1<br>
+產生時間：2026-11-05T03:09:51+00:00</div>
+<div class="control">
+<label for="mode">交通工具：</label>
+<select id="mode"><option value="MOTOR" selected="selected">機車（MOTOR）</option></select>
+<label for="day">分日：</label>
+<select id="day"><option value="ALL" selected="selected">全部</option><option value="1">DAY1</option></select>
+<label for="search">搜尋勘查點：</label>
+<input id="search" type="text" value="" placeholder="輸入地段、地號或地址">
+</div>
+<div id="count" class="count">目前顯示 9 個勘查點；本篩選已勾選 0 個</div>
+<div class="table-wrap">
+<table>
+<thead><tr>
+<th class="check">勾選</th><th>分日</th><th>分日第幾點</th><th>勘查點（點選開啟 Google Maps）</th><th>本筆面積(公頃)</th><th>申請面積(公頃)</th>
+</tr></thead>
+<tbody id="tbody"><tr data-mode="MOTOR" data-day="1" data-search="桃園市八德區建國段08030000"><td class="check"><input class="row-check" type="checkbox" data-route-key="MOTOR|1|1|桃園市八德區建國段08030000"></td><td class="day">DAY1</td><td class="seq">1</td><td class="point"><a class="point-link" href="https://www.google.com/maps/search/?api=1&amp;query=24.9448500%2C121.2852300" target="_blank" title="開啟 Google Maps 定位此勘查點">桃園市八德區建國段08030000</a></td><td class="num">0.4823</td><td class="num">0.48</td></tr><tr data-mode="MOTOR" data-day="1" data-search="桃園市八德區新興段02400000"><td class="check"><input class="row-check" type="checkbox" data-route-key="MOTOR|1|2|桃園市八德區新興段02400000"></td><td class="day">DAY1</td><td class="seq">2</td><td class="point"><a class="point-link" href="https://www.google.com/maps/search/?api=1&amp;query=24.9355050%2C121.2755610" target="_blank" title="開啟 Google Maps 定位此勘查點">桃園市八德區新興段02400000</a></td><td class="num">0.2464</td><td class="num">0.2464</td></tr><tr data-mode="MOTOR" data-day="1" data-search="桃園市大溪區廣福段02090000"><td class="check"><input class="row-check" type="checkbox" data-route-key="MOTOR|1|3|桃園市大溪區廣福段02090000"></td><td class="day">DAY1</td><td class="seq">3</td><td class="point"><a class="point-link" href="https://www.google.com/maps/search/?api=1&amp;query=24.9149060%2C121.2635810" target="_blank" title="開啟 Google Maps 定位此勘查點">桃園市大溪區廣福段02090000</a></td><td class="num">0.1724</td><td class="num">0.0723</td></tr><tr data-mode="MOTOR" data-day="1" data-search="桃園市大溪區廣福段03200000"><td class="check"><input class="row-check" type="checkbox" data-route-key="MOTOR|1|4|桃園市大溪區廣福段03200000"></td><td class="day">DAY1</td><td class="seq">4</td><td class="point"><a class="point-link" href="https://www.google.com/maps/search/?api=1&amp;query=24.9123270%2C121.2593890" target="_blank" title="開啟 Google Maps 定位此勘查點">桃園市大溪區廣福段03200000</a></td><td class="num">0.1922</td><td class="num">0.1921</td></tr><tr data-mode="MOTOR" data-day="1" data-search="桃園市平鎮區福林段07120001"><td class="check"><input class="row-check" type="checkbox" data-route-key="MOTOR|1|5|桃園市平鎮區福林段07120001"></td><td class="day">DAY1</td><td class="seq">5</td><td class="point"><a class="point-link" href="https://www.google.com/maps/search/?api=1&amp;query=24.9032290%2C121.2257340" target="_blank" title="開啟 Google Maps 定位此勘查點">桃園市平鎮區福林段07120001</a></td><td class="num">0.2915</td><td class="num">0.1545</td></tr><tr data-mode="MOTOR" data-day="1" data-search="桃園市平鎮區福林段08010000"><td class="check"><input class="row-check" type="checkbox" data-route-key="MOTOR|1|6|桃園市平鎮區福林段08010000"></td><td class="day">DAY1</td><td class="seq">6</td><td class="point"><a class="point-link" href="https://www.google.com/maps/search/?api=1&amp;query=24.9019830%2C121.2269440" target="_blank" title="開啟 Google Maps 定位此勘查點">桃園市平鎮區福林段08010000</a></td><td class="num">0.2715</td><td class="num">0.2383</td></tr><tr data-mode="MOTOR" data-day="1" data-search="桃園市平鎮區福林段07980000"><td class="check"><input class="row-check" type="checkbox" data-route-key="MOTOR|1|7|桃園市平鎮區福林段07980000"></td><td class="day">DAY1</td><td class="seq">7</td><td class="point"><a class="point-link" href="https://www.google.com/maps/search/?api=1&amp;query=24.9022970%2C121.2259390" target="_blank" title="開啟 Google Maps 定位此勘查點">桃園市平鎮區福林段07980000</a></td><td class="num">0.6355</td><td class="num">0.3588</td></tr><tr data-mode="MOTOR" data-day="1" data-search="桃園市平鎮區福林段07970000"><td class="check"><input class="row-check" type="checkbox" data-route-key="MOTOR|1|8|桃園市平鎮區福林段07970000"></td><td class="day">DAY1</td><td class="seq">8</td><td class="point"><a class="point-link" href="https://www.google.com/maps/search/?api=1&amp;query=24.9019330%2C121.2253100" target="_blank" title="開啟 Google Maps 定位此勘查點">桃園市平鎮區福林段07970000</a></td><td class="num">0.3453</td><td class="num">0.3332</td></tr><tr data-mode="MOTOR" data-day="1" data-search="桃園市新屋區後庄段09950000"><td class="check"><input class="row-check" type="checkbox" data-route-key="MOTOR|1|9|桃園市新屋區後庄段09950000"></td><td class="day">DAY1</td><td class="seq">9</td><td class="point"><a class="point-link" href="https://www.google.com/maps/search/?api=1&amp;query=24.9528750%2C121.0214400" target="_blank" title="開啟 Google Maps 定位此勘查點">桃園市新屋區後庄段09950000</a></td><td class="num">0.141</td><td class="num">0.141</td></tr></tbody>
+</table>
+</div>
+<div class="note">勾選狀態會保留在此瀏覽器，並依本批 Cell 2／Cell 4 輸入簽章分開保存。點選勘查點名稱即可開啟 Google Maps 定位該點。</div>
+<script type="text/javascript">
+/* 僅使用 ES5 語法；表格與初始分日已在 HTML 中，不依賴 JavaScript 才能顯示。 */
+(function () {
+    var STORAGE_KEY = "FRO_ROUTE_LIST_CHECKED_7489cae037b8a7786641714e69680a9c1e0b6420cdfb1114163991cb28d97dce_a206fc3b981975b5f1398c799d0b58114d8";
+    var modeEl = document.getElementById("mode");
+    var dayEl = document.getElementById("day");
+    var searchEl = document.getElementById("search");
+    var tbody = document.getElementById("tbody");
+    var countEl = document.getElementById("count");
+    var CHECKED = {};
+
+    function loadChecked() {
+        var raw, parsed, inputs, i, key;
+        try {
+            raw = window.localStorage ? window.localStorage.getItem(STORAGE_KEY) : null;
+            if (raw) {
+                parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === "object") { CHECKED = parsed; }
+            }
+        } catch (e) { CHECKED = {}; }
+        inputs = tbody.getElementsByTagName("input");
+        for (i = 0; i < inputs.length; i++) {
+            key = inputs[i].getAttribute("data-route-key");
+            if (key && CHECKED[key]) { inputs[i].checked = true; }
+        }
+    }
+
+    function saveChecked() {
+        try {
+            if (window.localStorage) {
+                window.localStorage.setItem(STORAGE_KEY, JSON.stringify(CHECKED));
+            }
+        } catch (e) {}
+    }
+
+    function getRows() {
+        return tbody.getElementsByTagName("tr");
+    }
+
+    function refreshDayOptions() {
+        var rows = getRows();
+        var selectedMode = modeEl.value;
+        var days = [];
+        var i, day, found, option, previous;
+        previous = dayEl.value;
+        for (i = 0; i < rows.length; i++) {
+            if (rows[i].getAttribute("data-mode") !== selectedMode) { continue; }
+            day = rows[i].getAttribute("data-day");
+            if (day === null || day === "") { continue; }
+            found = false;
+            for (var j = 0; j < days.length; j++) {
+                if (days[j] === day) { found = true; break; }
+            }
+            if (!found) { days.push(day); }
+        }
+        days.sort(function (a, b) { return parseInt(a, 10) - parseInt(b, 10); });
+        while (dayEl.options.length > 0) { dayEl.remove(0); }
+        option = document.createElement("option");
+        option.value = "ALL";
+        option.appendChild(document.createTextNode("全部"));
+        dayEl.options.add(option);
+        for (i = 0; i < days.length; i++) {
+            option = document.createElement("option");
+            option.value = days[i];
+            option.appendChild(document.createTextNode("DAY" + days[i]));
+            dayEl.options.add(option);
+        }
+        dayEl.value = "ALL";
+        if (previous !== "ALL" && previous !== "") {
+            for (i = 0; i < dayEl.options.length; i++) {
+                if (dayEl.options[i].value === previous) { dayEl.value = previous; break; }
+            }
+        }
+    }
+
+    function renderTable() {
+        var rows = getRows();
+        var selectedMode = modeEl.value;
+        var selectedDay = dayEl.value;
+        var query = String(searchEl.value || "").toLowerCase();
+        var visibleCount = 0;
+        var checkedVisible = 0;
+        var i, row, match, text, inputs, j;
+        for (i = 0; i < rows.length; i++) {
+            row = rows[i];
+            match = (row.getAttribute("data-mode") === selectedMode);
+            if (match && selectedDay !== "ALL") {
+                match = (row.getAttribute("data-day") === selectedDay);
+            }
+            text = row.getAttribute("data-search") || "";
+            if (match && query && text.toLowerCase().indexOf(query) < 0) { match = false; }
+            row.style.display = match ? "" : "none";
+            if (match) {
+                visibleCount++;
+                inputs = row.getElementsByTagName("input");
+                for (j = 0; j < inputs.length; j++) {
+                    if (inputs[j].checked) { checkedVisible++; }
+                }
+            }
+        }
+        countEl.innerHTML = "目前顯示 " + visibleCount + " 個勘查點；本篩選已勾選 " + checkedVisible + " 個";
+    }
+
+    function onCheckboxClick(input) {
+        var key = input.getAttribute("data-route-key");
+        if (!key) { return; }
+        if (input.checked) { CHECKED[key] = true; }
+        else { delete CHECKED[key]; }
+        saveChecked();
+        renderTable();
+    }
+
+    function bindEvents() {
+        var inputs = tbody.getElementsByTagName("input");
+        var i;
+        for (i = 0; i < inputs.length; i++) {
+            inputs[i].onclick = function () { onCheckboxClick(this); };
+        }
+        if (modeEl.addEventListener) {
+            modeEl.addEventListener("change", function () { refreshDayOptions(); renderTable(); }, false);
+            dayEl.addEventListener("change", renderTable, false);
+            searchEl.addEventListener("keyup", renderTable, false);
+            searchEl.addEventListener("change", renderTable, false);
+        } else if (modeEl.attachEvent) {
+            modeEl.attachEvent("onchange", function () { refreshDayOptions(); renderTable(); });
+            dayEl.attachEvent("onchange", renderTable);
+            searchEl.attachEvent("onkeyup", renderTable);
+            searchEl.attachEvent("onchange", renderTable);
+        }
+    }
+
+    try {
+        loadChecked();
+        bindEvents();
+        refreshDayOptions();
+        renderTable();
+    } catch (e) {
+        /* 即使互動功能出錯，伺服端已輸出的分日選單與表格仍可閱讀。 */
+        countEl.innerHTML = "清單資料已載入；篩選／勾選互動暫時無法啟用。";
+    }
+})();
+</script>
+</body>
+</html>
