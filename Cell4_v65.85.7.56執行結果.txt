@@ -1,0 +1,79 @@
+ INPUT_FRESHNESS_STATUS=PASS_SELECTED_LATEST_MODIFIED
+INPUT_SELECTED_PATH=/content/result.xlsx
+INPUT_SELECTED_SHA256=55b21dc912591410d7deb30f09611495f89bcb608ec474c243597cb63387b66a
+INPUT_SELECTED_SIZE_BYTES=30036
+INPUT_SELECTED_MTIME_NS=1794062267455929929
+INPUT_CANDIDATE_AUDIT=[{"mtime_ns": 1794062267455929929, "path": "/content/result.xlsx", "sha256": "55b21dc912591410d7deb30f09611495f89bcb608ec474c243597cb63387b66a", "size_bytes": 30036}]
+ROUTE_CONFIG_SELECTION=CANCEL_FALLBACK | REASON=empty_dialog_result | TIMEOUT_SECONDS=30
+使用既有路線設定檔：/content/input_route_config.xlsx
+Cell 4 v65.85.7.56_MOTOR_FLEET_ROAD_OVERLAP_PRIORITY｜Cell 2 輸入：/content/result.xlsx
+CELL4_PROGRESS_REPORTING=ENABLED | interval=20s | heartbeat=30s | upload_card=INLINE_CELL_OUTPUT
+======================================================================
+Cell 4 儲存模式： CONTENT
+Cell 4 OSM 快取： /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE
+Google Drive 未預先掛載；本次快取、檢查點及診斷備份改存 /content。
+注意：/content 是 Colab 暫存空間，Runtime 中斷或重啟後資料可能消失。
+======================================================================
+[CELL4_READ_START] 路線設定檔 RouteConfig | path=/content/input_route_config.xlsx | source_size=9.42 KiB
+[CELL4_STAGE_START] 讀取 Excel：路線設定檔 RouteConfig
+[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | elapsed=0.02s | status=PASS
+[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=13 | columns=4 | source_size=9.42 KiB | source_read_rate=0.36 MiB/s | elapsed=0.03s
+路線設定檔關鍵值檢查：
+  交通工具 = '只算機車'
+  每點停留時間 = 3
+  每日可勘查時間 = 5
+  機車平均速度 = 30
+  汽車平面道路平均速度 = 40
+  汽車高速公路平均速度 = 100
+  汽車快速公路平均速度 = 70
+======================================================================
+載入路線規劃設定檔
+設定檔： /content/input_route_config.xlsx
+交通工具設定：只算機車
+每點停留時間：3 分鐘
+每日可勘查時間：5 小時
+機車平均速度：30 km/h
+機車路網資格：普通重型機車｜高速／快速公路主線與匝道：禁止
+汽車平面道路平均速度：40 km/h
+汽車高速公路平均速度：100 km/h
+汽車快速公路平均速度：70 km/h
+汽車人工路段設定檔：找不到 /content/input_car_forbidden_segments.xlsx → 略過
+
+======================================================================
+Cell 4 續跑進度
+======================================================================
+進度檔案位置： /content/巡田最速適_Cell4_Fallback/CELL4_CHECKPOINTS
+儲存位置：/content（未掛載 Drive）
+
+======================================================================
+Cell 4 RAM 安全檢查
+======================================================================
+RAM 總量：12.67 GB
+RAM 可用：8.87 GB
+BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
+CELL4_RUN_ID=20261107T184939557219Z_2833dd4dc1
+CELL4_SOURCE_SHA256=5aeb4b965b588ca53c7f4dc89dc16763a02810e92f5daa04e186b49977dd044f
+CELL4_SOURCE_KIND=IPYTHON_CELL_HISTORY
+CELL4_SOURCE_DETECTION=EXECUTED_CELL_CONTENT_MATCH
+CELL4_INPUT_SHA256=55b21dc912591410d7deb30f09611495f89bcb608ec474c243597cb63387b66a
+CELL4_ROUTE_CONFIG_SHA256=e4542e67344bf0c4cd4eba77ec2dfff0e47482e5bcc12031cb9ce1f31969f197
+
+INPUT_CHECKPOINT_GATE_PATH= /content/result.xlsx
+INPUT_CHECKPOINT_GATE_SHA1= 664399ff66bd33095e78b51bba9ea73d248ea967
+INPUT_CHECKPOINT_GATE_SIGNATURE= 0b975d4ca1af0c9f7640
+Cell 4 執行簽章： 0b975d4ca1af0c9f7640
+Cell 4 交通工具分模式續跑進度： /content/巡田最速適_Cell4_Fallback/CELL4_CHECKPOINTS
+CHECKPOINT_FRESHNESS_PASS=MOTOR | RUN_ID=20261107T183050824233Z_f8c8599b88
+使用既有 機車（MOTOR）完成續跑進度：/content/巡田最速適_Cell4_Fallback/CELL4_CHECKPOINTS/CELL4_MOTOR_v65.85.7.56_MOTOR_FLEET_ROAD_OVERLAP_PRIORITY_checkpoint.pkl
+已由續跑進度載入：MOTOR
+所有指定的交通工具模式都有相同簽章的既有成果，不重新計算。
+
+所有指定的交通工具模式均已完成。
+CELL4_MODE_EXECUTION_RUN_IDS={"MOTOR": "20261107T183050824233Z_f8c8599b88"}
+[CELL4_HANDOFF_MANIFEST] /content/cell4_map_data.manifest.json
+[CELL4_HANDOFF_VERSION] {"MOTOR": {"CELL4_VERSION": "v65.85.7.56_MOTOR_FLEET_ROAD_OVERLAP_PRIORITY", "cell4_version": "v65.85.7.56_MOTOR_FLEET_ROAD_OVERLAP_PRIORITY", "cross_day_road_overlap": {"daily_unique_physical_segments": [602, 779, 846], "physical_segment_count": 2156, "repeat_road_km": 4.572528114594855, "repeat_road_m": 4572.528114594855, "shared_physical_segment_count": 71}}}
+[CELL4_HANDOFF_WRITE_VERIFY] {"path": "/content/cell4_map_data.pkl", "sha256": "5f7f9daded2c4800da499dc58bb0d471e56aaafd8eb52b9292dc05ffb49b48c4", "size_bytes": 294853}
+[CELL4_HANDOFF_MODE_RUN_IDS] {"MOTOR": "20261107T183050824233Z_f8c8599b88"}
+Cell 4 → Cell 5 地圖資料已交接：/content/cell4_map_data.pkl
+MOTOR：work_df=106 筆 | 顯示名稱欄位=True
+MOTOR 顯示名稱範例：['農業部農糧署北區分署', '桃園市八德區竹園段01710000', '桃園市八德區茄苳段07360000']
