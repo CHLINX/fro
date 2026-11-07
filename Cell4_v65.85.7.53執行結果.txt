@@ -1,0 +1,1411 @@
+# -*- coding: utf-8 -*-
+"""SSO_Market_Data_Continuation_TWSE_TPEX v1｜上市櫃雙市場行情續接
+
+功能：
+1. 唯讀辨識 Drive 內目前的長期交易資料庫（CSV／CSV.GZ）。
+2. 分別讀取 TWSE、TPEx 各自最後交易日期，從各自翌日補到程式執行日（Asia/Taipei）。
+3. 優先承接已核實的 v4.87.5.22 九日雙市場校正版，避免重複下載；其餘日期使用兩市場官方日期端點。
+4. 產生新版本完整資料庫副本，不覆寫原資料；新行情、原始 API JSON、逐日狀態、SHA256 與報告獨立保存。
+5. GitHub 僅上傳增量資料與稽核封存，不上傳整份大型歷史資料庫；使用獨立 audit branch，驗證 main 前後不變。
+
+本程式不重算因子、不訓練模型、不回測、不選股。若來源資料庫無法唯一辨識、官方日期缺漏無法確認，會保留診斷成果並停止產生「完整更新資料庫」，不會猜測或覆蓋原檔。
+"""
+from __future__ import annotations
+
+import base64
+import csv
+import datetime as dt
+import gzip
+import hashlib
+import io
+import json
+import os
+import re
+import shutil
+import sqlite3
+import sys
+import tempfile
+import time
+import traceback
+import zipfile
+from pathlib import Path
+from typing import Any, Dict, Iterable, Iterator, List, Optional, Sequence, Tuple
+from zoneinfo import ZoneInfo
+
+VERSION = "SSO_Market_Data_Continuation_TWSE_TPEX v1"
+VERSION_SLUG = "SSO_Market_Data_Continuation_TWSE_TPEX_v1"
+REPO = "CHLINX/sso"
+ROOT = Path("/content/drive/MyDrive/看股最速適")
+OUTPUT_PREFIX = "看股最速適_SSO_Market_Data_Continuation_TWSE_TPEX_v1_行情續接_"
+UPDATED_DB_NAME = "完整更新交易資料庫.csv.gz"
+SCRIPT_BASENAME = "SSO_Market_Data_Continuation_TWSE_TPEX_v1.py"
+TAIPEI = ZoneInfo("Asia/Taipei")
+MIN_DB_BYTES = 10 * 1024 * 1024
+MIN_DAILY_ROWS = 300
+HTTP_TIMEOUT = (20, 90)
+
+# 已核實的 v4.87.5.22 九日資料筆數；使用快取前仍會檢查逐日報告及自然鍵。
+KNOWN_CONFIRMED_CLOSURES = {
+    "2026-10-23": "薔琵颱風；TWSE／TPEx 已核對休市，不要求行情列",
+    "2026-10-26": "補假休市；TWSE／TPEx 已核對休市，不要求行情列",
+}
+
+CACHE_EXPECTED = {
+    ("TWSE", "2026-10-27"): 1386, ("TWSE", "2026-10-28"): 1386,
+    ("TWSE", "2026-10-29"): 1388, ("TWSE", "2026-10-30"): 1389,
+    ("TWSE", "2026-11-02"): 1389, ("TWSE", "2026-11-03"): 1390,
+    ("TWSE", "2026-11-04"): 1390, ("TWSE", "2026-11-05"): 1389,
+    ("TWSE", "2026-11-06"): 1389,
+    ("TPEX", "2026-10-27"): 1020, ("TPEX", "2026-10-28"): 1020,
+    ("TPEX", "2026-10-29"): 1017, ("TPEX", "2026-10-30"): 1018,
+    ("TPEX", "2026-11-02"): 1018, ("TPEX", "2026-11-03"): 1018,
+    ("TPEX", "2026-11-04"): 1018, ("TPEX", "2026-11-05"): 1017,
+    ("TPEX", "2026-11-06"): 1017,
+}
+
+ALIASES = {
+    "market": ["market", "market_type", "markettype", "市場", "市場別", "市場類別", "市場類型", "交易市場"],
+    "date": ["date", "trade_date", "tradedate", "交易日期", "交易日", "資料日期", "日期", "日 期"],
+    "code": ["code", "symbol", "stock_id", "stockid", "securitiescompanycode", "證券代號", "證券代碼", "股票代號", "代號"],
+    "name": ["name", "company_name", "companyname", "stock_name", "證券名稱", "股票名稱", "名稱"],
+    "open": ["open", "開盤價", "開盤"],
+    "high": ["high", "最高價", "最高"],
+    "low": ["low", "最低價", "最低"],
+    "close": ["close", "收盤價", "收盤"],
+    "change": ["change", "price_change", "漲跌價差", "漲跌價", "漲跌"],
+    "change_sign": ["change_sign", "change_note", "漲跌(+/-)", "漲跌(＋/－)", "漲跌註記", "漲跌符號", "漲跌方向", "漲跌記號"],
+    "volume": ["volume", "volume_shares", "trading_shares", "tradingshares", "成交股數", "成交股數(股)", "成交仟股", "成交股數(仟股)", "成交量", "成交量(股)", "成交量(仟股)", "原始成交量_不作指標"],
+    "amount": ["trading_value", "transactionamount", "turnover_value", "成交金額", "成交金額(元)", "成交金額(仟元)", "成交仟元"],
+    "trades": ["trade_count", "transactionnumber", "成交筆數", "筆數"],
+    "ohlc_valid": ["ohlc_valid", "ohlc有效", "OHLC有效"],
+    "positive_volume": ["positive_volume", "正成交量", "成交量為正"],
+    "official_note": ["official_note", "source_note", "官方備註", "備註", "附註", "註記"],
+    "suspension_note": ["suspension_note", "暫停交易註記", "暫停交易說明"],
+    "limit_touch_note": ["limit_touch_note", "牛熊證觸及限制價格註記", "觸及限制價格註記"],
+    "source": ["source", "source_endpoint", "source_name", "source_title", "資料來源", "來源", "來源端點"],
+}
+
+CANONICAL_COLUMNS = [
+    "market", "date", "code", "name", "open", "high", "low", "close",
+    "change", "change_sign", "volume_shares", "trading_value", "trade_count",
+    "ohlc_valid", "positive_volume", "official_note", "suspension_note",
+    "limit_touch_note", "source_endpoint", "source_file", "source_sha256",
+]
+
+
+def log(message: str) -> None:
+    print(f"[{dt.datetime.now(TAIPEI).strftime('%H:%M:%S')}] {message}", flush=True)
+
+
+def sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def norm_header(value: Any) -> str:
+    s = str(value or "").strip().lower().replace("\ufeff", "")
+    s = s.replace("　", "").replace(" ", "").replace("／", "/").replace("－", "-").replace("＋", "+")
+    return re.sub(r"[^a-z0-9\u4e00-\u9fff()+/.-]", "", s)
+
+
+def find_header(headers: Sequence[str], semantic: str) -> Optional[str]:
+    normalized = {norm_header(h): h for h in headers}
+    for alias in ALIASES[semantic]:
+        key = norm_header(alias)
+        if key in normalized:
+            return normalized[key]
+    # Conservative contains fallback; avoid using generic short aliases for columns.
+    for alias in ALIASES[semantic]:
+        key = norm_header(alias)
+        if len(key) >= 3:
+            for k, original in normalized.items():
+                if key in k:
+                    return original
+    return None
+
+
+def parse_date(value: Any) -> Optional[str]:
+    if value is None:
+        return None
+    s = str(value).strip().replace("-", "").replace("/", "").replace(".", "")
+    m = re.search(r"(?<!\d)(20\d{2})(\d{2})(\d{2})(?!\d)", s)
+    if m:
+        try:
+            return dt.date(*map(int, m.groups())).isoformat()
+        except ValueError:
+            return None
+    m = re.search(r"(?<!\d)(\d{3})(\d{2})(\d{2})(?!\d)", s)
+    if m:
+        y, mo, day = map(int, m.groups())
+        try:
+            return dt.date(y + 1911, mo, day).isoformat()
+        except ValueError:
+            return None
+    return None
+
+
+def market_code(value: Any) -> Optional[str]:
+    s = str(value or "").strip().upper()
+    if not s:
+        return None
+    if any(x in s for x in ("TWSE", "上市", "集中市場", "LISTED")):
+        return "TWSE"
+    if any(x in s for x in ("TPEX", "TPEx", "OTC", "上櫃", "櫃買")):
+        return "TPEX"
+    if s in {"1", "L"}:
+        return "TWSE"
+    if s in {"2", "O"}:
+        return "TPEX"
+    return None
+
+
+def parse_num(value: Any) -> Optional[float]:
+    if value is None:
+        return None
+    s = str(value).strip().replace(",", "").replace("\u3000", "")
+    if not s or s in {"--", "-", "X", "N/A", "nan", "None", "null"}:
+        return None
+    s = s.replace("元", "").replace("股", "").strip()
+    try:
+        n = float(s)
+        return n if n == n and abs(n) != float("inf") else None
+    except Exception:
+        return None
+
+
+def text_value(value: Any) -> str:
+    if value is None:
+        return ""
+    s = str(value).strip()
+    return "" if s.lower() in {"none", "nan", "null"} else s
+
+
+def fmt_num(value: Any) -> str:
+    if value is None or value == "":
+        return ""
+    try:
+        x = float(value)
+        return str(int(x)) if x.is_integer() else format(x, ".10g")
+    except Exception:
+        return str(value)
+
+
+def open_csv_text(path: Path):
+    if path.name.lower().endswith(".gz"):
+        return gzip.open(path, "rt", encoding="utf-8-sig", newline="")
+    return path.open("r", encoding="utf-8-sig", newline="")
+
+
+def csv_headers(path: Path) -> List[str]:
+    with open_csv_text(path) as f:
+        reader = csv.reader(f)
+        return next(reader, [])
+
+
+def is_output_path(path: Path) -> bool:
+    parts = [p.lower() for p in path.parts]
+    for p in parts:
+        if p in {"audit", "__pycache__", ".ipynb_checkpoints", "tmp", "temp", "cache", "raw_json"}:
+            return True
+        if p.startswith("看股最速適_v4.87."):
+            return True
+        if p.startswith("看股最速適_v4_87_"):
+            return True
+    return False
+
+
+def iter_candidate_files(root: Path) -> Iterator[Path]:
+    """Enumerate large historical CSV candidates only; never open ZIP files."""
+    seen = 0
+    for dirpath, dirnames, filenames in os.walk(root):
+        current = Path(dirpath)
+        keep = []
+        for name in dirnames:
+            p = current / name
+            if not is_output_path(p):
+                keep.append(name)
+        dirnames[:] = keep
+        for name in filenames:
+            seen += 1
+            if seen % 2000 == 0:
+                log(f"Drive 資料庫候選檔案掃描：{seen:,} 個檔案名稱")
+            p = current / name
+            low = name.lower()
+            if not (low.endswith(".csv") or low.endswith(".csv.gz")):
+                continue
+            try:
+                size = p.stat().st_size
+            except OSError:
+                continue
+            if size < MIN_DB_BYTES:
+                continue
+            if is_output_path(p):
+                continue
+            # Main/history candidates are named or located as market/price/data tables.
+            hints = ("行情", "交易", "資料集", "資料庫", "主表", "daily", "price", "ohlc", "v231", "v2.8", "v2_8", "market")
+            haystack = (str(p.parent) + "/" + p.name).lower()
+            if any(h.lower() in haystack for h in hints):
+                yield p
+
+
+def inspect_database(path: Path) -> Dict[str, Any]:
+    headers = csv_headers(path)
+    cols = {k: find_header(headers, k) for k in ("market", "date", "code", "open", "high", "low", "close", "volume")}
+    missing = [k for k, v in cols.items() if v is None]
+    result: Dict[str, Any] = {
+        "path": str(path), "bytes": path.stat().st_size, "headers": "；".join(headers),
+        "row_count": 0, "min_date": "", "max_date": "", "twse_min": "", "twse_max": "",
+        "tpex_min": "", "tpex_max": "", "twse_rows": 0, "tpex_rows": 0,
+        "schema_pass": not missing, "missing_fields": "；".join(missing),
+    }
+    if missing:
+        return result
+    min_by = {"TWSE": None, "TPEX": None}
+    max_by = {"TWSE": None, "TPEX": None}
+    try:
+        with open_csv_text(path) as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                m = market_code(row.get(cols["market"]))
+                d = parse_date(row.get(cols["date"]))
+                code = text_value(row.get(cols["code"]))
+                if m not in {"TWSE", "TPEX"} or not d or not code:
+                    continue
+                result["row_count"] += 1
+                result[m.lower() + "_rows"] += 1
+                if min_by[m] is None or d < min_by[m]: min_by[m] = d
+                if max_by[m] is None or d > max_by[m]: max_by[m] = d
+    except Exception as exc:
+        result["scan_error"] = f"{type(exc).__name__}: {exc}"
+        result["schema_pass"] = False
+        return result
+    result["twse_min"], result["twse_max"] = min_by["TWSE"] or "", max_by["TWSE"] or ""
+    result["tpex_min"], result["tpex_max"] = min_by["TPEX"] or "", max_by["TPEX"] or ""
+    dates = [x for x in [min_by["TWSE"], min_by["TPEX"]] if x]
+    dates2 = [x for x in [max_by["TWSE"], max_by["TPEX"]] if x]
+    result["min_date"] = min(dates) if dates else ""
+    result["max_date"] = max(dates2) if dates2 else ""
+    result["both_markets"] = bool(min_by["TWSE"] and min_by["TPEX"])
+    return result
+
+
+def discover_previous_updated_db(root: Path) -> Optional[Path]:
+    folders = sorted([p for p in root.iterdir() if p.is_dir() and p.name.startswith(OUTPUT_PREFIX)], key=lambda p: p.name)
+    for folder in reversed(folders):
+        candidate = folder / UPDATED_DB_NAME
+        if candidate.is_file() and candidate.stat().st_size > 0:
+            return candidate
+    return None
+
+
+def discover_database(root: Path, out: Path) -> Tuple[Path, List[Dict[str, Any]]]:
+    env_path = os.environ.get("SSO_DATABASE_PATH", "").strip()
+    if env_path:
+        p = Path(env_path).expanduser()
+        if not p.is_file():
+            raise FileNotFoundError(f"SSO_DATABASE_PATH 指定檔案不存在：{p}")
+        meta = inspect_database(p)
+        if not meta.get("schema_pass") or not meta.get("both_markets"):
+            raise RuntimeError(f"指定資料庫格式不符或缺少上市／上櫃：{meta}")
+        return p, [meta]
+
+    previous = discover_previous_updated_db(root)
+    if previous:
+        meta = inspect_database(previous)
+        if meta.get("schema_pass") and meta.get("both_markets"):
+            log(f"沿用上一版獨立更新資料庫：{previous}")
+            return previous, [meta]
+
+    candidates = list(iter_candidate_files(root))
+    log(f"歷史資料庫候選檔案：{len(candidates):,}；開始逐檔檢查日期及市場範圍")
+    inspected: List[Dict[str, Any]] = []
+    for i, p in enumerate(candidates, 1):
+        try:
+            meta = inspect_database(p)
+            if meta.get("schema_pass") and meta.get("both_markets") and meta.get("row_count", 0) >= 100_000:
+                inspected.append(meta)
+        except Exception as exc:
+            inspected.append({"path": str(p), "schema_pass": False, "scan_error": f"{type(exc).__name__}: {exc}"})
+        if i % 10 == 0 or i == len(candidates):
+            log(f"資料庫候選檢查進度：{i:,}/{len(candidates):,}；合格={len(inspected):,}")
+    write_csv(out / "01_歷史交易資料庫候選盤點.csv", inspected,
+              ["path", "bytes", "row_count", "min_date", "max_date", "twse_min", "twse_max", "twse_rows",
+               "tpex_min", "tpex_max", "tpex_rows", "schema_pass", "both_markets", "missing_fields", "scan_error", "headers"])
+    good = [x for x in inspected if x.get("schema_pass") and x.get("both_markets") and x.get("row_count", 0) >= 100_000]
+    if not good:
+        raise RuntimeError("找不到可辨識的長期雙市場 CSV／CSV.GZ 資料庫。未修改任何來源。請檢查 01_歷史交易資料庫候選盤點.csv；若資料庫是 Parquet／DuckDB／SQLite，需先按其實際結構另接讀寫器。")
+    good.sort(key=lambda x: (x.get("max_date", ""), int(x.get("row_count", 0)), int(x.get("bytes", 0)), x.get("path", "")), reverse=True)
+    top = good[0]
+    # If two candidates share the same final date and have similar row counts, do not guess.
+    if len(good) > 1:
+        second = good[1]
+        same_end = top.get("max_date") == second.get("max_date")
+        similar_size = abs(int(top["row_count"]) - int(second["row_count"])) / max(1, int(top["row_count"])) <= 0.02
+        if same_end and similar_size:
+            raise RuntimeError(
+                "資料庫候選有兩份以上的最後日期／筆數高度相近資料，為避免更新錯誤資料表，本版停止自動選檔。"
+                f"\n第一候選：{top['path']}｜{top['row_count']:,}｜{top['max_date']}"
+                f"\n第二候選：{second['path']}｜{second['row_count']:,}｜{second['max_date']}"
+                "\n請確認後，將確切路徑設為環境變數 SSO_DATABASE_PATH 再執行。"
+            )
+    log(f"自動選定歷史資料庫：{top['path']}｜{top['row_count']:,} 筆｜{top['min_date']} 至 {top['max_date']}")
+    return Path(top["path"]), inspected
+
+
+def write_csv(path: Path, rows: Sequence[Dict[str, Any]], columns: Optional[Sequence[str]] = None) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    cols = list(columns) if columns is not None else (list(rows[0].keys()) if rows else [])
+    opener = gzip.open if path.name.lower().endswith(".gz") else open
+    with opener(path, "wt", encoding="utf-8-sig", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
+        w.writeheader()
+        w.writerows(rows)
+
+
+def write_json(path: Path, data: Any) -> None:
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
+
+
+def date_range(start: dt.date, end: dt.date) -> Iterator[dt.date]:
+    d = start
+    while d <= end:
+        yield d
+        d += dt.timedelta(days=1)
+
+
+def date_format_like(value: str, iso: str) -> str:
+    s = str(value or "").strip()
+    day = dt.date.fromisoformat(iso)
+    if re.fullmatch(r"20\d{6}", s):
+        return day.strftime("%Y%m%d")
+    if re.fullmatch(r"\d{7}", s):
+        return f"{day.year - 1911:03d}{day.month:02d}{day.day:02d}"
+    if re.fullmatch(r"\d{3}/\d{2}/\d{2}", s):
+        return f"{day.year - 1911:03d}/{day.month:02d}/{day.day:02d}"
+    if "/" in s and len(s.split("/")[0]) == 4:
+        return day.strftime("%Y/%m/%d")
+    if "-" in s:
+        return day.isoformat()
+    return day.isoformat()
+
+
+def scan_chosen_database(path: Path, sqlite_path: Path) -> Dict[str, Any]:
+    headers = csv_headers(path)
+    cols = {k: find_header(headers, k) for k in ALIASES}
+    required = ("market", "date", "code", "open", "high", "low", "close", "volume")
+    missing = [k for k in required if cols.get(k) is None]
+    if missing:
+        raise RuntimeError(f"資料庫缺少必要欄位：{missing}；不會改變原始資料。")
+    sample_market: Dict[str, str] = {}
+    sample_date = ""
+    min_by: Dict[str, Optional[str]] = {"TWSE": None, "TPEX": None}
+    max_by: Dict[str, Optional[str]] = {"TWSE": None, "TPEX": None}
+    row_count = 0
+    duplicates = 0
+    conn = sqlite3.connect(str(sqlite_path))
+    conn.execute("PRAGMA journal_mode=OFF")
+    conn.execute("PRAGMA synchronous=OFF")
+    conn.execute("CREATE TABLE keys(market TEXT, date TEXT, code TEXT, PRIMARY KEY(market,date,code))")
+    batch = []
+    try:
+        with open_csv_text(path) as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                market = market_code(row.get(cols["market"]))
+                d = parse_date(row.get(cols["date"]))
+                code = text_value(row.get(cols["code"]))
+                if market not in {"TWSE", "TPEX"} or not d or not code:
+                    continue
+                row_count += 1
+                raw_m = text_value(row.get(cols["market"]))
+                sample_market.setdefault(market, raw_m)
+                if not sample_date:
+                    sample_date = text_value(row.get(cols["date"]))
+                if min_by[market] is None or d < min_by[market]: min_by[market] = d
+                if max_by[market] is None or d > max_by[market]: max_by[market] = d
+                batch.append((market, d, code))
+                if len(batch) >= 20_000:
+                    before = conn.total_changes
+                    conn.executemany("INSERT OR IGNORE INTO keys VALUES(?,?,?)", batch)
+                    duplicates += len(batch) - (conn.total_changes - before)
+                    batch.clear()
+        if batch:
+            before = conn.total_changes
+            conn.executemany("INSERT OR IGNORE INTO keys VALUES(?,?,?)", batch)
+            duplicates += len(batch) - (conn.total_changes - before)
+        conn.commit()
+    except Exception:
+        conn.close()
+        raise
+    return {
+        "headers": headers, "columns": cols, "market_samples": sample_market, "date_sample": sample_date,
+        "row_count": row_count, "duplicates": duplicates,
+        "last_date_by_market": {k: v or "" for k, v in max_by.items()},
+        "first_date_by_market": {k: v or "" for k, v in min_by.items()},
+        "sqlite_path": sqlite_path, "sqlite_conn": conn,
+    }
+
+
+def cache_v487522(root: Path, out: Path) -> Tuple[Dict[Tuple[str, str], List[Dict[str, Any]]], List[Dict[str, Any]]]:
+    folders = sorted([p for p in root.iterdir() if p.is_dir() and p.name.startswith("看股最速適_v4.87.5.22_九日雙市場單一來源校正與備註稽核_")], key=lambda p: p.name)
+    rows_by_day: Dict[Tuple[str, str], List[Dict[str, Any]]] = {}
+    inventory: List[Dict[str, Any]] = []
+    if not folders:
+        log("找不到 v4.87.5.22 快取；缺少日期將直接向官方端點補取")
+        return rows_by_day, inventory
+    selected = None
+    for folder in reversed(folders):
+        csv_path = folder / "23_九日雙市場行情_單一來源校正版.csv"
+        report = folder / "24_18組市場日期與資料筆數核對.csv"
+        if csv_path.is_file() and report.is_file():
+            selected = (folder, csv_path, report)
+            break
+    if not selected:
+        log("v4.87.5.22 資料夾存在但缺少逐筆表或 18 組核對表；不使用該快取")
+        return rows_by_day, inventory
+    folder, csv_path, report_path = selected
+    report_ok = True
+    with report_path.open("r", encoding="utf-8-sig", newline="") as f:
+        for r in csv.DictReader(f):
+            key = (market_code(r.get("market")), parse_date(r.get("date")))
+            expected = int(float(r.get("expected_rows") or 0))
+            actual = int(float(r.get("actual_unique_rows") or 0))
+            passed = str(r.get("row_count_pass", "")).lower() in {"true", "1", "pass"}
+            if key[0] in {"TWSE", "TPEX"} and key[1]:
+                expected_known = CACHE_EXPECTED.get(key)
+                if not passed or expected != actual or (expected_known is not None and expected != expected_known):
+                    report_ok = False
+                inventory.append({"market": key[0], "date": key[1], "expected": expected, "actual": actual, "report_pass": passed})
+    if not report_ok or len(inventory) != 18:
+        log("v4.87.5.22 18 組逐日核對不完整；不使用快取，改由官方端點補取")
+        return {}, inventory
+    cache_sha = sha256_file(csv_path)
+    with csv_path.open("r", encoding="utf-8-sig", newline="") as f:
+        for row in csv.DictReader(f):
+            market = market_code(row.get("market"))
+            day = parse_date(row.get("date"))
+            code = text_value(row.get("code"))
+            if market not in {"TWSE", "TPEX"} or not day or not code:
+                continue
+            row["market"] = market
+            row["date"] = day
+            row["code"] = code
+            cached_row = canonical_from_row(row, market, day, "v4.87.5.22_verified_cache")
+            cached_row["source_sha256"] = cache_sha
+            rows_by_day.setdefault((market, day), []).append(cached_row)
+    for key, expected in CACHE_EXPECTED.items():
+        actual = len({r["code"] for r in rows_by_day.get(key, [])})
+        if actual != expected:
+            log(f"v4.87.5.22 快取自然鍵筆數不符：{key} {actual}/{expected}；整批停用快取")
+            return {}, inventory
+    log(f"採用 v4.87.5.22 已核實九日快取：{sum(map(len, rows_by_day.values())):,} 列；不重新下載")
+    return rows_by_day, inventory
+
+
+def canonical_from_row(row: Dict[str, Any], market: str, day: str, source: str) -> Dict[str, Any]:
+    def get(semantic: str, fallback: Sequence[str] = ()) -> Any:
+        aliases = ALIASES[semantic] if semantic in ALIASES else []
+        # The v4.87.5.22/23 tables contain a derived display column named 備註.
+        # Once a normalized marker exists, only explicit official_note/source_note fields count.
+        if semantic == "official_note" and ("note_status" in row or "source_note_fields" in row):
+            aliases = ["official_note", "source_note"]
+        key = find_header(list(row.keys()), semantic) if aliases else None
+        if key is not None:
+            return row.get(key)
+        for k in fallback:
+            if k in row:
+                return row.get(k)
+        return None
+    def num_semantic(s: str, fallback: Sequence[str] = ()) -> Optional[float]:
+        return parse_num(get(s, fallback))
+    o, h, l, c = (num_semantic(k) for k in ("open", "high", "low", "close"))
+    volume = num_semantic("volume", ("volume_shares",))
+    # v4.87.5.22 standardized rows use shares. Preserve all market symbols/codes as strings.
+    return {
+        "market": market, "date": day, "code": text_value(get("code", ("code",))),
+        "name": text_value(get("name", ("name",))), "open": o, "high": h, "low": l, "close": c,
+        "change": num_semantic("change"), "change_sign": text_value(get("change_sign", ("change_sign",))),
+        "volume_shares": volume, "trading_value": num_semantic("amount", ("trading_value",)),
+        "trade_count": num_semantic("trades", ("trade_count",)),
+        "ohlc_valid": int(all(x is not None and x > 0 for x in (o, h, l, c)) and l <= min(o, c) <= max(o, c) <= h),
+        "positive_volume": int(volume is not None and volume > 0),
+        "official_note": text_value(get("official_note", ("official_note",))),
+        "suspension_note": text_value(get("suspension_note", ("suspension_note",))),
+        "limit_touch_note": text_value(get("limit_touch_note", ("limit_touch_note",))),
+        "source_endpoint": source, "source_file": source, "source_sha256": "",
+    }
+
+
+def get_header_index(fields: Sequence[str], aliases: Sequence[str]) -> Optional[int]:
+    normalized = [norm_header(x) for x in fields]
+    for alias in aliases:
+        a = norm_header(alias)
+        if a in normalized:
+            return normalized.index(a)
+    for alias in aliases:
+        a = norm_header(alias)
+        if len(a) >= 3:
+            for i, f in enumerate(normalized):
+                if a in f:
+                    return i
+    return None
+
+
+def find_price_table(payload: Dict[str, Any]) -> Tuple[List[str], List[List[Any]], str]:
+    tables = payload.get("tables")
+    candidates = []
+    if isinstance(tables, list):
+        for table in tables:
+            if not isinstance(table, dict):
+                continue
+            fields = table.get("fields") or table.get("Field") or table.get("columns") or []
+            data = table.get("data") or table.get("Data") or table.get("aaData") or []
+            if not isinstance(fields, list) or not isinstance(data, list):
+                continue
+            names = [str(x).strip() for x in fields]
+            required = [
+                get_header_index(names, ALIASES[k]) for k in ("code", "open", "high", "low", "close")
+            ]
+            if all(x is not None for x in required) and data:
+                title = str(table.get("title") or table.get("Title") or "")
+                candidates.append((names, data, title))
+    fields = payload.get("fields") or payload.get("Field")
+    data = payload.get("data") or payload.get("Data") or payload.get("aaData")
+    if isinstance(fields, list) and isinstance(data, list):
+        names = [str(x).strip() for x in fields]
+        if all(get_header_index(names, ALIASES[k]) is not None for k in ("code", "open", "high", "low", "close")) and data:
+            candidates.append((names, data, str(payload.get("title") or payload.get("stat") or "")))
+    if not candidates:
+        raise ValueError("官方 JSON 中找不到同時含證券代號及完整 OHLC 的每日行情表")
+    # Prefer table with highest rows; title tie-breaker favours daily close/quotes.
+    candidates.sort(key=lambda x: (len(x[1]), any(t in x[2] for t in ("收盤", "行情", "成交"))), reverse=True)
+    return candidates[0]
+
+
+def normalize_array_rows(fields: Sequence[str], data: Sequence[Any], market: str, day: str, endpoint: str, min_rows: int = MIN_DAILY_ROWS) -> List[Dict[str, Any]]:
+    idx = {k: get_header_index(fields, ALIASES[k]) for k in ALIASES}
+    out = []
+    for arr in data:
+        if not isinstance(arr, (list, tuple)):
+            continue
+        def v(k: str) -> Any:
+            i = idx.get(k)
+            return arr[i] if i is not None and i < len(arr) else None
+        code = text_value(v("code"))
+        if not code:
+            continue
+        o, h, l, c = (parse_num(v(k)) for k in ("open", "high", "low", "close"))
+        vol = parse_num(v("volume"))
+        amount = parse_num(v("amount"))
+        vol_header = fields[idx["volume"]] if idx.get("volume") is not None else ""
+        amount_header = fields[idx["amount"]] if idx.get("amount") is not None else ""
+        if "仟" in str(vol_header) or "thousand" in str(vol_header).lower():
+            vol = vol * 1000 if vol is not None else None
+        if "仟元" in str(amount_header) or "thousand" in str(amount_header).lower():
+            amount = amount * 1000 if amount is not None else None
+        out.append({
+            "market": market, "date": day, "code": code, "name": text_value(v("name")),
+            "open": o, "high": h, "low": l, "close": c, "change": parse_num(v("change")),
+            "change_sign": text_value(v("change_sign")), "volume_shares": vol,
+            "trading_value": amount, "trade_count": parse_num(v("trades")),
+            "ohlc_valid": int(all(x is not None and x > 0 for x in (o, h, l, c)) and l <= min(o, c) <= max(o, c) <= h),
+            "positive_volume": int(vol is not None and vol > 0),
+            "official_note": text_value(v("official_note")),
+            "suspension_note": text_value(v("suspension_note")),
+            "limit_touch_note": text_value(v("limit_touch_note")),
+            "source_endpoint": endpoint, "source_file": "", "source_sha256": "",
+        })
+    ensure_unique_rows(out, market, day, min_rows=min_rows)
+    return out
+
+
+def normalize_object_rows(data: Sequence[Dict[str, Any]], market: str, day: str, endpoint: str, min_rows: int = MIN_DAILY_ROWS) -> List[Dict[str, Any]]:
+    out = []
+    for obj in data:
+        if not isinstance(obj, dict):
+            continue
+        # Explicit row date, when supplied, must match requested date.
+        dkey = find_header(list(obj.keys()), ALIASES["date"])
+        actual = parse_date(obj.get(dkey)) if dkey else None
+        if actual and actual != day:
+            raise ValueError(f"回傳日期 {actual} 與請求日期 {day} 不一致")
+        row = canonical_from_row(obj, market, day, endpoint)
+        # English TPEx OpenAPI fields use TradingShares and TransactionAmount.
+        if row["volume_shares"] is None:
+            row["volume_shares"] = parse_num(obj.get("TradingShares") or obj.get("Volume"))
+        if row["trading_value"] is None:
+            row["trading_value"] = parse_num(obj.get("TransactionAmount") or obj.get("Value"))
+        if row["trade_count"] is None:
+            row["trade_count"] = parse_num(obj.get("TransactionNumber") or obj.get("TradeCount"))
+        if not row["code"]:
+            continue
+        row["positive_volume"] = int(row["volume_shares"] is not None and row["volume_shares"] > 0)
+        out.append(row)
+    ensure_unique_rows(out, market, day)
+    return out
+
+
+def ensure_unique_rows(rows: Sequence[Dict[str, Any]], market: str, day: str, min_rows: int = MIN_DAILY_ROWS) -> None:
+    keys = [(r.get("market"), r.get("date"), str(r.get("code"))) for r in rows]
+    if len(keys) != len(set(keys)):
+        raise ValueError(f"{market} {day} 官方回應存在重複自然鍵")
+    if len(rows) < min_rows:
+        raise ValueError(f"{market} {day} 回傳 {len(rows)} 筆，低於全市場完整行情最低檢查門檻 {min_rows}")
+
+
+def extract_dict_records(payload: Any) -> Optional[List[Dict[str, Any]]]:
+    if isinstance(payload, list) and payload and isinstance(payload[0], dict):
+        return payload
+    if not isinstance(payload, dict):
+        return None
+    for key in ("data", "Data", "aaData", "rows", "result"):
+        v = payload.get(key)
+        if isinstance(v, list) and v and isinstance(v[0], dict):
+            return v
+    return None
+
+
+def payload_is_empty(payload: Any) -> bool:
+    if isinstance(payload, list):
+        return len(payload) == 0
+    if isinstance(payload, dict):
+        if extract_dict_records(payload) is not None:
+            return False
+        tables = payload.get("tables")
+        if isinstance(tables, list):
+            has_table_rows = any(isinstance(t, dict) and (t.get("data") or t.get("Data") or t.get("aaData")) for t in tables)
+            if not has_table_rows:
+                return True
+            return False
+        msg = " ".join(str(payload.get(k, "")) for k in ("stat", "message", "msg", "status", "note"))
+        return not bool(msg) or any(x in msg for x in ("沒有符合", "查無資料", "無資料", "No data", "no data"))
+    return True
+
+
+def extract_response_date(payload: Any) -> Optional[str]:
+    if not isinstance(payload, dict):
+        return None
+    for k in ("date", "Date", "reportDate", "report_date", "交易日期", "資料日期"):
+        if payload.get(k):
+            d = parse_date(payload.get(k))
+            if d: return d
+    return None
+
+
+def fetch_json(session: Any, url: str, params: Dict[str, str], raw_dir: Path, prefix: str) -> Tuple[Any, bytes, str]:
+    import requests  # noqa
+    errors = []
+    for attempt in range(1, 4):
+        try:
+            response = session.get(url, params=params, timeout=HTTP_TIMEOUT)
+            response.raise_for_status()
+            body = response.content
+            try:
+                payload = response.json()
+            except Exception as exc:
+                raise ValueError(f"HTTP 200 但 JSON 解析失敗：{exc}; body={body[:300]!r}")
+            raw_dir.mkdir(parents=True, exist_ok=True)
+            raw_path = raw_dir / f"{prefix}_attempt{attempt}.json"
+            raw_path.write_bytes(body)
+            return payload, body, str(raw_path)
+        except Exception as exc:
+            errors.append(f"第{attempt}次 {type(exc).__name__}: {exc}")
+            if attempt < 3:
+                time.sleep(attempt * 2)
+    raise RuntimeError("；".join(errors))
+
+
+def fetch_twse_day(session: Any, day: str, raw_dir: Path) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    ymd = day.replace("-", "")
+    url = "https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX"
+    payload, body, raw_path = fetch_json(session, url, {"response": "json", "date": ymd, "type": "ALLBUT0999"}, raw_dir, f"TWSE_{day}")
+    reported_date = extract_response_date(payload)
+    if reported_date and reported_date != day:
+        raise ValueError(f"TWSE 回傳日期 {reported_date} 與請求 {day} 不一致")
+    if payload_is_empty(payload):
+        return [], {"market": "TWSE", "date": day, "status": "EMPTY_RESPONSE", "rows": 0,
+                    "endpoint": url, "raw_file": raw_path, "raw_sha256": sha256_bytes(body), "error": "官方端點有效回應但沒有行情列"}
+    fields, data, title = find_price_table(payload)
+    rows = normalize_array_rows(fields, data, "TWSE", day, url)
+    for r in rows:
+        r["source_file"] = raw_path
+        r["source_sha256"] = sha256_bytes(body)
+    return rows, {"market": "TWSE", "date": day, "status": "PASS", "rows": len(rows), "endpoint": url,
+                  "title": title, "raw_file": raw_path, "raw_sha256": sha256_bytes(body), "error": ""}
+
+
+def fetch_tpex_day(session: Any, day: str, raw_dir: Path) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    endpoints = [
+        ("dailyQuotes", "https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotes"),
+        ("otc", "https://www.tpex.org.tw/www/zh-tw/afterTrading/otc"),
+    ]
+    errors = []
+    explicit_empty = 0
+    for name, url in endpoints:
+        try:
+            payload, body, raw_path = fetch_json(session, url, {"response": "json", "date": day.replace("-", "/")}, raw_dir, f"TPEX_{day}_{name}")
+            reported_date = extract_response_date(payload)
+            if reported_date and reported_date != day:
+                errors.append(f"{name}: 回傳日期 {reported_date} 與請求 {day} 不一致")
+                continue
+            if payload_is_empty(payload):
+                explicit_empty += 1
+                errors.append(f"{name}: 官方端點有效回應但沒有行情列")
+                continue
+            dict_rows = extract_dict_records(payload)
+            if dict_rows is not None:
+                rows = normalize_object_rows(dict_rows, "TPEX", day, url)
+            else:
+                fields, data, title = find_price_table(payload)
+                rows = normalize_array_rows(fields, data, "TPEX", day, url)
+            for r in rows:
+                r["source_file"] = raw_path
+                r["source_sha256"] = sha256_bytes(body)
+            return rows, {"market": "TPEX", "date": day, "status": "PASS", "rows": len(rows),
+                          "endpoint": url, "endpoint_name": name, "raw_file": raw_path,
+                          "raw_sha256": sha256_bytes(body), "error": ""}
+        except Exception as exc:
+            errors.append(f"{name}: {type(exc).__name__}: {exc}")
+    # If both date-specific pages returned a valid empty response, preserve that as empty;
+    # do not let the latest-only OpenAPI endpoint turn a weekend into a false prior-day quote.
+    if explicit_empty >= 2:
+        return [], {"market": "TPEX", "date": day, "status": "EMPTY_RESPONSE", "rows": 0,
+                    "endpoint": "dailyQuotes|otc", "raw_file": "", "raw_sha256": "", "error": "；".join(errors)}
+    # Last-resort latest-only endpoint is relevant only for the execution date.
+    if day == dt.datetime.now(TAIPEI).date().isoformat():
+        try:
+            url = "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"
+            payload, body, raw_path = fetch_json(session, url, {}, raw_dir, f"TPEX_{day}_openapi_latest")
+            dict_rows = extract_dict_records(payload)
+            if dict_rows:
+                dates = {parse_date(r.get("Date") or r.get("date")) for r in dict_rows if r.get("Date") or r.get("date")}
+                dates.discard(None)
+                if dates == {day}:
+                    rows = normalize_object_rows(dict_rows, "TPEX", day, url)
+                    for r in rows:
+                        r["source_file"] = raw_path
+                        r["source_sha256"] = sha256_bytes(body)
+                    return rows, {"market": "TPEX", "date": day, "status": "PASS", "rows": len(rows),
+                                  "endpoint": url, "endpoint_name": "openapi_latest_exact_date", "raw_file": raw_path,
+                                  "raw_sha256": sha256_bytes(body), "error": ""}
+                errors.append(f"openapi latest: 回傳日期集合 {sorted(dates)} 不等於請求 {day}；拒絕寫入舊日行情")
+        except Exception as exc:
+            errors.append(f"openapi latest: {type(exc).__name__}: {exc}")
+    if errors and all("沒有行情列" in x or "沒有符合" in x or "查無資料" in x for x in errors):
+        return [], {"market": "TPEX", "date": day, "status": "EMPTY_RESPONSE", "rows": 0,
+                    "endpoint": " | ".join(x[0] for x in endpoints), "raw_file": "", "raw_sha256": "", "error": "；".join(errors)}
+    raise RuntimeError("TPEx 官方日期端點皆未成功：" + " | ".join(errors))
+
+
+def fetch_official_holidays(session: Any, year: int, raw_dir: Path) -> Tuple[set, List[Dict[str, Any]]]:
+    """Fetch TWSE official holiday schedule; only rows explicitly describing market closure are accepted."""
+    url = "https://openapi.twse.com.tw/v1/holidaySchedule/holidaySchedule"
+    try:
+        payload, body, raw_path = fetch_json(session, url, {}, raw_dir, f"TWSE_holidaySchedule_{year}")
+        records = payload if isinstance(payload, list) else extract_dict_records(payload) or []
+        holidays = set()
+        report = []
+        for r in records:
+            if not isinstance(r, dict):
+                continue
+            text = " ".join(str(v) for v in r.values())
+            date_value = None
+            for k, v in r.items():
+                if any(x in norm_header(k) for x in ("date", "日期", "交易日")):
+                    date_value = parse_date(v)
+                    if date_value: break
+            if not date_value or not date_value.startswith(str(year)):
+                continue
+            is_closed = any(x in text for x in ("休市", "停止交易", "不交易", "放假"))
+            if is_closed:
+                holidays.add(date_value)
+                report.append({"date": date_value, "status": "HOLIDAY_CONFIRMED_TWSE_SCHEDULE", "detail": text[:500]})
+        return holidays, report
+    except Exception as exc:
+        log(f"TWSE 官方休市日曆取得失敗：{type(exc).__name__}: {exc}")
+        return set(), [{"date": "", "status": "CALENDAR_FETCH_FAILED", "detail": str(exc)}]
+
+
+def load_cache_and_status(root: Path, out: Path) -> Tuple[Dict[Tuple[str, str], List[Dict[str, Any]]], List[Dict[str, Any]]]:
+    cache, inventory = cache_v487522(root, out)
+    return cache, inventory
+
+
+def make_session():
+    import requests
+    s = requests.Session()
+    s.headers.update({
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/128.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*", "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8",
+        "Referer": "https://www.twse.com.tw/", "Connection": "keep-alive",
+    })
+    return s
+
+
+def normalize_market_rows(rows: List[Dict[str, Any]], source: str) -> List[Dict[str, Any]]:
+    out = []
+    for r in rows:
+        if not r.get("code"):
+            continue
+        x = dict(r)
+        x["market"] = market_code(x.get("market")) or x.get("market")
+        x["date"] = parse_date(x.get("date")) or x.get("date")
+        x["code"] = text_value(x.get("code"))
+        x["source_endpoint"] = x.get("source_endpoint") or source
+        out.append(x)
+    ensure_unique_rows(out, out[0]["market"] if out else "?", out[0]["date"] if out else "?")
+    return out
+
+
+def existing_key(conn: sqlite3.Connection, market: str, day: str, code: str) -> bool:
+    cur = conn.execute("SELECT 1 FROM keys WHERE market=? AND date=? AND code=?", (market, day, code))
+    return cur.fetchone() is not None
+
+
+def register_new_key(conn: sqlite3.Connection, market: str, day: str, code: str) -> bool:
+    cur = conn.execute("INSERT OR IGNORE INTO keys VALUES(?,?,?)", (market, day, code))
+    return cur.rowcount == 1
+
+
+def discover_cache_rows(cache: Dict[Tuple[str, str], List[Dict[str, Any]]], market: str, day: str) -> Optional[List[Dict[str, Any]]]:
+    rows = cache.get((market, day))
+    return rows if rows is not None else None
+
+
+def select_and_fetch_incremental(
+    last_dates: Dict[str, str], asof: dt.date, cache: Dict[Tuple[str, str], List[Dict[str, Any]]],
+    session: Any, raw_dir: Path, holidays: set,
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], bool]:
+    valid_rows: List[Dict[str, Any]] = []
+    statuses: List[Dict[str, Any]] = []
+    all_complete = True
+    starts = []
+    for market in ("TWSE", "TPEX"):
+        last = last_dates.get(market, "")
+        if not last:
+            raise RuntimeError(f"資料庫找不到 {market} 的最後交易日期；不猜測起始日")
+        starts.append(dt.date.fromisoformat(last) + dt.timedelta(days=1))
+    global_start = min(starts)
+    if global_start > asof:
+        log(f"資料庫兩市場均已更新至執行日之前最近資料日期；不需新增行情。起日 {global_start} > 執行日 {asof}")
+        return [], [], True
+
+    for d in date_range(global_start, asof):
+        day = d.isoformat()
+        day_market_results = {}
+        for market in ("TWSE", "TPEX"):
+            last = dt.date.fromisoformat(last_dates[market])
+            if d <= last:
+                statuses.append({"date": day, "market": market, "status": "ALREADY_IN_DATABASE", "rows": 0,
+                                 "source": "existing_database", "raw_file": "", "raw_sha256": "",
+                                 "note": f"該市場資料庫已涵蓋至 {last.isoformat()}；不重抓、不重複追加"})
+                day_market_results[market] = "ALREADY_IN_DATABASE"
+                continue
+            cached = discover_cache_rows(cache, market, day)
+            if cached is not None:
+                rows = [dict(r) for r in cached]
+                expected = CACHE_EXPECTED.get((market, day))
+                if expected is not None and len(rows) == expected:
+                    for r in rows:
+                        r["source_endpoint"] = "v4.87.5.22_verified_cache"
+                        r["source_file"] = "v4.87.5.22:23_九日雙市場行情_單一來源校正版.csv"
+                    valid_rows.extend(rows)
+                    status = {"date": day, "market": market, "status": "CACHE_VERIFIED_PASS", "rows": len(rows),
+                              "source": "v4.87.5.22_verified_cache", "note": "18組逐日筆數及自然鍵已核實；沿用，不重抓"}
+                else:
+                    all_complete = False
+                    status = {"date": day, "market": market, "status": "CACHE_COUNT_MISMATCH", "rows": len(rows),
+                              "source": "v4.87.5.22_verified_cache", "note": f"預期 {expected} 筆；不使用快取"}
+                statuses.append(status)
+                day_market_results[market] = status["status"]
+                continue
+
+            # Previously audited exceptional closures are retained as explicit calendar evidence.
+            if day in KNOWN_CONFIRMED_CLOSURES:
+                status = {"date": day, "market": market, "status": "HOLIDAY_CONFIRMED_PRIOR_AUDIT", "rows": 0,
+                          "source": "prior official TWSE/TPEx calendar audit", "note": KNOWN_CONFIRMED_CLOSURES[day]}
+                statuses.append(status)
+                day_market_results[market] = status["status"]
+                continue
+            # Official calendar holidays do not require quote rows.
+            if day in holidays:
+                status = {"date": day, "market": market, "status": "HOLIDAY_CONFIRMED_TWSE_SCHEDULE", "rows": 0,
+                          "source": "TWSE holidaySchedule", "note": "官方休市日；不要求行情列"}
+                statuses.append(status)
+                day_market_results[market] = status["status"]
+                continue
+
+            try:
+                if market == "TWSE":
+                    rows, info = fetch_twse_day(session, day, raw_dir / day)
+                else:
+                    rows, info = fetch_tpex_day(session, day, raw_dir / day)
+                if rows:
+                    valid_rows.extend(rows)
+                    status = {"date": day, "market": market, "status": "PASS", "rows": len(rows),
+                              "source": info.get("endpoint", ""), "raw_file": info.get("raw_file", ""),
+                              "raw_sha256": info.get("raw_sha256", ""), "note": "官方日期端點回傳日期相符且自然鍵唯一"}
+                else:
+                    if d.weekday() >= 5:
+                        status = {"date": day, "market": market, "status": "WEEKEND_NO_QUOTES", "rows": 0,
+                                  "source": info.get("endpoint", ""), "raw_file": info.get("raw_file", ""),
+                                  "note": "官方日期端點未回傳行情；週末未據此推定休市原因，保留查詢紀錄"}
+                    elif day == asof.isoformat() and dt.datetime.now(TAIPEI).time() < dt.time(18, 30):
+                        status = {"date": day, "market": market, "status": "TODAY_NOT_PUBLISHED_YET", "rows": 0,
+                                  "source": info.get("endpoint", ""), "raw_file": info.get("raw_file", ""),
+                                  "note": "執行日尚未達 18:30；今日盤後資料可能尚未發布"}
+                        all_complete = False
+                    else:
+                        status = {"date": day, "market": market, "status": "NO_DATA_UNVERIFIED", "rows": 0,
+                                  "source": info.get("endpoint", ""), "raw_file": info.get("raw_file", ""),
+                                  "note": "官方端點有效回應但無行情列；未取得官方休市佐證，不把空回應直接當成休市"}
+                        all_complete = False
+                statuses.append(status)
+                day_market_results[market] = status["status"]
+            except Exception as exc:
+                status = {"date": day, "market": market, "status": "API_FAILED", "rows": 0,
+                          "source": "", "raw_file": "", "note": f"{type(exc).__name__}: {exc}"}
+                statuses.append(status)
+                day_market_results[market] = status["status"]
+                all_complete = False
+        # If a date has one market's rows and the other has an unresolved empty response, it stays partial.
+        if day_market_results.get("TWSE") in {"PASS", "CACHE_VERIFIED_PASS"} and day_market_results.get("TPEX") in {"NO_DATA_UNVERIFIED", "API_FAILED"}:
+            all_complete = False
+        if day_market_results.get("TPEX") in {"PASS", "CACHE_VERIFIED_PASS"} and day_market_results.get("TWSE") in {"NO_DATA_UNVERIFIED", "API_FAILED"}:
+            all_complete = False
+    return valid_rows, statuses, all_complete
+
+
+def transform_new_row(row: Dict[str, Any], headers: Sequence[str], cols: Dict[str, Optional[str]],
+                      market_samples: Dict[str, str], date_sample: str) -> Dict[str, str]:
+    out = {h: "" for h in headers}
+    def put(semantic: str, value: Any) -> None:
+        h = cols.get(semantic)
+        if h is not None:
+            out[h] = "" if value is None else str(value)
+    market = row["market"]
+    market_value = market_samples.get(market)
+    if market_value:
+        put("market", market_value)
+    else:
+        put("market", "上市" if market == "TWSE" else "上櫃")
+    date_value = date_format_like(date_sample, row["date"])
+    put("date", date_value)
+    put("code", row.get("code"))
+    put("name", row.get("name"))
+    for semantic in ("open", "high", "low", "close", "change"):
+        put(semantic, fmt_num(row.get(semantic)))
+    put("change_sign", row.get("change_sign"))
+    volume = row.get("volume_shares")
+    volume_header = cols.get("volume") or ""
+    if "仟股" in volume_header or "仟" in volume_header:
+        volume = (float(volume) / 1000) if volume not in (None, "") else None
+    put("volume", fmt_num(volume))
+    amount = row.get("trading_value")
+    amount_header = cols.get("amount") or ""
+    if "仟元" in amount_header or "仟" in amount_header:
+        amount = (float(amount) / 1000) if amount not in (None, "") else None
+    put("amount", fmt_num(amount))
+    put("trades", fmt_num(row.get("trade_count")))
+    put("ohlc_valid", str(row.get("ohlc_valid", "")))
+    put("positive_volume", str(row.get("positive_volume", "")))
+    put("official_note", row.get("official_note"))
+    put("suspension_note", row.get("suspension_note"))
+    put("limit_touch_note", row.get("limit_touch_note"))
+    put("source", row.get("source_endpoint") or row.get("source_file"))
+    return out
+
+
+def create_updated_database(source: Path, destination: Path, db_meta: Dict[str, Any],
+                            new_rows: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
+    headers = db_meta["headers"]
+    cols = db_meta["columns"]
+    missing = [k for k in ("market", "date", "code", "open", "high", "low", "close", "volume") if not cols.get(k)]
+    if missing:
+        raise RuntimeError(f"舊資料庫缺少必要欄位 {missing}，不能安全追加")
+    conn: sqlite3.Connection = db_meta["sqlite_conn"]
+    append = []
+    collisions = []
+    for r in new_rows:
+        m, d, c = r["market"], r["date"], r["code"]
+        if existing_key(conn, m, d, c):
+            collisions.append({"market": m, "date": d, "code": c, "reason": "KEY_ALREADY_EXISTS"})
+            continue
+        if not register_new_key(conn, m, d, c):
+            collisions.append({"market": m, "date": d, "code": c, "reason": "DUPLICATE_NEW_KEY"})
+            continue
+        append.append(r)
+    conn.commit()
+    if collisions:
+        raise RuntimeError(f"新行情有 {len(collisions)} 筆與資料庫或彼此自然鍵重複；不產生完整更新資料庫")
+    date_sample = db_meta.get("date_sample", "")
+    temp_destination = destination.with_name(destination.name + ".partial")
+    try:
+        with gzip.open(temp_destination, "wt", encoding="utf-8-sig", newline="", compresslevel=6) as out_f:
+            writer = csv.DictWriter(out_f, fieldnames=headers, extrasaction="ignore")
+            writer.writeheader()
+            with open_csv_text(source) as in_f:
+                reader = csv.DictReader(in_f)
+                for row in reader:
+                    writer.writerow({h: row.get(h, "") for h in headers})
+            for row in sorted(append, key=lambda x: (x["date"], x["market"], x["code"])):
+                writer.writerow(transform_new_row(row, headers, cols, db_meta["market_samples"], date_sample))
+        os.replace(temp_destination, destination)
+    except Exception:
+        try:
+            if temp_destination.exists():
+                temp_destination.unlink()
+        except Exception:
+            pass
+        raise
+    return {"source_rows": db_meta["row_count"], "appended_rows": len(append), "final_rows": db_meta["row_count"] + len(append),
+            "duplicate_conflicts": len(collisions), "new_rows": len(append), "output_bytes": destination.stat().st_size,
+            "output_sha256": sha256_file(destination)}
+
+
+def get_token() -> Optional[str]:
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    if token:
+        return token.strip()
+    try:
+        from google.colab import userdata  # type: ignore
+        token = userdata.get("GITHUB_TOKEN")
+        if token:
+            return str(token).strip()
+    except Exception:
+        pass
+    return None
+
+
+def github_api(session: Any, method: str, url: str, **kwargs: Any) -> Any:
+    response = session.request(method, url, timeout=120, **kwargs)
+    if not response.ok:
+        raise RuntimeError(f"GitHub API {method} {url} HTTP {response.status_code}: {response.text[:1200]}")
+    if response.status_code == 204 or not response.text:
+        return {}
+    return response.json()
+
+
+def github_upload(out: Path, zip_path: Path, summary_path: Path, script_path: Path, timestamp: str) -> Dict[str, Any]:
+    import requests
+    token = get_token()
+    if not token:
+        raise RuntimeError("找不到 GITHUB_TOKEN（環境變數或 Colab userdata）")
+    s = requests.Session()
+    s.headers.update({"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json",
+                      "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "SSO-Market-Data-Continuation-TWSE-TPEX-v1"})
+    api = f"https://api.github.com/repos/{REPO}"
+    main_before = github_api(s, "GET", api + "/branches/main")["commit"]["sha"]
+    branch = f"market-data-continuation/twse-tpex-v1-{timestamp}"
+    folder = f"market_data_continuation_twse_tpex_v1/{timestamp}"
+    files = [(f"{folder}/{zip_path.name}", zip_path), (f"{folder}/{summary_path.name}", summary_path),
+             (f"{folder}/{script_path.name}", script_path)]
+    # Independent branch from main's current SHA; never update main.
+    tree_entries = []
+    for repo_path, local in files:
+        blob = github_api(s, "POST", api + "/git/blobs", json={
+            "content": base64.b64encode(local.read_bytes()).decode("ascii"), "encoding": "base64"})
+        tree_entries.append({"path": repo_path, "mode": "100644", "type": "blob", "sha": blob["sha"]})
+    base_tree = github_api(s, "GET", api + f"/git/commits/{main_before}")["tree"]["sha"]
+    tree = github_api(s, "POST", api + "/git/trees", json={"base_tree": base_tree, "tree": tree_entries})
+    commit = github_api(s, "POST", api + "/git/commits", json={
+        "message": "SSO Market Data Continuation TWSE TPEX v1: incrementally update market database",
+        "tree": tree["sha"], "parents": [main_before]})
+    github_api(s, "POST", api + "/git/refs", json={"ref": f"refs/heads/{branch}", "sha": commit["sha"]})
+    checks = []
+    for repo_path, local in files:
+        response = s.get(f"https://raw.githubusercontent.com/{REPO}/{branch}/{repo_path}", timeout=120)
+        response.raise_for_status()
+        local_sha = sha256_file(local)
+        remote_sha = sha256_bytes(response.content)
+        checks.append({"path": repo_path, "local_sha256": local_sha, "remote_sha256": remote_sha, "match": local_sha == remote_sha})
+        if local_sha != remote_sha:
+            raise RuntimeError(f"GitHub 遠端檔案 SHA256 不一致：{repo_path}")
+    main_after = github_api(s, "GET", api + "/branches/main")["commit"]["sha"]
+    if main_before != main_after:
+        raise RuntimeError(f"GitHub main 前後 SHA 不一致：{main_before} != {main_after}")
+    return {"status": "PASS", "branch": branch, "commit": commit["sha"], "main_before": main_before,
+            "main_after": main_after, "main_unchanged": True, "files": checks}
+
+
+def self_test() -> None:
+    assert parse_date("2026-11-06") == "2026-11-06"
+    assert parse_date("115/11/06") == "2026-11-06"
+    assert parse_date("1151106") == "2026-11-06"
+    assert market_code("上市") == "TWSE" and market_code("櫃買") == "TPEX"
+    assert parse_num("1,234") == 1234
+    test = [
+        {"market": "TWSE", "date": "2026-11-06", "code": "2330"},
+        {"market": "TWSE", "date": "2026-11-06", "code": "2317"},
+    ]
+    ensure_unique_rows(test, "TWSE", "2026-11-06", min_rows=1)
+    rows = normalize_array_rows(
+        ["證券代號", "證券名稱", "開盤價", "最高價", "最低價", "收盤價", "成交股數", "成交金額", "成交筆數", "漲跌(+/-)", "註記"],
+        [["2330", "台積電", "100", "102", "99", "101", "100000", "10000000", "1000", "+", ""]],
+        "TWSE", "2026-11-06", "SELFTEST", min_rows=1)
+    assert len(rows) == 1 and rows[0]["code"] == "2330" and rows[0]["change_sign"] == "+"
+    assert rows[0]["volume_shares"] == 100000
+    # Volume unit conversion for thousand-shares fields.
+    rows2 = normalize_array_rows(
+        ["代號", "名稱", "開盤", "最高", "最低", "收盤", "成交仟股", "成交仟元", "成交筆數"],
+        [["3105", "穩懋", "100", "102", "99", "101", "12", "345", "50"]],
+        "TPEX", "2026-11-06", "SELFTEST", min_rows=1)
+    assert rows2[0]["volume_shares"] == 12000 and rows2[0]["trading_value"] == 345000
+    normalized = {"market": "TWSE", "date": "2026-11-06", "code": "2330",
+                  "official_note": "", "備註": "官方原始回應未提供可辨識註記",
+                  "note_status": "OFFICIAL_NOTE_FIELD_NOT_RETURNED", "source_note_fields": ""}
+    note_row = canonical_from_row(normalized, "TWSE", "2026-11-06", "cache")
+    assert note_row["official_note"] == ""  # derived 備註 must not become official text note
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        gz = Path(td) / "test.csv.gz"
+        write_csv(gz, [{"a": "1"}], ["a"])
+        with gzip.open(gz, "rt", encoding="utf-8-sig", newline="") as f:
+            assert next(csv.DictReader(f))["a"] == "1"
+
+        # Full local test: original duplicate rows remain unchanged; only new key is appended.
+        source = Path(td) / "history.csv"
+        headers = ["市場類別", "交易日期", "證券代號", "證券名稱", "開盤價", "最高價", "最低價", "收盤價",
+                   "漲跌價差", "漲跌註記", "成交股數", "成交金額", "成交筆數", "官方備註"]
+        old_rows = [
+            {"市場類別": "上市", "交易日期": "2026-10-28", "證券代號": "2330", "證券名稱": "台積電",
+             "開盤價": "100", "最高價": "102", "最低價": "99", "收盤價": "101", "漲跌價差": "1",
+             "漲跌註記": "+", "成交股數": "100000", "成交金額": "10000000", "成交筆數": "1000", "官方備註": ""},
+            {"市場類別": "上市", "交易日期": "2026-10-28", "證券代號": "2330", "證券名稱": "台積電重複舊列",
+             "開盤價": "100", "最高價": "102", "最低價": "99", "收盤價": "101", "漲跌價差": "1",
+             "漲跌註記": "+", "成交股數": "100000", "成交金額": "10000000", "成交筆數": "1000", "官方備註": ""},
+        ]
+        with source.open("w", encoding="utf-8-sig", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=headers); w.writeheader(); w.writerows(old_rows)
+        before_sha = sha256_file(source)
+        key_db = Path(td) / "keys.sqlite"
+        meta = scan_chosen_database(source, key_db)
+        assert meta["duplicates"] == 1 and meta["last_date_by_market"]["TWSE"] == "2026-10-28"
+        new_row = {"market": "TWSE", "date": "2026-10-29", "code": "2330", "name": "台積電",
+                   "open": 101, "high": 103, "low": 100, "close": 102, "change": 1, "change_sign": "+",
+                   "volume_shares": 120000, "trading_value": 12000000, "trade_count": 1100,
+                   "ohlc_valid": 1, "positive_volume": 1, "official_note": "測試註記",
+                   "suspension_note": "", "limit_touch_note": "", "source_endpoint": "SELFTEST"}
+        out_db = Path(td) / "updated.csv.gz"
+        info = create_updated_database(source, out_db, meta, [new_row])
+        meta["sqlite_conn"].close()
+        assert sha256_file(source) == before_sha
+        assert info["source_rows"] == 2 and info["appended_rows"] == 1 and info["final_rows"] == 3
+        with gzip.open(out_db, "rt", encoding="utf-8-sig", newline="") as f:
+            new_file_rows = list(csv.DictReader(f))
+        assert len(new_file_rows) == 3
+        assert [r["證券代號"] for r in new_file_rows].count("2330") == 3
+        assert new_file_rows[-1]["漲跌註記"] == "+" and new_file_rows[-1]["官方備註"] == "測試註記"
+
+
+def make_zip(out: Path, zip_path: Path, include_raw: bool = True) -> None:
+    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as zf:
+        for p in sorted(out.rglob("*")):
+            if not p.is_file() or p == zip_path:
+                continue
+            rel = p.relative_to(out)
+            # Large complete database copy is Drive-only; ZIP contains delta and audit trail.
+            if p.name == UPDATED_DB_NAME:
+                continue
+            if not include_raw and "raw_api" in p.parts:
+                continue
+            zf.write(p, arcname=str(rel))
+    with zipfile.ZipFile(zip_path, "r") as zf:
+        bad = zf.testzip()
+        if bad:
+            raise RuntimeError(f"ZIP CRC 失敗：{bad}")
+
+
+def main() -> None:
+    print("=" * 118, flush=True)
+    log(f"Colab 執行入口已啟動：{VERSION}")
+    log("看股最速適｜依資料庫各市場最後交易日逐市場補到程式執行日")
+    log("原始資料唯讀；產生新資料庫副本；不覆蓋原檔；不合併其他研究表；不執行因子／模型／回測／選股")
+    if not ROOT.exists():
+        raise FileNotFoundError(f"Google Drive 根目錄不存在或未掛載：{ROOT}")
+    self_test()
+    timestamp = dt.datetime.now(TAIPEI).strftime("%Y%m%d_%H%M%S")
+    out = ROOT / f"{OUTPUT_PREFIX}{timestamp}"
+    out.mkdir(parents=True, exist_ok=False)
+    script_path = None
+    try:
+        candidate = globals().get("__file__")
+        if isinstance(candidate, str) and Path(candidate).is_file():
+            script_path = Path(candidate).resolve()
+        if script_path is None:
+            for p in (Path("/content") / SCRIPT_BASENAME, Path.cwd() / SCRIPT_BASENAME, Path("/mnt/data") / SCRIPT_BASENAME):
+                if p.is_file():
+                    script_path = p.resolve(); break
+        if script_path:
+            shutil.copy2(script_path, out / SCRIPT_BASENAME)
+        else:
+            log("警告：未定位執行中的 .py；成果摘要仍會保存")
+
+        source_db, candidate_inventory = discover_database(ROOT, out)
+        if not (out / "01_歷史交易資料庫候選盤點.csv").exists():
+            write_csv(out / "01_歷史交易資料庫候選盤點.csv", candidate_inventory,
+                      ["path", "bytes", "row_count", "min_date", "max_date", "twse_min", "twse_max", "twse_rows",
+                       "tpex_min", "tpex_max", "tpex_rows", "schema_pass", "both_markets", "missing_fields", "scan_error", "headers"])
+        source_sha_before = sha256_file(source_db)
+        log(f"原始交易資料庫：{source_db}")
+        log(f"原始資料庫 SHA256：{source_sha_before}")
+        key_db = out / "_natural_keys.sqlite"
+        db_meta = scan_chosen_database(source_db, key_db)
+        last_dates = db_meta["last_date_by_market"]
+        log(f"TWSE 資料庫最後日期：{last_dates['TWSE']}")
+        log(f"TPEX 資料庫最後日期：{last_dates['TPEX']}")
+        if db_meta["duplicates"]:
+            log(f"警告：原始資料庫既有重複自然鍵 {db_meta['duplicates']:,} 組；本版全部原樣保留，只禁止新增資料與既有鍵重複，不替舊資料去重。")
+        asof = dt.datetime.now(TAIPEI).date()
+        log(f"程式執行日（Asia/Taipei）：{asof.isoformat()}；每個市場從各自最後日期翌日開始")
+
+        cache, cache_inventory = load_cache_and_status(ROOT, out)
+        if cache_inventory:
+            write_csv(out / "02_v487522快取逐日核對.csv", cache_inventory, ["market", "date", "expected", "actual", "report_pass"])
+        session = make_session()
+        holidays, calendar_report = fetch_official_holidays(session, asof.year, out / "raw_api")
+        write_csv(out / "03_TWSE官方休市日曆核對.csv", calendar_report, ["date", "status", "detail"])
+        rows, statuses, date_complete = select_and_fetch_incremental(last_dates, asof, cache, session,
+                                                                       out / "raw_api", holidays)
+        # New natural keys must be unique across all market/date groups.
+        new_keys = [(r["market"], r["date"], r["code"]) for r in rows]
+        if len(new_keys) != len(set(new_keys)):
+            raise RuntimeError("本次新增行情跨來源存在重複自然鍵；不寫入完整資料庫")
+        for r in rows:
+            if r["date"] <= last_dates[r["market"]]:
+                raise RuntimeError(f"新增資料日期沒有晚於資料庫最後日期：{r['market']} {r['date']} <= {last_dates[r['market']]}")
+        write_csv(out / "04_逐市場逐日補充狀態.csv", statuses,
+                  ["date", "market", "status", "rows", "source", "endpoint", "raw_file", "raw_sha256", "note"])
+        write_csv(out / "05_新增交易資料.csv.gz", rows, CANONICAL_COLUMNS)
+
+        # Rebuild only into a new file. Original file is never opened for writing.
+        unresolved = [r for r in statuses if r.get("status") in {"API_FAILED", "NO_DATA_UNVERIFIED", "TODAY_NOT_PUBLISHED_YET", "CACHE_COUNT_MISMATCH"}]
+        holiday_or_weekend = all(r.get("status") not in {"API_FAILED", "NO_DATA_UNVERIFIED", "TODAY_NOT_PUBLISHED_YET", "CACHE_COUNT_MISMATCH"} for r in statuses)
+        complete = date_complete and holiday_or_weekend
+        updated_info = {"status": "NOT_CREATED", "note": "有日期尚未確認，保留增量資料但不輸出完整資料庫副本"}
+        if complete:
+            destination = out / UPDATED_DB_NAME
+            updated_info = create_updated_database(source_db, destination, db_meta, rows)
+            updated_info["status"] = "PASS"
+            log(f"完整更新資料庫副本完成：{destination}｜新增 {updated_info['appended_rows']:,} 筆")
+        else:
+            log(f"警告：有 {len(unresolved)} 組日期／市場未能確認；不產生完整更新資料庫副本")
+
+        # Close key index and prove original database remained byte-identical.
+        db_meta["sqlite_conn"].close()
+        if key_db.exists():
+            key_db.unlink()
+        source_sha_after = sha256_file(source_db)
+        source_unchanged = source_sha_before == source_sha_after
+        if not source_unchanged:
+            raise RuntimeError("原始資料庫 SHA256 前後不一致；請立即停止使用本次成果")
+        write_csv(out / "06_原始資料庫唯讀前後SHA核對.csv", [{
+            "source_path": str(source_db), "sha256_before": source_sha_before,
+            "sha256_after": source_sha_after, "unchanged": source_unchanged,
+            "database_rows": db_meta["row_count"], "database_duplicate_keys": db_meta["duplicates"],
+        }], ["source_path", "sha256_before", "sha256_after", "unchanged", "database_rows", "database_duplicate_keys"])
+        mapping_rows = []
+        mapped_headers = {v: k for k, v in db_meta["columns"].items() if v}
+        for h in db_meta["headers"]:
+            semantic = mapped_headers.get(h, "")
+            mapping_rows.append({"database_column": h, "mapped_semantic": semantic,
+                                 "new_rows_value": "由官方行情映射" if semantic else "新增列留白（本版不重算因子／衍生欄位）"})
+        write_csv(out / "07_資料庫欄位映射與新增列留白說明.csv", mapping_rows,
+                  ["database_column", "mapped_semantic", "new_rows_value"])
+        write_csv(out / "08_原始資料庫既有重複自然鍵摘要.csv", [{
+            "existing_duplicate_key_groups": db_meta["duplicates"],
+            "action": "原始列完整保留；本版不修正舊重複鍵；新資料若與既有鍵衝突即拒絕追加。"
+        }], ["existing_duplicate_key_groups", "action"])
+
+        status_counts: Dict[str, int] = {}
+        for r in statuses:
+            status_counts[r.get("status", "UNKNOWN")] = status_counts.get(r.get("status", "UNKNOWN"), 0) + 1
+        last_by_market_after = dict(last_dates)
+        for r in rows:
+            if r["date"] > last_by_market_after[r["market"]]:
+                last_by_market_after[r["market"]] = r["date"]
+        summary = [
+            f"{VERSION}｜上市櫃雙市場行情續接",
+            f"執行時間（Asia/Taipei）：{dt.datetime.now(TAIPEI).isoformat(timespec='seconds')}",
+            f"原始資料庫：{source_db}", f"原始資料庫 SHA256：{source_sha_before}",
+            f"TWSE 原始最後日期：{last_dates['TWSE']}；本次最新取得：{last_by_market_after['TWSE']}",
+            f"TPEX 原始最後日期：{last_dates['TPEX']}；本次最新取得：{last_by_market_after['TPEX']}",
+            f"程式執行日：{asof.isoformat()}",
+            f"本次新增行情：{len(rows):,} 筆；狀態分布：{json.dumps(status_counts, ensure_ascii=False)}",
+            f"完整更新資料庫副本：{updated_info.get('status')}；{updated_info.get('note', '')}",
+            f"完整資料庫副本路徑：{out / UPDATED_DB_NAME if updated_info.get('status') == 'PASS' else '未產生'}",
+            f"完整資料庫副本 SHA256：{updated_info.get('output_sha256', '未產生')}",
+            f"原始資料庫唯讀 SHA 前後一致：{source_unchanged}",
+            f"原始資料庫既有重複自然鍵：{db_meta['duplicates']:,} 組（本版原樣保留、不去重）",
+            "資料來源：TWSE MI_INDEX（逐日日期端點）、TPEx dailyQuotes／otc（逐日日期端點）；既有 v4.87.5.22 九日資料僅在其 18 組筆數核對通過時沿用。",
+            "空回應不直接視為休市；未能由官方休市日曆或週末狀態確認的日期，標示未確認並阻止完整資料庫副本輸出。",
+            "原始資料未覆寫；本次新增資料另存；未合併其他研究表；未執行因子、模型、回測或選股。",
+        ]
+        summary_path = out / "執行摘要.txt"
+        summary_path.write_text("\n".join(summary) + "\n", encoding="utf-8")
+        manifest = {
+            "version": VERSION, "asof_taipei": asof.isoformat(), "source_database": str(source_db),
+            "source_sha256_before": source_sha_before, "source_sha256_after": source_sha_after,
+            "source_unchanged": source_unchanged, "last_date_by_market_before": last_dates,
+            "last_date_by_market_after": last_by_market_after, "new_rows": len(rows),
+            "status_counts": status_counts, "date_range_complete": complete,
+            "updated_database_created": updated_info.get("status") == "PASS", "updated_database": str(out / UPDATED_DB_NAME) if updated_info.get("status") == "PASS" else None,
+            "updated_database_info": updated_info, "cache_rows_used": sum(len(v) for v in cache.values()),
+            "drive_original_read_only": True, "no_factor_model_backtest_stock_selection": True,
+        }
+        write_json(out / "執行中繼資料.json", manifest)
+
+        # ZIP contains incremental rows + raw API responses + reports + script; large complete DB copy is Drive-only.
+        if not script_path:
+            script_path = out / SCRIPT_BASENAME
+            source_hint = Path("/mnt/data") / SCRIPT_BASENAME
+            if source_hint.is_file(): shutil.copy2(source_hint, script_path)
+        if not script_path or not script_path.is_file():
+            script_path = out / "程式封存缺失.txt"
+            script_path.write_text("執行環境未定位完整 .py；請另行保存提供的程式檔。\n", encoding="utf-8")
+        zip_path = out / f"{VERSION_SLUG}_{timestamp}.zip"
+        make_zip(out, zip_path)
+        zip_sha = sha256_file(zip_path)
+        log(f"ZIP CRC PASS：{zip_path.name}｜{zip_path.stat().st_size:,} bytes｜SHA256={zip_sha}")
+        try:
+            gh = github_upload(out, zip_path, summary_path, script_path, timestamp)
+            write_json(out / "GitHub上傳結果.json", gh)
+            log(f"GitHub audit branch PASS：{gh['branch']}｜commit={gh['commit']}")
+            log(f"GitHub main 前後一致：{gh['main_before']}")
+        except Exception as exc:
+            gh = {"status": "FAILED", "error": f"{type(exc).__name__}: {exc}"}
+            write_json(out / "GitHub上傳結果.json", gh)
+            log(f"GitHub 上傳 FAILED：{gh['error']}")
+        log(f"新增交易資料列數：{len(rows):,}")
+        log(f"完整更新資料庫：{updated_info.get('status')}")
+        log(f"原始資料唯讀：{'PASS' if source_unchanged else 'FAILED'}")
+        log(f"成果目錄：{out}")
+        log(f"增量資料 ZIP：{zip_path}")
+        log(f"GitHub：{gh.get('status')}｜{gh.get('branch', gh.get('error', ''))}")
+        log("正式 29 因子矩陣／模型／回測／推薦／選股均未執行")
+    except Exception as exc:
+        log(f"執行失敗：{type(exc).__name__}: {exc}")
+        (out / "執行錯誤.txt").write_text(traceback.format_exc(), encoding="utf-8")
+        raise
+    finally:
+        try:
+            if 'db_meta' in locals() and isinstance(db_meta, dict):
+                conn = db_meta.get("sqlite_conn")
+                if conn:
+                    conn.close()
+            if 'key_db' in locals() and key_db.exists():
+                key_db.unlink()
+        except Exception:
+            pass
+    print("=" * 118, flush=True)
+
+
+if __name__ == "__main__":
+    main()
