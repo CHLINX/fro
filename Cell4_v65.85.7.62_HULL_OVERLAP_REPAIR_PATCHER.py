@@ -67,7 +67,7 @@ source = _replace_once(
 source = _replace_once(
     source,
     "    def _v65_85_23_day_group_variants(groups):",
-    "def _v65_85_23_day_group_variants(groups, max_start_candidates=None):",
+    "    def _v65_85_23_day_group_variants(groups, max_start_candidates=None):",
     "v62 首站候選參數",
 )
 source = _replace_once(
@@ -425,6 +425,23 @@ source = _replace_once(
     "v62 初始幾何診斷 log",
 )
 
+source = _replace_once(
+    source,
+    """                _convex_hull_balance_log_59["status"] = (
+                    "NO_POSITIVE_AREA_OVERLAP" if _hull_state_59["overlap_area_m2"]
+                    <= float(CONVEX_HULL_OVERLAP_AREA_TOLERANCE_M2) else "SEARCHING"
+                )""",
+    """                _convex_hull_balance_log_59["status"] = (
+                    "NO_POSITIVE_AREA_OVERLAP_AND_NO_POINT_INTRUSION"
+                    if (
+                        _hull_state_59["overlap_area_m2"]
+                        <= float(CONVEX_HULL_OVERLAP_AREA_TOLERANCE_M2)
+                        and int(_hull_state_59.get("point_intrusion_count", 0)) == 0
+                    ) else "SEARCHING"
+                )""",
+    "v62 初始狀態同時檢查點位侵入",
+)
+
 # 幾何候選：只接受「點位侵入數不增加、凸包交疊面積不增加」且至少一項改善。
 source = _replace_once(
     source,
@@ -716,6 +733,11 @@ source = _replace_once(
                     and int(_hull_state_59.get("point_intrusion_count", 0)) == 0
                 ): """,
     "v62 最終幾何診斷輸出",
+)
+
+source = source.replace(
+    "[V65.85.7.59_CONVEX_HULL_PROGRESS]",
+    "[V65.85.7.62_CONVEX_HULL_PROGRESS]",
 )
 
 # 將所有進度標記升至 v62，並在結尾追加明確的診斷摘要標記。
