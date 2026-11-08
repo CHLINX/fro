@@ -487,6 +487,28 @@ source = _replace_once(
     "v62 幾何候選 Pareto 篩選與排序",
 )
 
+# 每輪都以當前可行分日方案的正式全域評分作基準，凸包移動不得增加跨日物理道路重複。
+source = _replace_once(
+    source,
+    """                    _base_times_59 = [
+                        float(actual_closed_day_metrics(_b, _d)["total_min"])
+                        for _d, _b in enumerate(_base_batches_59, start=1)
+                    ]
+                    _day_groups_59, _move_candidates_59 = _v65_85_30_build_transfer_candidates(""",
+    """                    _base_times_59 = [
+                        float(actual_closed_day_metrics(_b, _d)["total_min"])
+                        for _d, _b in enumerate(_base_batches_59, start=1)
+                    ]
+                    _base_plan_score_62 = _v65_85_23_plan_metrics(
+                        _base_batches_59, _cross_day_near_pairs,
+                        _cross_day_near_penalty_min_per_weight
+                    )
+                    if _base_plan_score_62 is None:
+                        raise RuntimeError("v62 凸包移日基準方案無法通過正式全域路線評分。")
+                    _day_groups_59, _move_candidates_59 = _v65_85_30_build_transfer_candidates(""",
+    "v62 凸包搬移全域基準評分",
+)
+
 # Search completeness metrics and route-attempt accounting.
 source = _replace_once(
     source,
@@ -496,6 +518,7 @@ source = _replace_once(
     """                        "exact_candidates_checked": 0,
                         "route_reoptimization_attempts": 0,
                         "route_reoptimization_failures": 0,
+                        "cross_day_repeat_rejections": 0,
                         "hard_constraint_rejections": 0,
                         "baseline_point_intrusion_count": int(
                             _hull_state_59.get("point_intrusion_count", 0)
@@ -615,6 +638,24 @@ source = _replace_once(
                             if _trial_plan_score_59 is None:""",
     "v62 精確評分計數定位",
 )
+source = _replace_once(
+    source,
+    """                            if _trial_plan_score_59 is None:
+                                _pass_log_59["hard_constraint_rejections"] += 1
+                                continue
+                            _exact_hull_59 = _v65_85_59_hull_state(_trial_batches_59)""",
+    """                            if _trial_plan_score_59 is None:
+                                _pass_log_59["hard_constraint_rejections"] += 1
+                                continue
+                            _candidate_repeat_62 = float(_trial_plan_score_59[3])
+                            _baseline_repeat_62 = float(_base_plan_score_62[3])
+                            if _candidate_repeat_62 > _baseline_repeat_62 + 0.00005:
+                                _pass_log_59["cross_day_repeat_rejections"] += 1
+                                continue
+                            _exact_hull_59 = _v65_85_59_hull_state(_trial_batches_59)""",
+    "v62 跨日物理道路重複硬限制",
+)
+
 # 每個候選進入正式路線重建前即計數；例外時不再出現「候選檢查 0」的誤導。
 source = _replace_once(
     source,
