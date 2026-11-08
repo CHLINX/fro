@@ -1,0 +1,51 @@
+name: FRO Cell4 MOTOR OSM road download test
+
+on:
+  push:
+    branches:
+      - cell4-osm-road-download-test-20261108
+    paths:
+      - ".github/workflows/cell4-osm-download-test.yml"
+      - "tools/cell4_osm_download_test.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fro-cell4-osm-download-test
+  cancel-in-progress: false
+
+jobs:
+  download-motor-osm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install Cell4 OSM dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "osmnx==2.1.1" "networkx==3.7"
+
+      - name: Download Cell4 MOTOR OSM road graph
+        env:
+          FRO_OSM_OUT: artifacts
+        run: |
+          python tools/cell4_osm_download_test.py
+
+      - name: Upload OSM graph and verification summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: FRO_Cell4_MOTOR_OSM_${{ github.run_id }}
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 14
