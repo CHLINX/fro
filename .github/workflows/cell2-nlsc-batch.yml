@@ -29,7 +29,7 @@ jobs:
           playwright install --with-deps chromium
       - name: Write private batch input
         env:
-          BATCH_JSON: \${{ inputs.batch_json }}
+          BATCH_JSON: ${{ inputs.batch_json }}
         run: |
           mkdir -p input
           python - <<'PY'
