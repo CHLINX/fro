@@ -450,7 +450,7 @@ _second_pass = r'''        # ===================================================
             json.dumps(_V65_85_61_FINAL_SEQUENCE_LOCK, separators=(",", ":")).encode("utf-8")
         ).hexdigest()
         print("[V65.85.7.61_FINAL_AUDIT] " + json.dumps({
-            "version": NEW_VERSION,
+            "version": "v65.85.7.61",
             "first_dead_end_pass_protected": False,
             "second_dead_end_pass": "PASS_AND_LOCKED",
             "verified_corridor_count": int(len(_v65_85_61_final_corridors)),
