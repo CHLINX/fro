@@ -66,7 +66,7 @@ source = _replace_once(
 # 凸包移日重建時，不再把 12 個最近首站當作硬性搜尋上限。
 source = _replace_once(
     source,
-    "def _v65_85_23_day_group_variants(groups):",
+    "    def _v65_85_23_day_group_variants(groups):",
     "def _v65_85_23_day_group_variants(groups, max_start_candidates=None):",
     "v62 首站候選參數",
 )
