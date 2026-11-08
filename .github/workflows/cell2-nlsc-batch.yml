@@ -1,0 +1,55 @@
+name: Cell2 NLSC batch coordinates
+
+on:
+  push:
+    branches:
+      - cell2-github-actions-batch-20261108
+    paths:
+      - "cell2_github_batch.py"
+      - "input/parcels.json"
+      - ".github/workflows/cell2-nlsc-batch.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  nlsc-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Checkout selected test branch
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Playwright
+        run: |
+          python -m pip install --upgrade pip
+          pip install playwright
+          playwright install --with-deps chromium
+      - name: Validate authorized batch input
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("input/parcels.json")
+          rows=json.loads(p.read_text(encoding="utf-8"))
+          required={"縣市","鄉鎮市區","地段","地號"}
+          assert len(rows)==105, f"Expected 105 parcels, got {len(rows)}"
+          for i,row in enumerate(rows,1):
+              missing=required-set(row)
+              assert not missing, f"row {i} missing {sorted(missing)}"
+          print(f"Validated {len(rows)} parcel records.")
+          PY
+      - name: Run Cell2 NLSC batch coordinate lookup
+        run: python cell2_github_batch.py
+      - name: Upload coordinate results and raw NLSC responses
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cell2-nlsc-batch-results
+          path: output/
+          if-no-files-found: warn
+          retention-days: 30
