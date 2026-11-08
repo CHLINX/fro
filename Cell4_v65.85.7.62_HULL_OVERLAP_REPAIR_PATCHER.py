@@ -472,7 +472,10 @@ source = _replace_once(
                         _base_intrusions_62 = int(_hull_state_59.get("point_intrusion_count", 0))
                         _trial_intrusions_62 = int(_trial_hull_59.get("point_intrusion_count", 0))
                         _area_not_worse_62 = (
-                            float(_trial_hull_59["overlap_area_m2"]) <= _base_area_59 + 1e-6
+                            float(_trial_hull_59["overlap_area_m2"]) <= max(
+                                _base_area_59,
+                                float(CONVEX_HULL_OVERLAP_AREA_TOLERANCE_M2)
+                            ) + 1e-6
                         )
                         _intrusions_not_worse_62 = (
                             _trial_intrusions_62 <= _base_intrusions_62
@@ -706,7 +709,10 @@ source = _replace_once(
                                 0.01, float(CONVEX_HULL_OVERLAP_AREA_TOLERANCE_M2) * 0.01
                             )
                             _area_nonworse_exact_62 = (
-                                _exact_area_59 <= _base_area_59 + 1e-6
+                                _exact_area_59 <= max(
+                                    _base_area_59,
+                                    float(CONVEX_HULL_OVERLAP_AREA_TOLERANCE_M2)
+                                ) + 1e-6
                             )
                             _intrusions_nonworse_exact_62 = (
                                 _exact_intrusions_62 <= _base_intrusions_exact_62
