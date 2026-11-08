@@ -247,8 +247,10 @@ source = _replace_once(
 # v62：凸包狀態同時統計對方點位侵入，以及「交集區內完全沒有任一日點位」的空白交疊。
 source = _replace_once(
     source,
-    "                from shapely.geometry import MultiPoint",
-    "                from shapely.geometry import MultiPoint, Point",
+    """                from pyproj import Transformer
+                from shapely.geometry import MultiPoint""",
+    """                from pyproj import Transformer
+                from shapely.geometry import MultiPoint, Point""",
     "v62 Shapely Point 匯入",
 )
 source = _replace_once(
