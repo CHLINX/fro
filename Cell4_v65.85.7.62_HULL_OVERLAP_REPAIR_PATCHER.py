@@ -442,6 +442,20 @@ source = _replace_once(
     "v62 初始狀態同時檢查點位侵入",
 )
 
+source = _replace_once(
+    source,
+    """                    _base_area_59 = float(_hull_state_59["overlap_area_m2"])
+                    if _base_area_59 <= float(CONVEX_HULL_OVERLAP_AREA_TOLERANCE_M2):
+                        break""",
+    """                    _base_area_59 = float(_hull_state_59["overlap_area_m2"])
+                    if (
+                        _base_area_59 <= float(CONVEX_HULL_OVERLAP_AREA_TOLERANCE_M2)
+                        and int(_hull_state_59.get("point_intrusion_count", 0)) == 0
+                    ):
+                        break""",
+    "v62 點位侵入尚存時不得因面積為零提前停止",
+)
+
 # 幾何候選：只接受「點位侵入數不增加、凸包交疊面積不增加」且至少一項改善。
 source = _replace_once(
     source,
@@ -779,6 +793,23 @@ source = _replace_once(
 source = source.replace(
     "[V65.85.7.59_CONVEX_HULL_PROGRESS]",
     "[V65.85.7.62_CONVEX_HULL_PROGRESS]",
+)
+
+source = _replace_once(
+    source,
+    """                elif not _convex_hull_balance_log_59["accepted_moves"]:
+                    _convex_hull_balance_log_59["status"] = "UNRESOLVED_NO_FEASIBLE_IMPROVING_MOVE"
+                elif _convex_hull_balance_log_59["status"] != "UNRESOLVED_NO_FEASIBLE_IMPROVING_MOVE":""",
+    """                elif (
+                    _hull_state_59["overlap_area_m2"]
+                    <= float(CONVEX_HULL_OVERLAP_AREA_TOLERANCE_M2)
+                    and int(_hull_state_59.get("point_intrusion_count", 0)) > 0
+                ):
+                    _convex_hull_balance_log_59["status"] = "POINT_INTRUSION_REMAINS_WITHOUT_POSITIVE_AREA_OVERLAP"
+                elif not _convex_hull_balance_log_59["accepted_moves"]:
+                    _convex_hull_balance_log_59["status"] = "UNRESOLVED_NO_FEASIBLE_PARETO_IMPROVEMENT"
+                elif _convex_hull_balance_log_59["status"] != "UNRESOLVED_NO_FEASIBLE_PARETO_IMPROVEMENT":""",
+    "v62 最終狀態區分點位侵入與空白交疊",
 )
 
 # 將所有進度標記升至 v62，並在結尾追加明確的診斷摘要標記。
