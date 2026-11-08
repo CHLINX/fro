@@ -109,6 +109,9 @@ class NLSC:
         current_city=await self.page.input_value("#land_city")
         if current_city!=city:
             await self.page.select_option("#land_city",label=city,force=True)
+            # Switching county/city reloads township options asynchronously.
+            await wait_options(self.page,"#land_area_office option",
+                               lambda x:x["value"]==cat["area_value"],timeout=45)
         current_area=await self.page.input_value("#land_area_office")
         if current_area!=cat["area_value"]:
             await self.page.evaluate("""({value})=>{
