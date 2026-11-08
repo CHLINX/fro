@@ -1,12 +1,14 @@
 name: Cell2 NLSC batch coordinates
 
 on:
+  push:
+    branches:
+      - cell2-github-actions-batch-20261108
+    paths:
+      - "cell2_github_batch.py"
+      - "input/parcels.json"
+      - ".github/workflows/cell2-nlsc-batch.yml"
   workflow_dispatch:
-    inputs:
-      batch_json:
-        description: "JSON array of parcel records: 縣市, 鄉鎮市區, 地段, 地號"
-        required: true
-        type: string
 
 permissions:
   contents: read
@@ -16,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 360
     steps:
-      - name: Checkout test branch
+      - name: Checkout selected test branch
         uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -27,25 +29,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install playwright
           playwright install --with-deps chromium
-      - name: Write private batch input
-        env:
-          BATCH_JSON: ${{ inputs.batch_json }}
+      - name: Validate authorized batch input
         run: |
-          mkdir -p input
           python - <<'PY'
-          import json, os
-          rows=json.loads(os.environ["BATCH_JSON"])
-          if not isinstance(rows,list) or not rows:
-              raise SystemExit("batch_json must be a non-empty JSON array")
+          import json
+          from pathlib import Path
+          p=Path("input/parcels.json")
+          rows=json.loads(p.read_text(encoding="utf-8"))
           required={"縣市","鄉鎮市區","地段","地號"}
+          assert len(rows)==105, f"Expected 105 parcels, got {len(rows)}"
           for i,row in enumerate(rows,1):
               missing=required-set(row)
-              if missing: raise SystemExit(f"row {i} missing: {sorted(missing)}")
-          with open("input/parcels.json","w",encoding="utf-8") as f:
-              json.dump(rows,f,ensure_ascii=False)
-          print(f"Validated {len(rows)} parcel rows")
+              assert not missing, f"row {i} missing {sorted(missing)}"
+          print(f"Validated {len(rows)} parcel records.")
           PY
-      - name: Run Cell2 batch coordinate lookup
+      - name: Run Cell2 NLSC batch coordinate lookup
         run: python cell2_github_batch.py
       - name: Upload coordinate results and raw NLSC responses
         if: always()
