@@ -5757,3 +5757,7 @@ RuntimeError: WATER_BARRIER_ACCESS_UNRESOLVED：有勘查點的進場直線會�
 [CELL4_EXECUTION_STATUS]=FAILED
 [CELL4_RUN_FINISHED_TW]=2026-11-17T18:07:06+08:00
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-17/Cell4_v65.85.7.132_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+[GITHUB_UPLOAD_STATUS]=SUCCESS
+[GITHUB_BRANCH]=fro-upload/2026-11-17
+[GITHUB_FILE_URL]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-17/Cell4_v65.85.7.132_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+[執行備忘錄] GitHub 執行結果：https://github.com/CHLINX/fro/blob/fro-upload/2026-11-17/Cell4_v65.85.7.132_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
