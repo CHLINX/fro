@@ -624,13 +624,14 @@ KeyboardInterrupt
 [CELL4_EXECUTION_STATUS]=FAILED
 [CELL4_RUN_FINISHED_TW]=2026-11-18T18:17:06+08:00
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-18/Cell4_v65.85.7.133_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
-.85.7.46_SHARED_SNAP_GROUPS] {"shared_snap_node_group_count": 1, "shared_snap_point_count": 2, "groups": [{"snap_node_id": 14338744824, "members": ["桃園市八德區營盤段06830000", "桃園市八德區營盤段07000000"]}], "stable_member_order": "Cell2 original row index ascending"}
-全域初始路線：115 點 | 起點=農業部農糧署北區分署
-初始全域道路成本：177.40 km
-
-======================================================================
-第二階段：全部點位一起做全域道路路線最佳化
-======================================================================
+[GITHUB_UPLOAD_STATUS]=SUCCESS
+[GITHUB_READBACK_STATUS]=PASS
+[GITHUB_BLOB_SHA]=38596ccd4c3576c0613ce34e052a227a3e3dcf39
+[GITHUB_READBACK_SHA256]=829fa6e2d20f0488fa0f6490237039d17a794097b8be5c84709f8bbd77234933
+[GITHUB_BRANCH]=fro-upload/2026-11-18
+[GITHUB_FILE_URL]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-18/Cell4_v65.85.7.133_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+[執行備忘錄] GitHub 執行結果：https://github.com/CHLINX/fro/blob/fro-upload/2026-11-18/Cell4_v65.85.7.133_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+==============================================================
 V65.64.23 全域最佳化前 Virtual anchor 順序可行化：移動 0 次
 全域最佳化前道路成本：177.40 km
 最佳化視窗：前後各 24 個位置
@@ -920,3 +921,10 @@ KeyboardInterrupt
 [CELL4_EXECUTION_STATUS]=FAILED
 [CELL4_RUN_FINISHED_TW]=2026-11-18T18:17:06+08:00
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-18/Cell4_v65.85.7.133_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+[GITHUB_UPLOAD_STATUS]=SUCCESS
+[GITHUB_READBACK_STATUS]=PASS
+[GITHUB_BLOB_SHA]=38596ccd4c3576c0613ce34e052a227a3e3dcf39
+[GITHUB_READBACK_SHA256]=829fa6e2d20f0488fa0f6490237039d17a794097b8be5c84709f8bbd77234933
+[GITHUB_BRANCH]=fro-upload/2026-11-18
+[GITHUB_FILE_URL]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-18/Cell4_v65.85.7.133_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+[執行備忘錄] GitHub 執行結果：https://github.com/CHLINX/fro/blob/fro-upload/2026-11-18/Cell4_v65.85.7.133_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
