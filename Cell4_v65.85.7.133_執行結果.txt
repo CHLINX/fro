@@ -1,7 +1,7 @@
 ==============================================================================
 CELL4_VERSION=v65.85.7.133
 CELL4_LOG_PATH=/content/Cell4_v65.85.7.133_執行結果.txt
-CELL4_RUN_STARTED_TW=2026-11-18T18:03:27+08:00
+CELL4_RUN_STARTED_TW=2026-11-18T18:13:26+08:00
 ==============================================================================
 [GITHUB_TOKEN_PREFLIGHT]=AVAILABLE
 INPUT_FRESHNESS_STATUS=PASS_SELECTED_LATEST_MODIFIED
@@ -25,7 +25,7 @@ Google Drive 未預先掛載；本次快取、檢查點及診斷備份改存 /co
 [CELL4_READ_START] 路線設定檔 RouteConfig | path=/content/input_route_config.xlsx | source_size=12.20 KiB
 [CELL4_STAGE_START] 讀取 Excel：路線設定檔 RouteConfig
 [CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | elapsed=0.04s | status=PASS
-[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.26 MiB/s | elapsed=0.05s
+[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.29 MiB/s | elapsed=0.04s
 路線設定檔關鍵值檢查：
   交通工具 = '只算機車'
   每點停留時間 = 3
@@ -83,9 +83,9 @@ Cell 4 續跑進度
 Cell 4 RAM 安全檢查
 ======================================================================
 RAM 總量：12.67 GB
-RAM 可用：10.16 GB
+RAM 可用：10.09 GB
 BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
-CELL4_RUN_ID=20261118T100342283239Z_31745df5db
+CELL4_RUN_ID=20261118T101341563629Z_0a8b4bb1d2
 CELL4_SOURCE_SHA256=f1449461efa4a511a6f6da17fa4086a94435bce4f9540ddd72f565d57fcbd13e
 CELL4_SOURCE_KIND=PYTHON_FILE
 CELL4_SOURCE_DETECTION=CURRENT_VERSION_CONTENT_MATCH
@@ -110,8 +110,8 @@ NetworkX 版本： 3.7
 道路網類型：MOTOR 專屬自訂 drive_service+track | cache_profile=fro_motor_drive_service_track_v1
 [CELL4_READ_START] 機車 Cell2 result.xlsx | path=/content/result.xlsx | source_size=31.36 KiB
 [CELL4_STAGE_START] 讀取 Excel：機車 Cell2 result.xlsx
-[CELL4_STAGE_DONE] 讀取 Excel：機車 Cell2 result.xlsx | elapsed=0.11s | status=PASS
-[CELL4_READ_DONE] 機車 Cell2 result.xlsx | rows=115 | columns=37 | source_size=31.36 KiB | source_read_rate=0.28 MiB/s | elapsed=0.11s
+[CELL4_STAGE_DONE] 讀取 Excel：機車 Cell2 result.xlsx | elapsed=0.16s | status=PASS
+[CELL4_READ_DONE] 機車 Cell2 result.xlsx | rows=115 | columns=37 | source_size=31.36 KiB | source_read_rate=0.19 MiB/s | elapsed=0.16s
 原始資料筆數： 115
 
 ======================================================================
@@ -124,12 +124,12 @@ NetworkX 版本： 3.7
 固定起點座標：[ 121.30936300, 24.98845400]
 v65.66 RAM 預檢：115 點；座標跨度約 32.8 × 13.1 km；距離矩陣輸出約 0.1 MiB，採列分塊計算。
 Haversine 直線距離矩陣完成。
-[RAM] Haversine 完成 | process RSS=1.08 GiB | system available=10.16 GiB
-[RAM] Local XY 完成 | process RSS=1.08 GiB | system available=10.16 GiB
-[RAM] 開始建立 OSM 下載範圍 | process RSS=1.08 GiB | system available=10.16 GiB
+[RAM] Haversine 完成 | process RSS=1.22 GiB | system available=10.09 GiB
+[RAM] Local XY 完成 | process RSS=1.22 GiB | system available=10.09 GiB
+[RAM] 開始建立 OSM 下載範圍 | process RSS=1.22 GiB | system available=10.09 GiB
 下載範圍幾何：115 點；改採投影後凸包 buffer（7000 m + 1 m 安全餘裕），避免逐點 buffer/union。
 下載範圍幾何建立完成。
-[RAM] OSM 下載範圍幾何完成 | process RSS=1.08 GiB | system available=10.16 GiB
+[RAM] OSM 下載範圍幾何完成 | process RSS=1.22 GiB | system available=10.09 GiB
 
 ======================================================================
 OSM 下載範圍
@@ -137,34 +137,27 @@ OSM 下載範圍
 west/south/east/north： (120.91483656443899, 24.832391110469842, 121.37864805364879, 25.077308798650666)
 buffer：7000 m
 下載方式：先用矩形範圍；失敗時改用區域範圍
-[RAM] OSM graph 載入／下載前 | process RSS=1.08 GiB | system available=10.16 GiB
+[RAM] OSM graph 載入／下載前 | process RSS=1.22 GiB | system available=10.09 GiB
 
 ======================================================================
 下載 OpenStreetMap 道路圖（v35：矩形範圍 優先；快取可由 FORCE_REFRESH_OSM_CACHE 控制）
 ======================================================================
 [CELL4_STAGE_START] MOTOR OSM 快取新鮮度驗證／載入
-OSM 快取未命中，需下載最新路網。
-[CELL4_STAGE_DONE] MOTOR OSM 快取新鮮度驗證／載入 | elapsed=0.00s | status=PASS
-MOTOR OSM cache miss：優先取得 Geofabrik 台灣每日 PBF 快照；Overpass 保留為備援。
-[CELL4_STAGE_START] Geofabrik PBF MOTOR 優先建圖
-Geofabrik 台灣 PBF 快取命中；遠端版本未變。 Last-Modified=Wed, 18 Nov 2026 00:01:39 GMT; size=328,606,718 bytes
-[OSM_SOURCE=GEOFABRIK_PBF] 從本機台灣 PBF 解析範圍：west=120.9148366, south=24.8323911, east=121.3786481, north=25.0773088
-[CELL4_HEARTBEAT] Geofabrik PBF MOTOR 優先建圖 | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
-[CELL4_HEARTBEAT] Geofabrik PBF MOTOR 優先建圖 | still_running=True | elapsed=60.1s | 此步驟尚無逐筆回呼；程序仍在執行。
-Building the graph of taiwan-latest.osm.pbf took 01:27
-[OSM_SOURCE=GEOFABRIK_PBF] graph 建立完成：nodes=83,283; edges=203,294; freshness_verified=True
-[CELL4_STAGE_DONE] Geofabrik PBF MOTOR 優先建圖 | elapsed=89.19s | status=PASS
-[CELL4_STAGE_START] 寫入／壓縮 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz
-[CELL4_STAGE_DONE] 寫入／壓縮 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz | elapsed=6.56s | status=PASS
-[CELL4_CACHE_WRITE_DONE] /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz | size=17.96 MiB
-Geofabrik PBF 來源證據已保存：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz.source.json | last_modified=Wed, 18 Nov 2026 00:01:39 GMT | freshness_verified=True
-OSM 路網已寫入快取：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 1/203,294 edges (0.0%) | speed=19,175.09 edges/s | elapsed=0.0s | ETA=10.6s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 50,824/203,294 edges (25.0%) | speed=148,082.13 edges/s | elapsed=0.3s | ETA=1.0s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 101,647/203,294 edges (50.0%) | speed=148,275.97 edges/s | elapsed=0.7s | ETA=0.7s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 152,471/203,294 edges (75.0%) | speed=145,398.80 edges/s | elapsed=1.0s | ETA=0.3s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 203,294/203,294 edges (100.0%) | speed=146,000.44 edges/s | elapsed=1.4s | ETA=0.0s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 203,294/203,294 edges (100.0%) | speed=145,522.55 edges/s | elapsed=1.4s | ETA=0.0s | highway counts ready
+[CELL4_CACHE_READ_START] /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz | compressed_size=17.96 MiB
+[CELL4_STAGE_START] 解壓／讀取 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz
+[CELL4_STAGE_DONE] 解壓／讀取 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz | elapsed=6.74s | status=PASS
+[CELL4_CACHE_READ_DONE] /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz | compressed_size=17.96 MiB | source_rate=2.66 MiB/s | elapsed=6.75s
+使用 Geofabrik PBF 路網快取：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz
+快取 OSM 圖：節點=83,283 | 道路段=203,294
+Geofabrik 快照版本檢查：PASS
+[CELL4_STAGE_DONE] MOTOR OSM 快取新鮮度驗證／載入 | elapsed=8.20s | status=PASS
+V65.82 MOTOR 專用路網快取命中；CAR drive_service 快取未使用此圖。
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 1/203,294 edges (0.0%) | speed=14,596.62 edges/s | elapsed=0.0s | ETA=13.9s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 50,824/203,294 edges (25.0%) | speed=148,726.21 edges/s | elapsed=0.3s | ETA=1.0s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 101,647/203,294 edges (50.0%) | speed=149,142.30 edges/s | elapsed=0.7s | ETA=0.7s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 152,471/203,294 edges (75.0%) | speed=148,572.93 edges/s | elapsed=1.0s | ETA=0.3s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 203,294/203,294 edges (100.0%) | speed=147,363.15 edges/s | elapsed=1.4s | ETA=0.0s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 203,294/203,294 edges (100.0%) | speed=147,081.37 edges/s | elapsed=1.4s | ETA=0.0s | highway counts ready
 V65.82 MOTOR 原始自訂路網：節點=83,283 | directed edges=203,294 | track=3,454 | service=103,747 | residential=44,445 | living_street=1,330
 本次不下載 OSM，直接使用已取得的路網快取／圖形。
 [CELL4_OSM_PROVENANCE] {"evidence_status": "PBF_REMOTE_SIGNATURE_RECORDED", "fingerprint_sha256": null, "fingerprint_status": null, "graph_edges": 203294, "graph_nodes": 83283, "mode": "MOTOR", "network_type": "fro_motor_drive_service_track_v1", "pbf_remote_version_signature": "43081854893940312546f1538c909457189da415b751b7872e27a05b4627b4b4", "source_type": "geofabrik_taiwan_pbf", "source_type_inferred": false}
@@ -173,406 +166,757 @@ V65.82 MOTOR 原始自訂路網：節點=83,283 | directed edges=203,294 | track
 [CELL4_STAGE_START] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api
 [CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
 [CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | still_running=True | elapsed=60.0s | 此步驟尚無逐筆回呼；程序仍在執行。
-[CELL4_STAGE_DONE] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | elapsed=61.34s | status=ERROR | error=ResponseStatusCodeError: 'overpass-api.de' responded: 502 Bad Gateway # 502 Gateway Timeout
+[CELL4_STAGE_DONE] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | elapsed=77.09s | status=PASS
+水體資料下載成功：https://overpass-api.de/api | features=6,421
+機車 水體資料來源端點：https://overpass-api.de/api
+[CELL4_PROGRESS] OSM 水路／水體 geometry 掃描 | 1/6,421 geometries (0.0%) | speed=5,992.37 geometries/s | elapsed=0.0s | ETA=1.1s
+[CELL4_PROGRESS] OSM 水路／水體 geometry 掃描 | 1,606/6,421 geometries (25.0%) | speed=97,515.55 geometries/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] OSM 水路／水體 geometry 掃描 | 3,211/6,421 geometries (50.0%) | speed=101,711.66 geometries/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] OSM 水路／水體 geometry 掃描 | 4,816/6,421 geometries (75.0%) | speed=100,071.65 geometries/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] OSM 水路／水體 geometry 掃描 | 6,421/6,421 geometries (100.0%) | speed=99,556.30 geometries/s | elapsed=0.1s | ETA=0.0s
+[CELL4_PROGRESS] OSM 水路／水體 geometry 掃描 | 6,421/6,421 geometries (100.0%) | speed=93,150.27 geometries/s | elapsed=0.1s | ETA=0.0s | valid=6,421; areal_parts=2,614
+OSM 完整水體 geometry=6,421 筆 | 面狀水域硬阻隔=2,614 筆
+[CELL4_STAGE_START] 寫入／壓縮 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/water_539c8a47f86efde3.pkl.gz
+[CELL4_STAGE_DONE] 寫入／壓縮 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/water_539c8a47f86efde3.pkl.gz | elapsed=0.10s | status=PASS
+[CELL4_CACHE_WRITE_DONE] /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/water_539c8a47f86efde3.pkl.gz | size=1.38 MiB
+OSM 完整水體／面狀水域已寫入快取：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/water_539c8a47f86efde3.pkl.gz
 
-This Overpass API server is currently at capacity. All query workers are busy
-and the request queue is full.
+======================================================================
+建立機車道路權重
+======================================================================
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 1/203,294 edges (0.0%) | speed=25,760.58 edges/s | elapsed=0.0s | ETA=7.9s
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 50,824/203,294 edges (25.0%) | speed=34,524.19 edges/s | elapsed=1.5s | ETA=4.4s
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 101,647/203,294 edges (50.0%) | speed=34,973.85 edges/s | elapsed=2.9s | ETA=2.9s
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 152,471/203,294 edges (75.0%) | speed=35,793.66 edges/s | elapsed=4.3s | ETA=1.4s
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 203,294/203,294 edges (100.0%) | speed=36,574.91 edges/s | elapsed=5.6s | ETA=0.0s
+排除道路： 9433
+保留加權 edges： 193861
+V65.82 MOTOR 道路類型稽核（有向 edge；input／blocked／retained）：
+  highway=track: input=3,454 | blocked_by_MOTOR_rules=54 | retained=3,400
+  highway=service: input=103,747 | blocked_by_MOTOR_rules=7,266 | retained=96,481
+  highway=residential: input=44,445 | blocked_by_MOTOR_rules=596 | retained=43,849
+  highway=living_street: input=1,330 | blocked_by_MOTOR_rules=450 | retained=880
+V65.85.7.20 MOTOR 道路倍率成本（沿用 v65.85.7.12 設定）：啟用 | 臺31-39系列高鐵橋下道路=×0.95 | 臺61-89系列（路線編號／名稱／地方路名）平面側車道=×0.95 | Service=×1.00 | Living Street=×1.00 | Track=×2.00 | Unpaved=×2.00 | Destination=×1.15
+MOTOR 台66側車道離開成本：已移除 | 額外固定成本=0m
+目前節點數： 83283
+目前道路段數： 193861
+移除沒有道路連接的節點： 3385
+最大連通區塊節點數： 78112 nodes
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 203,294/203,294 edges (100.0%) | speed=33,147.40 edges/s | elapsed=6.1s | ETA=0.0s | edge scan and weights complete
 
-## What to do
+======================================================================
+將地籍點接到「最近道路段的實際位置」，避免只接道路端點造成超過 100 公尺的偏移
+======================================================================
+建立本模式道路圖的最近節點基準（MOTOR track 圖不沿用 CAR node ID）。
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 1/115 rows (0.9%) | speed=1,270.83 rows/s | elapsed=0.0s | ETA=0.1s
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 29/115 rows (25.2%) | speed=2,959.46 rows/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 58/115 rows (50.4%) | speed=3,701.75 rows/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 87/115 rows (75.7%) | speed=4,125.08 rows/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 115/115 rows (100.0%) | speed=4,345.96 rows/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 115/115 rows (100.0%) | speed=4,032.33 rows/s | elapsed=0.0s | ETA=0.0s | address_road_hits=1
+[V65.85.7.14_PARCEL_NEAREST_ROAD_RULE] parcel cases: selected edge = argmin(metric distance from primary parcel point to complete geometry of all MOTOR-routable OSM edges); address/main-road/branch/dead-end overrides disabled for parcel snap; virtual anchor forced to the nearest-edge projection
+主要定位最近道路段：115 筆 | 平均道路距離=44.6 m | 最大=132.9 m
+[V65.77_SNAP_COLLISION] candidate_pairs=42 | forced_anchor_cases=49 | point_threshold=10.0m | projection_threshold=5.0m
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 14338744824, "point_index_a": 11, "point_name_a": "桃園市八德區營盤段06830000", "point_index_b": 14, "point_name_b": "桃園市八德區營盤段07010000", "source_point_separation_m": 98.71858777632262, "road_projection_separation_m": 38.42558342890991, "edge_a": [14338744818, 14338744824, 0], "edge_b": [14338744818, 14338744824, 0], "edge_distance_a_m": 60.20669705601023, "edge_distance_b_m": 10.69217410961963}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 14338744824, "point_index_a": 13, "point_name_a": "桃園市八德區營盤段07000000", "point_index_b": 14, "point_name_b": "桃園市八德區營盤段07010000", "source_point_separation_m": 45.03518065855952, "road_projection_separation_m": 38.42558342890991, "edge_a": [14338744818, 14338744824, 0], "edge_b": [14338744818, 14338744824, 0], "edge_distance_a_m": 32.09614845278974, "edge_distance_b_m": 10.69217410961963}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 4414875174, "point_index_a": 21, "point_name_a": "桃園市大溪區廣福段01720000", "point_index_b": 22, "point_name_b": "桃園市大溪區廣福段01760000", "source_point_separation_m": 88.84867295123202, "road_projection_separation_m": 31.61489041307351, "edge_a": [4414875174, 4414875250, 0], "edge_b": [4414875174, 4414875250, 0], "edge_distance_a_m": 9.404862001960952, "edge_distance_b_m": 63.70762950103034}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 4425687044, "point_index_a": 24, "point_name_a": "桃園市中壢區山上段08570000", "point_index_b": 26, "point_name_b": "桃園市中壢區山上段08770000", "source_point_separation_m": 107.40131190964605, "road_projection_separation_m": 74.99840557682977, "edge_a": [4421246324, 4425687044, 0], "edge_b": [4425687048, 4425687044, 0], "edge_distance_a_m": 46.06823282676236, "edge_distance_b_m": 58.475309202339}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 4425687044, "point_index_a": 24, "point_name_a": "桃園市中壢區山上段08570000", "point_index_b": 27, "point_name_b": "桃園市中壢區山上段08780000", "source_point_separation_m": 89.10947603378196, "road_projection_separation_m": 21.329131513364757, "edge_a": [4421246324, 4425687044, 0], "edge_b": [4421246324, 4425687044, 0], "edge_distance_a_m": 46.06823282676236, "edge_distance_b_m": 40.45093769570258}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 4425687044, "point_index_a": 24, "point_name_a": "桃園市中壢區山上段08570000", "point_index_b": 28, "point_name_b": "桃園市中壢區山上段08890000", "source_point_separation_m": 116.40863053885259, "road_projection_separation_m": 57.00600744769436, "edge_a": [4421246324, 4425687044, 0], "edge_b": [4425687048, 4425687044, 0], "edge_distance_a_m": 46.06823282676236, "edge_distance_b_m": 27.309896505594967}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 4425687044, "point_index_a": 26, "point_name_a": "桃園市中壢區山上段08770000", "point_index_b": 27, "point_name_b": "桃園市中壢區山上段08780000", "source_point_separation_m": 19.7870056683547, "road_projection_separation_m": 83.95224465142421, "edge_a": [4425687048, 4425687044, 0], "edge_b": [4421246324, 4425687044, 0], "edge_distance_a_m": 58.475309202339, "edge_distance_b_m": 40.45093769570258}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 4425687044, "point_index_a": 26, "point_name_a": "桃園市中壢區山上段08770000", "point_index_b": 28, "point_name_b": "桃園市中壢區山上段08890000", "source_point_separation_m": 88.85542574275665, "road_projection_separation_m": 23.155672427388225, "edge_a": [4425687048, 4425687044, 0], "edge_b": [4425687048, 4425687044, 0], "edge_distance_a_m": 58.475309202339, "edge_distance_b_m": 27.309896505594967}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 4425687044, "point_index_a": 27, "point_name_a": "桃園市中壢區山上段08780000", "point_index_b": 28, "point_name_b": "桃園市中壢區山上段08890000", "source_point_separation_m": 78.16538572079239, "road_projection_separation_m": 70.25504477171799, "edge_a": [4421246324, 4425687044, 0], "edge_b": [4425687048, 4425687044, 0], "edge_distance_a_m": 40.45093769570258, "edge_distance_b_m": 27.309896505594967}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1151896804, "point_index_a": 29, "point_name_a": "桃園市中壢區內厝段18460000", "point_index_b": 31, "point_name_b": "桃園市中壢區月眉段11940000", "source_point_separation_m": 165.0082696580775, "road_projection_separation_m": 164.03292632943482, "edge_a": [1151896802, 1151896804, 0], "edge_b": [1909050203, 1151896804, 0], "edge_distance_a_m": 25.519343713589887, "edge_distance_b_m": 22.485625146738023}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1151896804, "point_index_a": 29, "point_name_a": "桃園市中壢區內厝段18460000", "point_index_b": 32, "point_name_b": "桃園市中壢區月眉段12050000", "source_point_separation_m": 141.95102104461174, "road_projection_separation_m": 140.9802190004274, "edge_a": [1151896802, 1151896804, 0], "edge_b": [1909050203, 1151896804, 0], "edge_distance_a_m": 25.519343713589887, "edge_distance_b_m": 22.587533622448422}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1151896804, "point_index_a": 29, "point_name_a": "桃園市中壢區內厝段18460000", "point_index_b": 33, "point_name_b": "桃園市中壢區月眉段12080000", "source_point_separation_m": 125.499054569702, "road_projection_separation_m": 88.00502619575128, "edge_a": [1151896802, 1151896804, 0], "edge_b": [10588054004, 1151896804, 0], "edge_distance_a_m": 25.519343713589887, "edge_distance_b_m": 48.457434559866876}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1151896804, "point_index_a": 31, "point_name_a": "桃園市中壢區月眉段11940000", "point_index_b": 32, "point_name_b": "桃園市中壢區月眉段12050000", "source_point_separation_m": 23.05752591637785, "road_projection_separation_m": 23.057300710522515, "edge_a": [1909050203, 1151896804, 0], "edge_b": [1909050203, 1151896804, 0], "edge_distance_a_m": 22.485625146738023, "edge_distance_b_m": 22.587533622448422}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1151896804, "point_index_a": 31, "point_name_a": "桃園市中壢區月眉段11940000", "point_index_b": 33, "point_name_b": "桃園市中壢區月眉段12080000", "source_point_separation_m": 53.149731924115144, "road_projection_separation_m": 102.552792496855, "edge_a": [1909050203, 1151896804, 0], "edge_b": [10588054004, 1151896804, 0], "edge_distance_a_m": 22.485625146738023, "edge_distance_b_m": 48.457434559866876}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1151896804, "point_index_a": 32, "point_name_a": "桃園市中壢區月眉段12050000", "point_index_b": 33, "point_name_b": "桃園市中壢區月眉段12080000", "source_point_separation_m": 36.76311500435295, "road_projection_separation_m": 82.68242983105154, "edge_a": [1909050203, 1151896804, 0], "edge_b": [10588054004, 1151896804, 0], "edge_distance_a_m": 22.587533622448422, "edge_distance_b_m": 48.457434559866876}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 2975854566, "point_index_a": 34, "point_name_a": "桃園市中壢區新興段04400000", "point_index_b": 35, "point_name_b": "桃園市中壢區新興段04420000", "source_point_separation_m": 50.079743889540005, "road_projection_separation_m": 12.196353534121377, "edge_a": [2975854566, 2975854559, 0], "edge_b": [2975854566, 2975854559, 0], "edge_distance_a_m": 82.96692235066922, "edge_distance_b_m": 43.054041627618034}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 11660912569, "point_index_a": 42, "point_name_a": "桃園市平鎮區富貴段09760000", "point_index_b": 43, "point_name_b": "桃園市平鎮區富貴段09760001", "source_point_separation_m": 39.75164792667345, "road_projection_separation_m": 61.185992679785926, "edge_a": [4421266769, 11660912569, 0], "edge_b": [11660912569, 4421266769, 0], "edge_distance_a_m": 24.42172144747589, "edge_distance_b_m": 40.104425001498996}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 5326638679, "point_index_a": 45, "point_name_a": "桃園市平鎮區福林段07540000", "point_index_b": 108, "point_name_b": "桃園市平鎮區福林段07980000", "source_point_separation_m": 66.0817623386776, "road_projection_separation_m": 89.82380042283505, "edge_a": [5326638679, 5326638670, 0], "edge_b": [8344416884, 5326638679, 0], "edge_distance_a_m": 20.786103933388883, "edge_distance_b_m": 8.406359595605924}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 5326638679, "point_index_a": 45, "point_name_a": "桃園市平鎮區福林段07540000", "point_index_b": 109, "point_name_b": "桃園市平鎮區福林段08010000", "source_point_separation_m": 85.2265966525126, "road_projection_separation_m": 59.29022164831387, "edge_a": [5326638679, 5326638670, 0], "edge_b": [5326638679, 8344416884, 0], "edge_distance_a_m": 20.786103933388883, "edge_distance_b_m": 33.002027378023314}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 5326638679, "point_index_a": 108, "point_name_a": "桃園市平鎮區福林段07980000", "point_index_b": 109, "point_name_b": "桃園市平鎮區福林段08010000", "source_point_separation_m": 108.16171521073672, "road_projection_separation_m": 90.07953986037943, "edge_a": [8344416884, 5326638679, 0], "edge_b": [5326638679, 8344416884, 0], "edge_distance_a_m": 8.406359595605924, "edge_distance_b_m": 33.002027378023314}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 8344416884, "point_index_a": 46, "point_name_a": "桃園市平鎮區福林段07990000", "point_index_b": 48, "point_name_b": "桃園市平鎮區福林段08050000", "source_point_separation_m": 128.62310960982668, "road_projection_separation_m": 175.8457174079683, "edge_a": [8344416884, 5326638679, 0], "edge_b": [8344416884, 5326638679, 0], "edge_distance_a_m": 25.64793093384029, "edge_distance_b_m": 132.93957801131845}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 8344416884, "point_index_a": 46, "point_name_a": "桃園市平鎮區福林段07990000", "point_index_b": 107, "point_name_b": "桃園市平鎮區福林段07970000", "source_point_separation_m": 92.47571125715258, "road_projection_separation_m": 73.74563699250133, "edge_a": [8344416884, 5326638679, 0], "edge_b": [8344416884, 5326638679, 0], "edge_distance_a_m": 25.64793093384029, "edge_distance_b_m": 18.05817664647646}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 8344416884, "point_index_a": 48, "point_name_a": "桃園市平鎮區福林段08050000", "point_index_b": 107, "point_name_b": "桃園市平鎮區福林段07970000", "source_point_separation_m": 179.8716596171448, "road_projection_separation_m": 126.2534450686507, "edge_a": [8344416884, 5326638679, 0], "edge_b": [8344416884, 5326638679, 0], "edge_distance_a_m": 132.93957801131845, "edge_distance_b_m": 18.05817664647646}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 7190890753, "point_index_a": 50, "point_name_a": "桃園市新屋區十五間段十五間尾小段03130000", "point_index_b": 51, "point_name_b": "桃園市新屋區十五間段十五間尾小段03150000", "source_point_separation_m": 41.42198931946704, "road_projection_separation_m": 41.39551242700033, "edge_a": [7190890753, 7190882758, 0], "edge_b": [7190890753, 7190882758, 0], "edge_distance_a_m": 78.34056605456537, "edge_distance_b_m": 79.82135977697398}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 3251925423, "point_index_a": 55, "point_name_a": "桃園市新屋區下田心子段下田心子小段08500001", "point_index_b": 56, "point_name_b": "桃園市新屋區下田心子段下田心子小段09880000", "source_point_separation_m": 182.05937999981688, "road_projection_separation_m": 223.45957895518833, "edge_a": [3251925423, 3251925435, 0], "edge_b": [3251925423, 3251925376, 0], "edge_distance_a_m": 94.7809490813016, "edge_distance_b_m": 49.75064834913817}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 7099609375, "point_index_a": 63, "point_name_a": "桃園市新屋區東勢段甲頭厝小段09120001", "point_index_b": 64, "point_name_b": "桃園市新屋區東勢段甲頭厝小段09130000", "source_point_separation_m": 20.58633351426118, "road_projection_separation_m": 20.577515850457036, "edge_a": [7099609373, 7099609375, 0], "edge_b": [7099609373, 7099609375, 0], "edge_distance_a_m": 31.152312667325695, "edge_distance_b_m": 31.75478174786874}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 3756974307, "point_index_a": 67, "point_name_a": "桃園市新屋區青田段04000000", "point_index_b": 68, "point_name_b": "桃園市新屋區青田段04030000", "source_point_separation_m": 22.99062908341026, "road_projection_separation_m": 7.057707718152204, "edge_a": [3756974301, 3756974307, 0], "edge_b": [3756974301, 3756974307, 0], "edge_distance_a_m": 16.06942781947004, "edge_distance_b_m": 37.94996226052072}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1863230182, "point_index_a": 71, "point_name_a": "桃園市新屋區後庄段19200000", "point_index_b": 72, "point_name_b": "桃園市新屋區後庄段19210000", "source_point_separation_m": 23.608824401681318, "road_projection_separation_m": 23.608643477304568, "edge_a": [1863230182, 1863230184, 0], "edge_b": [1863230182, 1863230184, 0], "edge_distance_a_m": 48.18215122433246, "edge_distance_b_m": 48.08972376379542}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1863230176, "point_index_a": 73, "point_name_a": "桃園市新屋區後庄段19350000", "point_index_b": 74, "point_name_b": "桃園市新屋區後庄段19360000", "source_point_separation_m": 24.112850078047785, "road_projection_separation_m": 24.11084358102079, "edge_a": [1863230176, 1863230173, 0], "edge_b": [1863230176, 1863230173, 0], "edge_distance_a_m": 58.783151320121576, "edge_distance_b_m": 59.09421514613211}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1863230176, "point_index_a": 73, "point_name_a": "桃園市新屋區後庄段19350000", "point_index_b": 75, "point_name_b": "桃園市新屋區後庄段19370000", "source_point_separation_m": 47.36699756049086, "road_projection_separation_m": 89.7060159546651, "edge_a": [1863230176, 1863230173, 0], "edge_b": [1863230176, 1863230173, 0], "edge_distance_a_m": 58.783151320121576, "edge_distance_b_m": 67.85691396048769}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1863230176, "point_index_a": 74, "point_name_a": "桃園市新屋區後庄段19360000", "point_index_b": 75, "point_name_b": "桃園市新屋區後庄段19370000", "source_point_separation_m": 27.870384866525992, "road_projection_separation_m": 67.20608425649922, "edge_a": [1863230176, 1863230173, 0], "edge_b": [1863230176, 1863230173, 0], "edge_distance_a_m": 59.09421514613211, "edge_distance_b_m": 67.85691396048769}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 7190939382, "point_index_a": 76, "point_name_a": "桃園市新屋區後庄段20470000", "point_index_b": 77, "point_name_b": "桃園市新屋區後庄段20480000", "source_point_separation_m": 24.672712197935716, "road_projection_separation_m": 24.477962425877035, "edge_a": [7190939382, 4434540302, 0], "edge_b": [7190939382, 4434540302, 0], "edge_distance_a_m": 32.14361779747047, "edge_distance_b_m": 29.049739535965163}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 7190939382, "point_index_a": 76, "point_name_a": "桃園市新屋區後庄段20470000", "point_index_b": 78, "point_name_b": "桃園市新屋區後庄段20490000", "source_point_separation_m": 50.09947352958488, "road_projection_separation_m": 49.63282668891577, "edge_a": [7190939382, 4434540302, 0], "edge_b": [4434540302, 7190939382, 0], "edge_distance_a_m": 32.14361779747047, "edge_distance_b_m": 25.321612023945946}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 7190939382, "point_index_a": 77, "point_name_a": "桃園市新屋區後庄段20480000", "point_index_b": 78, "point_name_b": "桃園市新屋區後庄段20490000", "source_point_separation_m": 25.429630962202616, "road_projection_separation_m": 25.154864263038732, "edge_a": [7190939382, 4434540302, 0], "edge_b": [4434540302, 7190939382, 0], "edge_distance_a_m": 29.049739535965163, "edge_distance_b_m": 25.321612023945946}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1860741488, "point_index_a": 79, "point_name_a": "桃園市新屋區後庄段20590000", "point_index_b": 80, "point_name_b": "桃園市新屋區後庄段20600000", "source_point_separation_m": 20.067269779064752, "road_projection_separation_m": 20.03647357339535, "edge_a": [1860741488, 1860741457, 0], "edge_b": [1860741488, 1860741457, 0], "edge_distance_a_m": 57.622127030543105, "edge_distance_b_m": 58.73345196906022}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1860741488, "point_index_a": 79, "point_name_a": "桃園市新屋區後庄段20590000", "point_index_b": 81, "point_name_b": "桃園市新屋區後庄段20610000", "source_point_separation_m": 40.107891051701486, "road_projection_separation_m": 44.07322400367346, "edge_a": [1860741488, 1860741457, 0], "edge_b": [1860741488, 1860741457, 0], "edge_distance_a_m": 57.622127030543105, "edge_distance_b_m": 58.728059109680224}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1860741488, "point_index_a": 80, "point_name_a": "桃園市新屋區後庄段20600000", "point_index_b": 81, "point_name_b": "桃園市新屋區後庄段20610000", "source_point_separation_m": 20.040764842382384, "road_projection_separation_m": 24.054226868933803, "edge_a": [1860741488, 1860741457, 0], "edge_b": [1860741488, 1860741457, 0], "edge_distance_a_m": 58.73345196906022, "edge_distance_b_m": 58.728059109680224}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1860741457, "point_index_a": 82, "point_name_a": "桃園市新屋區後庄段20680000", "point_index_b": 83, "point_name_b": "桃園市新屋區後庄段20690000", "source_point_separation_m": 26.646887107802403, "road_projection_separation_m": 13.826830740788628, "edge_a": [1860741488, 1860741457, 0], "edge_b": [1860741457, 1860741488, 0], "edge_distance_a_m": 52.26264197524766, "edge_distance_b_m": 29.483806530576757}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1863229992, "point_index_a": 92, "point_name_a": "新竹縣新豐鄉福興段後湖子小段04810000", "point_index_b": 94, "point_name_b": "新竹縣新豐鄉福興段後湖子小段05120000", "source_point_separation_m": 130.90342738009164, "road_projection_separation_m": 6.491402101302556, "edge_a": [698991592, 1863229992, 0], "edge_b": [698991592, 1863229992, 0], "edge_distance_a_m": 73.31669151025596, "edge_distance_b_m": 57.42568493520162}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1863229992, "point_index_a": 92, "point_name_a": "新竹縣新豐鄉福興段後湖子小段04810000", "point_index_b": 95, "point_name_b": "新竹縣新豐鄉福興段後湖子小段05190000", "source_point_separation_m": 193.79469009322023, "road_projection_separation_m": 189.6571645722156, "edge_a": [698991592, 1863229992, 0], "edge_b": [1864669142, 1863229992, 0], "edge_distance_a_m": 73.31669151025596, "edge_distance_b_m": 46.73480198310187}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 1863229992, "point_index_a": 94, "point_name_a": "新竹縣新豐鄉福興段後湖子小段05120000", "point_index_b": 95, "point_name_b": "新竹縣新豐鄉福興段後湖子小段05190000", "source_point_separation_m": 134.83460024489787, "road_projection_separation_m": 183.33543065494152, "edge_a": [698991592, 1863229992, 0], "edge_b": [1864669142, 1863229992, 0], "edge_distance_a_m": 57.42568493520162, "edge_distance_b_m": 46.73480198310187}
+[V65.77_SNAP_COLLISION] PAIR={"shared_candidate_endpoint_node": 13622391945, "point_index_a": 102, "point_name_a": "新竹縣新豐鄉福興段後湖子小段12060000", "point_index_b": 103, "point_name_b": "新竹縣新豐鄉福興段後湖子小段12070000", "source_point_separation_m": 21.80539531702914, "road_projection_separation_m": 26.56678590914652, "edge_a": [1864669034, 13622391945, 0], "edge_b": [1864669034, 13622391945, 0], "edge_distance_a_m": 41.228040388759624, "edge_distance_b_m": 26.464738083717286}
+[V65.77_SNAP_COLLISION] POSTCHECK | unresolved_shared_node_groups=1
+[V65.77_SNAP_COLLISION] UNRESOLVED={"final_shared_node": 14338744824, "indices": [11, 13], "labels": ["桃園市八德區營盤段06830000", "桃園市八德區營盤段07000000"], "repair_candidate_indices": [11, 13]}
+道路投影接點之間補接道路：34 段 | 反向補接=34 段 | 幾何fallback=0 段
+道路接點處理完成：道路接點變更=133 筆 | 地址道路優先成功=0 筆 | 地址道路未找到=0 筆 | 道路投影接點=104 筆 | 使用地址座標作為進場參考=0 筆 | 案件到最近道路段平均距離=44.9 m | 車輛進場接道路口平均直線距離=44.7 m | 車輛進場接道路口最大直線距離=132.9 m | 車輛進場沿道路距離：本次未採用支路沿道路距離作為接點
+本版進場道路規則：地址最後一段道路優先；若未找到則沿用既有道路接點邏輯
+沿用本次已取得 OSM 完整水體資料。
+地籍進場硬阻隔：僅檢查面狀水域 Polygon / MultiPolygon。
+因水路避讓調整道路節點： 0 筆；無安全接點： 0 筆； 32 點以外擴搜檢查=0 節點
+平均 snap： 44.70434950233183 m
+最大 snap： 132.93957801131845 m
+超過 500m： 0
+相同 OSM snap node 群組： 1
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 1/115 points (0.9%) | speed=168,095.47 points/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 29/115 points (25.2%) | speed=13,767.08 points/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 58/115 points (50.4%) | speed=14,284.50 points/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 87/115 points (75.7%) | speed=11,488.63 points/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 115/115 points (100.0%) | speed=11,877.41 points/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 115/115 points (100.0%) | speed=9,377.57 points/s | elapsed=0.0s | ETA=0.0s | virtual_nodes=104; owner_errors=0
+V65.64.23 virtual anchor reuse：0 筆（通過）
+V65.64.23 virtual anchor owner 驗證：104 筆（通過）
+V65.64.23 同一路名鄰近低階道路保護案件： 18 筆
+因此可能產生 0 m 地籍點間距離： 1 筆
 
-Retry your request using exponential backoff: wait a short interval, then retry.
-If the request fails again
-水體查詢端點失敗：https://overpass-api.de/api | transient=True | ResponseStatusCodeError: 'overpass-api.de' responded: 502 Bad Gateway # 502 Gateway Timeout
+======================================================================
+建立本機 OSM 道路成本矩陣（機車）
+======================================================================
+建立路徑／旅行時間矩陣（每條道路只計算一次）...
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 1/194,345 edges (0.0%) | speed=29,161.32 edges/s | elapsed=0.0s | ETA=6.7s
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 48,587/194,345 edges (25.0%) | speed=75,826.52 edges/s | elapsed=0.6s | ETA=1.9s
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 97,173/194,345 edges (50.0%) | speed=76,425.63 edges/s | elapsed=1.3s | ETA=1.3s
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 145,759/194,345 edges (75.0%) | speed=76,981.46 edges/s | elapsed=1.9s | ETA=0.6s
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 194,345/194,345 edges (100.0%) | speed=76,225.87 edges/s | elapsed=2.5s | ETA=0.0s
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 194,345/194,345 edges (100.0%) | speed=76,150.51 edges/s | elapsed=2.6s | ETA=0.0s | route_pairs=192,753; time_pairs=192,753; length_edges=194,345
+  CSR 節點=80,002 | directed 道路段=192,753
+計算各查核點之間的最短道路路線...
+ROUTE Dijkstra：來源 115 筆分成 8 批，每批最多 16 筆；predecessor 磁碟映射
+[CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 1/8
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 1/8 | elapsed=0.21s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 16/115 sources (13.9%) | speed=72.85 sources/s | elapsed=0.2s | ETA=1.4s | batch=1/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 2/8
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 2/8 | elapsed=0.21s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 32/115 sources (27.8%) | speed=73.15 sources/s | elapsed=0.4s | ETA=1.1s | batch=2/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 3/8
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 3/8 | elapsed=0.22s | status=PASS
+[CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 4/8
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 4/8 | elapsed=0.21s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 64/115 sources (55.7%) | speed=72.38 sources/s | elapsed=0.9s | ETA=0.7s | batch=4/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 5/8
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 5/8 | elapsed=0.20s | status=PASS
+[CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 6/8
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 6/8 | elapsed=0.20s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 96/115 sources (83.5%) | speed=73.56 sources/s | elapsed=1.3s | ETA=0.3s | batch=6/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 7/8
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 7/8 | elapsed=0.23s | status=PASS
+[CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 8/8
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 8/8 | elapsed=0.06s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 115/115 sources (100.0%) | speed=70.84 sources/s | elapsed=1.6s | ETA=0.0s | batch=8/8; chunk_sources=3; working_set≈2.75 MiB; predecessor=disk-memmap
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 115/115 sources (100.0%) | speed=70.55 sources/s | elapsed=1.6s | ETA=0.0s | batches=8; predecessor=disk-memmap
+最短道路路線計算完成。
+可達元素：13225/13225
+可達率：100.00%
+非對角可達率：100.00%
 
-This Overpass API server is currently at capacity. All query workers are busy
-and the request queue is full.
+檢查固定起點的實際可達性
+固定起點可到達：115/115 (100.00%)
 
-## What to do
+======================================================================
+第一階段：全部點位一起建立全域初始路線
+======================================================================
+[V65.85.7.46_SHARED_SNAP_GROUPS] {"shared_snap_node_group_count": 1, "shared_snap_point_count": 2, "groups": [{"snap_node_id": 14338744824, "members": ["桃園市八德區營盤段06830000", "桃園市八德區營盤段07000000"]}], "stable_member_order": "Cell2 original row index ascending"}
+全域初始路線：115 點 | 起點=農業部農糧署北區分署
+初始全域道路成本：177.40 km
 
-Retry your request using exponential backoff: wait a short interval, then retry.
-If the request fails again, double the wait time and retry again.
+======================================================================
+第二階段：全部點位一起做全域道路路線最佳化
+======================================================================
+V65.64.23 全域最佳化前 Virtual anchor 順序可行化：移動 0 次
+全域最佳化前道路成本：177.40 km
+最佳化視窗：前後各 24 個位置
+無意義繞回判定：近 8 站、直接道路距離 ≤ 3000 m、路徑繞行至少 1200 m
+調整路線順序第 1: 成本 177.43 公里等效值 | 耗時 0.1 秒
+調整路線順序第 2: 成本 174.43 公里等效值 | 耗時 0.1 秒
+調整路線順序第 3: 成本 174.11 公里等效值 | 耗時 0.1 秒
+調整路線順序第 4: 成本 173.23 公里等效值 | 耗時 0.1 秒
+調整路線順序第 5: 成本 173.06 公里等效值 | 耗時 0.1 秒
+調整路線順序第 6: 成本 172.97 公里等效值 | 耗時 0.1 秒
+調整路線順序第 7: 成本 172.97 公里等效值 | 耗時 0.1 秒
+調整路線順序第 8: 成本 172.97 公里等效值 | 耗時 0.1 秒
+調整路線順序第 9: 成本 173.23 公里等效值 | 耗時 0.1 秒
+調整路線順序第 10: 成本 173.20 公里等效值 | 耗時 0.1 秒
+交換路線順序第 1: 成本 172.97 公里等效值 | 耗時 0.1 秒
+交換路線順序第 2: 成本 172.92 公里等效值 | 耗時 0.1 秒
+交換路線順序第 3: 成本 172.92 公里等效值 | 耗時 0.1 秒
+交換路線順序第 4: 無進一步改善
 
-## For heavy or automated use
+全域最佳化完成：改善 13 次
+全域道路成本：172.57 km
+全域目標函數：199.50 公里等效值
+全域 Crossing：11
+全域 U-turn：6
+V65.64.23 全域最佳化內建 Virtual anchor forward-crossing：0 段
 
-This public endpoint is intended for browser-based and human-operated tools.
-For automated or high-volume use, run a local Overpass API instance:
+======================================================================
+第三階段前置：建立實際道路距離矩陣（供每日工時計算）
+======================================================================
+建立 scipy CSR 實際道路長度矩陣...
+  CSR 節點=80,002 | directed 道路段=192,753
+計算所有查核點之間的道路距離...
+ROAD Dijkstra：來源 115 筆分成 8 批，每批最多 16 筆；不保留 predecessor
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 1/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 1/8 | elapsed=0.30s | status=PASS
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 16/115 sources (13.9%) | speed=53.05 sources/s | elapsed=0.3s | ETA=1.9s | batch=1/8; chunk_sources=16; working_set≈9.77 MiB; predecessor=off
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 2/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 2/8 | elapsed=0.29s | status=PASS
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 32/115 sources (27.8%) | speed=53.51 sources/s | elapsed=0.6s | ETA=1.6s | batch=2/8; chunk_sources=16; working_set≈9.77 MiB; predecessor=off
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 3/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 3/8 | elapsed=0.27s | status=PASS
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 4/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 4/8 | elapsed=0.28s | status=PASS
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 64/115 sources (55.7%) | speed=55.33 sources/s | elapsed=1.2s | ETA=0.9s | batch=4/8; chunk_sources=16; working_set≈9.77 MiB; predecessor=off
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 5/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 5/8 | elapsed=0.27s | status=PASS
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 6/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 6/8 | elapsed=0.27s | status=PASS
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 96/115 sources (83.5%) | speed=56.38 sources/s | elapsed=1.7s | ETA=0.3s | batch=6/8; chunk_sources=16; working_set≈9.77 MiB; predecessor=off
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 7/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 7/8 | elapsed=0.27s | status=PASS
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 8/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 8/8 | elapsed=0.04s | status=PASS
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 115/115 sources (100.0%) | speed=56.84 sources/s | elapsed=2.0s | ETA=0.0s | batch=8/8; chunk_sources=3; working_set≈1.83 MiB; predecessor=off
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 115/115 sources (100.0%) | speed=56.79 sources/s | elapsed=2.0s | ETA=0.0s | batches=8; predecessor=off
+實際道路矩陣非對角可達率：100.00%
 
-https://github.com/b1tw153/Overpass-API/blob/main/README.md
+建立機車旅行時間矩陣（平均 30.0 km/h）
+  TIME CSR 節點=80,002 | directed 道路段=192,753
+計算所有查核點之間的行車時間...
+TIME Dijkstra：來源 115 筆分成 8 批，每批最多 16 筆；predecessor 磁碟映射
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 1/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 1/8 | elapsed=0.21s | status=PASS
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 16/115 sources (13.9%) | speed=72.44 sources/s | elapsed=0.2s | ETA=1.4s | batch=1/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 2/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 2/8 | elapsed=0.21s | status=PASS
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 32/115 sources (27.8%) | speed=71.44 sources/s | elapsed=0.4s | ETA=1.2s | batch=2/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 3/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 3/8 | elapsed=0.22s | status=PASS
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 4/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 4/8 | elapsed=0.20s | status=PASS
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 64/115 sources (55.7%) | speed=71.62 sources/s | elapsed=0.9s | ETA=0.7s | batch=4/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 5/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 5/8 | elapsed=0.21s | status=PASS
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 6/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 6/8 | elapsed=0.20s | status=PASS
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 96/115 sources (83.5%) | speed=72.48 sources/s | elapsed=1.3s | ETA=0.3s | batch=6/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 7/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 7/8 | elapsed=0.21s | status=PASS
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 8/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 8/8 | elapsed=0.04s | status=PASS
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 115/115 sources (100.0%) | speed=72.07 sources/s | elapsed=1.6s | ETA=0.0s | batch=8/8; chunk_sources=3; working_set≈2.75 MiB; predecessor=disk-memmap
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 115/115 sources (100.0%) | speed=71.96 sources/s | elapsed=1.6s | ETA=0.0s | batches=8; predecessor=disk-memmap
+[V65.85_ORDER_TRACE] TARGET_BINDINGS={"P33": {"matches": [], "unique_index": null}, "P34": {"matches": [], "unique_index": null}, "P35": {"matches": [], "unique_index": null}}
+[V65.85_ORDER_TRACE] TARGET_BINDING_BLOCKED; expected exactly one row per target.
+全域路線：維持目前方向 | 首站=桃園市八德區茄苳段07360000 (4.70 km)
+V65.64.23 Virtual anchor 實際通過順序修正：0 次
+✅ V65.64.23 全域路線修正後 Virtual anchor forward-crossing：0 段
+實際旅行時間矩陣非對角可達率：100.00%
+[V65.85_CLUSTER_TARGET_BINDINGS] {"02170001": {"matches": [], "unique_index": null}, "02180000": {"matches": [], "unique_index": null}, "02190000": {"matches": [], "unique_index": null}, "02200000": {"matches": [], "unique_index": null}, "02210000": {"matches": [], "unique_index": null}}
 
-Overpass 端點切換冷卻 2 秒。
-水體資料查詢端點 2/3：https://overpass.private.coffee/api
-[CELL4_STAGE_START] 機車 OSM 水路／水體資料下載 https://overpass.private.coffee/api
-[CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass.private.coffee/api | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
+======================================================================
+附加方案：所有點位一次跑完（不受每日時間限制；單日最終方案將於實際 OSM 路線比較後決定）
+======================================================================
+v65.64.23：全點一次方案正式納入 Virtual anchor＋一般案件物理通過順序硬性限制。
+[V65.85.7_VA_REPAIR_STEP] {"label": "全點一次 seed TIME_VA round 1", "pass": 1, "edge_pos0": 3, "from_point": 9, "to_point": 7, "offending_points": [10, 8], "old_positions0": {"10": 6, "8": 5}, "new_positions0": {"10": 4, "8": 5}, "before_order_sha256_prefix": "342d5ade45379c73", "after_order_sha256_prefix": "cdd84386cff53022", "repeated_order_first_seen_pass": null}
+[V65.85.7_VA_REPAIR_STEP] {"label": "全點一次 seed TIME_VA round 1", "pass": 2, "edge_pos0": 102, "from_point": 23, "to_point": 22, "offending_points": [111], "old_positions0": {"111": 105}, "new_positions0": {"111": 103}, "before_order_sha256_prefix": "cdd84386cff53022", "after_order_sha256_prefix": "8458ae71e9798183", "repeated_order_first_seen_pass": null}
+[V65.85.7_VA_REPAIR_SUMMARY] {"label": "全點一次 seed TIME_VA round 1", "max_passes": 256, "passes_completed": 3, "moves_count": 3, "stop_reason": "NO_VA_CROSSING_REMAINS", "cycle_detected": false, "cycle_length": null, "cycle_first_seen_pass": null, "cycle_repeat_pass": null, "initial_order_sha256": "342d5ade45379c736bd366626dd27ca55b09b4e8f4fd089fff6f22e999e7b510", "step_records_count": 2, "step_records_sample": [{"label": "全點一次 seed TIME_VA round 1", "pass": 1, "edge_pos0": 3, "from_point": 9, "to_point": 7, "offending_points": [10, 8], "old_positions0": {"10": 6, "8": 5}, "new_positions0": {"10": 4, "8": 5}, "before_order_sha256_prefix": "342d5ade45379c73", "after_order_sha256_prefix": "cdd84386cff53022", "repeated_order_first_seen_pass": null}, {"label": "全點一次 seed TIME_VA round 1", "pass": 2, "edge_pos0": 102, "from_point": 23, "to_point": 22, "offending_points": [111], "old_positions0": {"111": 105}, "new_positions0": {"111": 103}, "before_order_sha256_prefix": "cdd84386cff53022", "after_order_sha256_prefix": "8458ae71e9798183", "repeated_order_first_seen_pass": null}], "final_va_crossing_count": 0, "final_va_crossing_sample": [], "final_order_sha256": "8458ae71e9798183197530f42d2c177fd89d29c8fef63ad37945441d8a45e3c7", "final_order_preview": [0, 3, 2, 9, 10, 8, 7, 1, 16, 17, 13, 11]}
+[V65.85.7_COMBINED_ORDER_REPAIR_ROUND] {"label": "全點一次 seed", "round": 1, "max_rounds": 32, "va_moves_this_round": 3, "physical_moves_this_round": 0, "va_moves_total": 3, "physical_moves_total": 0, "va_crossing_count_after_round": 0, "physical_crossing_count_after_round": 0, "va_crossing_sample": [], "physical_crossing_sample": [], "va_repair_stop_reason": "NO_VA_CROSSING_REMAINS", "va_repair_cycle_detected": false, "va_repair_cycle_length": null, "feasible_after_round": true, "order_changed": true, "repeated_order_first_seen_round": null}
+[V65.85.7_COMBINED_ORDER_REPAIR_SUMMARY] {"label": "全點一次 seed", "stop_reason": "FEASIBLE", "rounds_completed": 1, "max_rounds": 32, "va_moves_total": 3, "physical_moves_total": 0, "va_crossing_count_final": 0, "physical_crossing_count_final": 0, "va_crossing_sample_final": [], "physical_crossing_sample_final": [], "feasible_final": true}
+[V65.85.7.46_SHARED_SNAP_SEED_NORMALIZATION] {"normalized_group_count": 1, "normalized_groups": [{"members": [11, 13], "before_members": [13, 11], "after_members": [11, 13], "was_contiguous": true}], "stable_member_order": "Cell2 original row index ascending"}
+V65.85 全點一次 seed TIME-based Virtual anchor 可行化：移動 3 次
+[V65.85_ONE_SHOT_2OPT] {"pass": 1, "reverse_start_pos0": 35, "reverse_end_pos0": 38, "before_min": 348.95446653274485, "after_min": 348.5345964505136, "improvement_min": 0.41987008223122757, "improving_candidate_count": 4}
+[V65.85_ONE_SHOT_2OPT] {"pass": 2, "reverse_start_pos0": 92, "reverse_end_pos0": 99, "before_min": 348.5345964505136, "after_min": 348.23821245051363, "improvement_min": 0.2963839999999891, "improving_candidate_count": 3}
+[V65.85_ONE_SHOT_2OPT] pass=3 no feasible improving candidate | improving_candidates=2
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 1/110 windows (0.9%) | speed=210,748.14 windows/s | elapsed=0.0s | ETA=0.0s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=8; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=16; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=24; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 28/110 windows (25.5%) | speed=8.39 windows/s | elapsed=3.3s | ETA=9.8s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=32; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=40; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=48; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 55/110 windows (50.0%) | speed=5.81 windows/s | elapsed=9.5s | ETA=9.5s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=56; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=64; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=72; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=80; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 83/110 windows (75.5%) | speed=6.07 windows/s | elapsed=13.7s | ETA=4.4s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=88; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=96; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=104; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.23 windows/s | elapsed=17.7s | ETA=0.0s
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.17 windows/s | elapsed=17.8s | ETA=0.0s | scored=110; candidates=59
+[V65.85.7_ONE_SHOT_BLOCK_PERMUTATION] {"pass": 1, "accepted": true, "block_size": 5, "start_pos0": 106, "block_before_names": ["桃園市大溪區社角段06740000", "桃園市八德區連城段02580000", "桃園市大溪區仁德段00460000", "桃園市大溪區社角段05600000", "桃園市大溪區瑞興段18980000"], "block_after_names": ["桃園市大溪區社角段06740000", "桃園市大溪區社角段05600000", "桃園市大溪區仁德段00460000", "桃園市大溪區瑞興段18980000", "桃園市八德區連城段02580000"], "before_closed_time_min": 348.23821245051363, "after_closed_time_min": 347.6716688505136, "improvement_min": 0.5665436000000454, "tie_break_applied": false, "spatial_sweep_before_m": 119746.73967676598, "spatial_sweep_after_m": 118548.4849354446, "spatial_sweep_delta_m": -1198.254741321376, "windows_scanned": 110, "candidate_permutations_scored": 59, "strict_time_improvement_candidates": 2, "equal_time_spatial_tiebreak_candidates": 57, "candidate_validation_count": 1, "validation_cap": 512, "virtual_anchor_rejections": 0, "physical_order_rejections": 0, "cluster_before": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}, "cluster_after": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}}
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "一次完成路線 round 1", "forward_closed_time_min": 347.6716688505136, "reverse_closed_time_min": 347.8591113695706, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.6716688505136}
+[V65.85_ONE_SHOT_OPTIMIZATION_ROUND] {"round": 1, "before_min": 361.06776361870675, "after_min": 347.6716688505136, "improvement_min": 13.396094768193166, "changed_order": true, "two_opt_accepted": 2, "five_block_permutation_accepted": 1}
+[V65.85_ONE_SHOT_2OPT] pass=1 no feasible improving candidate | improving_candidates=2
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 1/110 windows (0.9%) | speed=220,022.02 windows/s | elapsed=0.0s | ETA=0.0s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=8; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=16; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=24; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 28/110 windows (25.5%) | speed=5.15 windows/s | elapsed=5.4s | ETA=15.9s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=32; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=40; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=48; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 55/110 windows (50.0%) | speed=5.85 windows/s | elapsed=9.4s | ETA=9.4s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=56; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=64; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=72; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=80; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 83/110 windows (75.5%) | speed=6.13 windows/s | elapsed=13.5s | ETA=4.4s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=88; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=96; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=104; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=5.72 windows/s | elapsed=19.2s | ETA=0.0s
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=5.65 windows/s | elapsed=19.5s | ETA=0.0s | scored=110; candidates=57
+[V65.85.7_ONE_SHOT_BLOCK_PERMUTATION] {"pass": 1, "accepted": true, "block_size": 5, "start_pos0": 73, "block_before_names": ["桃園市新屋區大牛欄段下埔頂小段00370002", "桃園市新屋區下田心子段赤牛欄小段11290000", "桃園市新屋區東勢段甲頭厝小段09130000", "桃園市新屋區東勢段甲頭厝小段09120001", "桃園市新屋區東勢段甲頭厝小段08340000"], "block_after_names": ["桃園市新屋區大牛欄段下埔頂小段00370002", "桃園市新屋區下田心子段赤牛欄小段11290000", "桃園市新屋區東勢段甲頭厝小段08340000", "桃園市新屋區東勢段甲頭厝小段09130000", "桃園市新屋區東勢段甲頭厝小段09120001"], "before_closed_time_min": 347.6716688505136, "after_closed_time_min": 347.67166885051347, "improvement_min": 1.1368683772161603e-13, "tie_break_applied": true, "spatial_sweep_before_m": 118548.4849354446, "spatial_sweep_after_m": 118452.97898225559, "spatial_sweep_delta_m": -95.50595318901469, "windows_scanned": 110, "candidate_permutations_scored": 57, "strict_time_improvement_candidates": 0, "equal_time_spatial_tiebreak_candidates": 57, "candidate_validation_count": 4, "validation_cap": 512, "virtual_anchor_rejections": 3, "physical_order_rejections": 3, "cluster_before": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}, "cluster_after": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}}
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "一次完成路線 round 2", "forward_closed_time_min": 347.67166885051347, "reverse_closed_time_min": 347.8591113695706, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.67166885051347}
+[V65.85_ONE_SHOT_OPTIMIZATION_ROUND] {"round": 2, "before_min": 347.6716688505136, "after_min": 347.67166885051347, "improvement_min": 1.1368683772161603e-13, "changed_order": true, "two_opt_accepted": 0, "five_block_permutation_accepted": 1}
+[V65.85_ONE_SHOT_2OPT] pass=1 no feasible improving candidate | improving_candidates=2
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 1/110 windows (0.9%) | speed=306,184.93 windows/s | elapsed=0.0s | ETA=0.0s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=8; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=16; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=24; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 28/110 windows (25.5%) | speed=8.39 windows/s | elapsed=3.3s | ETA=9.8s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=32; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=40; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=48; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 55/110 windows (50.0%) | speed=7.51 windows/s | elapsed=7.3s | ETA=7.3s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=56; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=64; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=72; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=80; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 83/110 windows (75.5%) | speed=6.28 windows/s | elapsed=13.2s | ETA=4.3s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=88; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=96; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=104; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.23 windows/s | elapsed=17.7s | ETA=0.0s
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.18 windows/s | elapsed=17.8s | ETA=0.0s | scored=110; candidates=51
+[V65.85.7_ONE_SHOT_BLOCK_PERMUTATION] {"pass": 1, "accepted": true, "block_size": 5, "start_pos0": 94, "block_before_names": ["桃園市平鎮區福林段08010000", "桃園市平鎮區福林段08050000", "桃園市平鎮區福林段07980000", "桃園市平鎮區福林段07970000", "桃園市平鎮區福林段07990000"], "block_after_names": ["桃園市平鎮區福林段08050000", "桃園市平鎮區福林段07990000", "桃園市平鎮區福林段07970000", "桃園市平鎮區福林段07980000", "桃園市平鎮區福林段08010000"], "before_closed_time_min": 347.67166885051347, "after_closed_time_min": 347.67166885051347, "improvement_min": 0.0, "tie_break_applied": true, "spatial_sweep_before_m": 118452.97898225559, "spatial_sweep_after_m": 118381.73372864237, "spatial_sweep_delta_m": -71.24525361321867, "windows_scanned": 110, "candidate_permutations_scored": 51, "strict_time_improvement_candidates": 0, "equal_time_spatial_tiebreak_candidates": 51, "candidate_validation_count": 8, "validation_cap": 512, "virtual_anchor_rejections": 7, "physical_order_rejections": 7, "cluster_before": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}, "cluster_after": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}}
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "一次完成路線 round 3", "forward_closed_time_min": 347.67166885051347, "reverse_closed_time_min": 347.8591113695706, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.67166885051347}
+[V65.85_ONE_SHOT_OPTIMIZATION_ROUND] {"round": 3, "before_min": 347.67166885051347, "after_min": 347.67166885051347, "improvement_min": 0.0, "changed_order": true, "two_opt_accepted": 0, "five_block_permutation_accepted": 1}
+[V65.85_ONE_SHOT_2OPT] pass=1 no feasible improving candidate | improving_candidates=2
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 1/110 windows (0.9%) | speed=314,960.67 windows/s | elapsed=0.0s | ETA=0.0s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=8; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=16; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=24; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 28/110 windows (25.5%) | speed=8.40 windows/s | elapsed=3.3s | ETA=9.8s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=32; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=40; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=48; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 55/110 windows (50.0%) | speed=6.16 windows/s | elapsed=8.9s | ETA=8.9s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=56; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=64; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=72; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=80; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 83/110 windows (75.5%) | speed=6.10 windows/s | elapsed=13.6s | ETA=4.4s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=88; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=96; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=104; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.26 windows/s | elapsed=17.6s | ETA=0.0s
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.20 windows/s | elapsed=17.7s | ETA=0.0s | scored=110; candidates=40
+[V65.85.7_ONE_SHOT_BLOCK_PERMUTATION] {"pass": 1, "accepted": true, "block_size": 5, "start_pos0": 86, "block_before_names": ["桃園市平鎮區南華段09750001", "桃園市平鎮區南華段09750000", "桃園市平鎮區南華段14820000", "桃園市平鎮區中興段04820000", "桃園市平鎮區中興段04800000"], "block_after_names": ["桃園市平鎮區南華段09750001", "桃園市平鎮區南華段09750000", "桃園市平鎮區南華段14820000", "桃園市平鎮區中興段04800000", "桃園市平鎮區中興段04820000"], "before_closed_time_min": 347.67166885051347, "after_closed_time_min": 347.67166885051347, "improvement_min": 0.0, "tie_break_applied": true, "spatial_sweep_before_m": 118381.73372864237, "spatial_sweep_after_m": 118322.6092000442, "spatial_sweep_delta_m": -59.12452859817131, "windows_scanned": 110, "candidate_permutations_scored": 40, "strict_time_improvement_candidates": 0, "equal_time_spatial_tiebreak_candidates": 40, "candidate_validation_count": 11, "validation_cap": 512, "virtual_anchor_rejections": 10, "physical_order_rejections": 10, "cluster_before": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}, "cluster_after": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}}
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "一次完成路線 round 4", "forward_closed_time_min": 347.67166885051347, "reverse_closed_time_min": 347.85911136957066, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.67166885051347}
+[V65.85_ONE_SHOT_OPTIMIZATION_ROUND] {"round": 4, "before_min": 347.67166885051347, "after_min": 347.67166885051347, "improvement_min": 0.0, "changed_order": true, "two_opt_accepted": 0, "five_block_permutation_accepted": 1}
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "一次完成路線最終方向", "forward_closed_time_min": 347.67166885051347, "reverse_closed_time_min": 347.85911136957066, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.67166885051347}
+V65.64.23 全點一次 Virtual anchor 候選硬限制：relocate 拒絕=3、swap 拒絕=1
+V65.64.23 全點一次一般案件 physical 候選硬限制：relocate 拒絕=0、swap 拒絕=0
+V65.85 一次完成 TIME-based Virtual anchor pair cache：242 組
+[V65.85.7_VA_REPAIR_SUMMARY] {"label": "全點一次最終驗證 TIME_VA round 1", "max_passes": 256, "passes_completed": 1, "moves_count": 0, "stop_reason": "NO_VA_CROSSING_REMAINS", "cycle_detected": false, "cycle_length": null, "cycle_first_seen_pass": null, "cycle_repeat_pass": null, "initial_order_sha256": "71cf1ef0c2c6b458f55f8a38517912123cddca2bd52a30a8cb52d59c7d953786", "step_records_count": 0, "step_records_sample": [], "final_va_crossing_count": 0, "final_va_crossing_sample": [], "final_order_sha256": "71cf1ef0c2c6b458f55f8a38517912123cddca2bd52a30a8cb52d59c7d953786", "final_order_preview": [0, 3, 2, 9, 10, 8, 7, 1, 16, 17, 11, 13]}
+[V65.85.7_COMBINED_ORDER_REPAIR_ROUND] {"label": "全點一次最終驗證", "round": 1, "max_rounds": 32, "va_moves_this_round": 0, "physical_moves_this_round": 0, "va_moves_total": 0, "physical_moves_total": 0, "va_crossing_count_after_round": 0, "physical_crossing_count_after_round": 0, "va_crossing_sample": [], "physical_crossing_sample": [], "va_repair_stop_reason": "NO_VA_CROSSING_REMAINS", "va_repair_cycle_detected": false, "va_repair_cycle_length": null, "feasible_after_round": true, "order_changed": false, "repeated_order_first_seen_round": 0}
+[V65.85.7_COMBINED_ORDER_REPAIR_SUMMARY] {"label": "全點一次最終驗證", "stop_reason": "FEASIBLE", "rounds_completed": 1, "max_rounds": 32, "va_moves_total": 0, "physical_moves_total": 0, "va_crossing_count_final": 0, "physical_crossing_count_final": 0, "va_crossing_sample_final": [], "physical_crossing_sample_final": [], "feasible_final": true}
+V65.85 全點一次 TIME-based Virtual anchor 最終可行化：0 次
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "TIME-based 修復後最終方向", "forward_closed_time_min": 347.67166885051347, "reverse_closed_time_min": 347.85911136957066, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.67166885051347}
+✅ V65.85 全點一次 TIME-based Virtual anchor forward-crossing：0 段
+✅ V65.85 全點一次一般案件 TIME-based physical forward-crossing：0 段
+[V65.85_ONE_SHOT_VA_COST_ALIGNMENT] {"predecessor": "TIME_PREDECESSOR", "cache_pairs": 242, "forward_crossings": 0, "route_weight_va_cache_used_for_one_shot_hard_check": false}
+[V65.85_ONE_SHOT_CLUSTER_FINAL] {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}
+[V65.85_TARGET_ADJACENCY_TEST] {"point_A": "桃園市大園區和平段06450000（使用者所稱第2點）", "point_B": "桃園市大園區和平段06580000（使用者所稱第87點）", "A_matches": [], "B_matches": [], "current_A_visit_no": null, "current_B_visit_no": null, "baseline_matrix_time_min": 347.67166885051347, "forced_A_then_B_time_min": null, "forced_move_delta_min": null, "forced_order_virtual_anchor_feasible": null, "forced_order_physical_feasible": null, "forced_order_combined_feasible": null, "interpretation": "TARGET_NOT_UNIQUE_OR_MISSING"}
+全點一次跑完：114 個查核點 | 起點＋查核點共 115 點 | 無每日工時上限
+獨立初始閉合旅行時間：6.02 hr
+最佳化後閉合旅行時間：5.79 hr
+全點一次跑完首站：桃園市八德區茄苳段07370000 | 起點→首站：4.83 km | 約 9.7 min
+點位處理時間：5.70 hr
+預估總外勤時間：11.49 hr
+
+======================================================================
+第四階段：每日工時＋固定起點往返共同最佳化
+======================================================================
+每日出門時間上限：5.0 小時 | 每點處理：3 分鐘 | 機車平均行駛速度：30.0 km/h
+ 每日往返路線計算：使用 Numba 加速
+建立每日分界 DP 區段成本快取...
+最少工作日：4 天；固定天數後以『實際總工時最小』為主要目標。
+全域每日分界 DP：候選切點 1～113；DP 目標總工時=953.99 分鐘等效值
+維持全域近→遠查核順序；取消跨日 point transfer / swap 4 pass，改由全域 DP 一次共同決定分界。
+[V97_PRE_GEOMETRY_ROUTE_WORK] {"daily_route_optimizer_skipped": true, "daily_direction_comparison_skipped": true, "fixed_day_count_from_existing_workday_dp": 4, "daily_point_counts_before_geometry": [46, 21, 36, 11]}
+最終每日分界共同最佳化完成：953.99 分鐘等效值
+每日分界 1：未發現明顯近點／反向重跑風險。
+每日分界 2：前日末點→52 / 次日首點→114 | 直接=2.71 km | 經起點=62.38 km | 額外往返=59.68 km | 懲罰=17.51 min
+每日分界 3：未發現明顯近點／反向重跑風險。
+最終每日分界連續性檢查：953.99 分鐘等效值
+[V97_PRE_GEOMETRY_ROUTE_WORK] daily_boundary_rebalance=SKIPPED
+每日地理集中最佳化完成：接受 0 次分界調整 | 兩日合計實際 OSM 改善 0.00 min
+[V97_PRE_GEOMETRY_ROUTE_WORK] cross_day_point_exchange=SKIPPED
+跨日交換全日合計改善：0.00 min
+[V97_PRE_GEOMETRY_ROUTE_WORK] daily_direction_switch=SKIPPED
+[V97_PRE_GEOMETRY_ROUTE_WORK] daily_relocate_swap_2opt_block_refinement=SKIPPED
+[V65.85.7.47_SHARED_SNAP_STAGE_AUDIT] {"stage": "BEFORE_V97_GEOMETRY_FIRST_TEST", "status": "PASS", "shared_snap_node_group_count": 1, "shared_snap_point_count": 2, "days": 4, "violations": []}
+[V97_PRE_GEOMETRY_ROUTE_WORK] {"global_250m_road_component_count": 67, "capacity_lower_bound_probe": "SKIPPED", "single_group_osm_route_probe": "SKIPPED", "capacity_forced_group_split": "DISABLED", "shared_snap_groups_remain_atomic": true}
+[V99_GROUP_WORKLOAD_MODEL] {"version": "v65.85.7.133", "natural_group_count": 67, "point_count": 114, "group_definition": "250M_MOTOR_OSM_ROAD_CONNECTED_COMPONENT; SHARED_SNAP_ATOMIC", "group_workload_definition": "POINT_SERVICE_MINUTES + 1.5x_SYMMETRIC_DIRECTED_OSM_TIME_D_MST", "inter_group_cost": "MIN_DIRECTED_OSM_TIME_D_BETWEEN_GROUP_MEMBERS; GREEDY_MULTI_START_CLOSED_DAY_ESTIMATE", "group_point_counts": [2, 4, 1, 2, 1, 1, 2, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 2, 1, 8, 3, 1, 5, 1, 1, 1, 4, 1, 1, 3, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 3, 1, 2, 1, 1, 5, 3, 2, 3, 1, 1, 3, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1], "group_internal_mst_minutes": [0.2656, 0.9369, 0.0, 0.2039, 0.0, 0.0, 0.4193, 0.0, 0.0, 0.0, 0.3081, 0.0, 0.0, 0.0, 0.1306, 0.0, 0.0, 0.0244, 0.0, 1.0743, 0.2773, 0.0, 0.6361, 0.0, 0.0, 0.0, 0.2499, 0.0, 0.0, 0.1872, 0.0, 0.0, 0.0, 0.0, 0.0409, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1617, 0.0, 0.4465, 0.0, 0.0, 0.4256, 0.1879, 0.0467, 0.0983, 0.0, 0.0, 0.4782, 0.0, 0.0, 0.0, 0.0, 0.0, 0.6821, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "group_workload_minutes": [6.3985, 13.4053, 3.0, 6.3058, 3.0, 3.0, 6.629, 3.0, 3.0, 3.0, 9.4621, 3.0, 3.0, 3.0, 9.1958, 3.0, 3.0, 6.0365, 3.0, 25.6114, 9.416, 3.0, 15.9541, 3.0, 3.0, 3.0, 12.3749, 3.0, 3.0, 9.2807, 3.0, 3.0, 3.0, 3.0, 6.0614, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 9.2426, 3.0, 6.6697, 3.0, 3.0, 15.6384, 9.2819, 6.0701, 9.1475, 3.0, 3.0, 9.7173, 3.0, 3.0, 3.0, 3.0, 3.0, 13.0231, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0], "ranking_uses_equal_point_count": false, "daily_service_time_included": true, "depot_outbound_and_return_estimated": true}
+[V101_BASE_N_SEARCH_PROFILE] {"baseline_days": 4, "geometry_per_angle_limit": 64, "near_cut_count_per_boundary": 32, "exact_hull_scan_limit": 900, "geometry_pool_limit": 96, "actual_osm_route_candidate_limit": 24, "candidate_diversity": "MAX_3_PER_SORTED_DAILY_POINT_COUNT_PROFILE; MAX_6_PER_5_DEGREE_ANGLE_BUCKET", "escalation_policy": "ONLY_AFTER_ALL_TESTED_BASE_N_CANDIDATES_FAIL_HARD_CHECKS"}
 
 [CELL4_EXECUTION_ERROR]
 Traceback (most recent call last):
-  File "/content/Cell4_v65.85.7.133 (2).py", line 34259, in <module>
+  File "/content/Cell4_v65.85.7.133 (3).py", line 34259, in <module>
     _payload = run_vehicle_mode(
         vehicle_mode=_mode,
     ...<8 lines>...
         shared_context=None,
     )
-  File "/content/Cell4_v65.85.7.133 (2).py", line 5642, in run_vehicle_mode
-    water_features, water_source_endpoint = _download_water_features_with_failover(
-                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        download_polygon, f"{VEHICLE_LABEL} OSM 水路／水體資料下載"
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/Cell4_v65.85.7.133 (3).py", line 29179, in run_vehicle_mode
+    batches = _v65_85_23_integrated_alns_split_optimizer(batches)
+  File "/content/Cell4_v65.85.7.133 (3).py", line 24563, in _v65_85_23_integrated_alns_split_optimizer
+    _v96_geometry_stats) = _v97_pick_geometry(_v96_selected_day_count, _exhaustive=True)
+                           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/Cell4_v65.85.7.133 (3).py", line 24356, in _v97_pick_geometry
+    _candidates, _builder_stats = _v97_projection_geometry_candidates(
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        _group_sequence,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        _near_cut_count_override=_near_cut_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     )
     ^
-  File "/content/Cell4_v65.85.7.133 (2).py", line 1589, in _download_water_features_with_failover
-    features = _cell4_run_with_heartbeat(
-        f"{stage_label} {endpoint}",
-    ...<2 lines>...
-        tags=WATER_OSM_QUERY_TAGS,
-    )
-  File "/content/Cell4_v65.85.7.133 (2).py", line 942, in _cell4_run_with_heartbeat
-    result = function(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/osmnx/features.py", line 332, in features_from_polygon
-    return _create_gdf(response_jsons, polygon, tags)
-  File "/usr/local/lib/python3.13/dist-packages/osmnx/features.py", line 406, in _create_gdf
-    for response_json in response_jsons:
-                         ^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 432, in _download_overpass_features
-    yield _overpass_request(OrderedDict(data=query_str))
-          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 460, in _overpass_request
-    pause = _get_overpass_pause(settings.overpass_url)
-  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 181, in _get_overpass_pause
-    response = requests.get(
-        url,
-    ...<2 lines>...
-        **settings.requests_kwargs,
-    )
-  File "/usr/local/lib/python3.13/dist-packages/requests/api.py", line 73, in get
-    return request("get", url, params=params, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/requests/api.py", line 59, in request
-    return session.request(method=method, url=url, **kwargs)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/requests/sessions.py", line 589, in request
-    resp = self.send(prep, **send_kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/requests/sessions.py", line 703, in send
-    r = adapter.send(request, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/requests/adapters.py", line 667, in send
-    resp = conn.urlopen(
-        method=request.method,
-    ...<9 lines>...
-        chunked=chunked,
-    )
-  File "/usr/local/lib/python3.13/dist-packages/urllib3/connectionpool.py", line 787, in urlopen
-    response = self._make_request(
-        conn,
-    ...<10 lines>...
-        **response_kw,
-    )
-  File "/usr/local/lib/python3.13/dist-packages/urllib3/connectionpool.py", line 534, in _make_request
-    response = conn.getresponse()
-  File "/usr/local/lib/python3.13/dist-packages/urllib3/connection.py", line 565, in getresponse
-    httplib_response = super().getresponse()
-  File "/usr/lib/python3.13/http/client.py", line 1478, in getresponse
-    response.begin()
-    ~~~~~~~~~~~~~~^^
-  File "/usr/lib/python3.13/http/client.py", line 343, in begin
-    version, status, reason = self._read_status()
-                              ~~~~~~~~~~~~~~~~~^^
-  File "/usr/lib/python3.13/http/client.py", line 304, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
-  File "/usr/lib/python3.13/socket.py", line 723, in readinto
-    return self._sock.recv_into(b)
-           ~~~~~~~~~~~~~~~~~~~~^^^
-  File "/usr/lib/python3.13/ssl.py", line 1315, in recv_into
-    return self.read(nbytes, buffer)
-           ~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.13/ssl.py", line 1149, in read
-    return self._sslobj.read(len, buffer)
-           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/content/Cell4_v65.85.7.133 (3).py", line 23478, in _v97_projection_geometry_candidates
+    _rank_indices = np.asarray(sorted(
+                               ~~~~~~^
+        (int(x) for x in _shortlist126),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        ),
+        ^^
+    )[:_limit126], dtype=np.int64)
+    ^
+  File "/content/Cell4_v65.85.7.133 (3).py", line 23481, in <lambda>
+    float(np.sum(np.maximum(
+                 ~~~~~~~~~~^
+        0.0, _workloads_matrix[_row126] - float(max_day_min)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))),
+    ^
 KeyboardInterrupt
 
 
 [CELL4_EXECUTION_STATUS]=FAILED
-[CELL4_RUN_FINISHED_TW]=2026-11-18T18:07:21+08:00
+[CELL4_RUN_FINISHED_TW]=2026-11-18T18:17:06+08:00
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-18/Cell4_v65.85.7.133_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
-UT_SELECTED_MTIME_NS=1794995916862202787
-INPUT_CANDIDATE_AUDIT=[{"mtime_ns": 1794995916862202787, "path": "/content/result.xlsx", "sha256": "91634f33ca1a4c9ea1a16912d27df802732310cfaf271be1bf490d520a99d233", "size_bytes": 32114}]
-ROUTE_CONFIG_SELECTION=NEW_UPLOAD | PATH=/content/input_route_config.xlsx
-已使用本次上傳的路線設定檔：/content/input_route_config.xlsx
-Cell 4 v65.85.7.133｜Cell 2 輸入：/content/result.xlsx
-CELL4_PROGRESS_REPORTING=ENABLED | interval=20s | heartbeat=30s | upload_card=INLINE_CELL_OUTPUT
-======================================================================
-Cell 4 儲存模式： CONTENT
-Cell 4 OSM 快取： /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE
-v82 OSM 來源策略：MOTOR cache miss 優先 Geofabrik 每日 PBF；Overpass 作備援；水體快取依同一 PBF 版本識別。
-v81 跨日重複道路：不設舊基準硬上限；仍列入全域最佳化目標。
-Google Drive 未預先掛載；本次快取、檢查點及診斷備份改存 /content。
-注意：/content 是 Colab 暫存空間，Runtime 中斷或重啟後資料可能消失。
-======================================================================
-[CELL4_READ_START] 路線設定檔 RouteConfig | path=/content/input_route_config.xlsx | source_size=12.20 KiB
-[CELL4_STAGE_START] 讀取 Excel：路線設定檔 RouteConfig
-[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | elapsed=0.04s | status=PASS
-[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.26 MiB/s | elapsed=0.05s
-路線設定檔關鍵值檢查：
-  交通工具 = '只算機車'
-  每點停留時間 = 3
-  每日可勘查時間 = 5
-  機車平均速度 = 30
-  汽車平面道路平均速度 = 40
-  汽車高速公路平均速度 = 100
-  汽車快速公路平均速度 = 70
-  臺31～臺39高鐵橋下道路成本倍率 = ×0.95
-  臺61～臺89快速公路平面側車道成本倍率 = ×0.95
-  Motorcycle designated 道路成本倍率 = ×0.85
-  Motor_vehicle designated 道路成本倍率 = ×0.90
-  Service 道路成本倍率 = ×1.00
-  Living Street 道路成本倍率 = ×1.00
-  Track 產業道路成本倍率 = ×2.00
-  未鋪面路面成本倍率 = ×2.00
-  Destination 限制道路成本倍率 = ×1.15
-  汽車 Service 一般道路成本倍率 = ×1.30
-  汽車 Service Alley 成本倍率 = ×3.50
-  汽車 Service Driveway 成本倍率 = ×3.00
-  汽車 Service Parking Aisle 成本倍率 = ×4.00
-  汽車 Living Street 成本倍率 = ×1.20
-  汽車 Track 產業道路成本倍率 = ×6.00
-  汽車 Track grade4／grade5 附加倍率 = ×1.30
-  汽車 Track／Service narrow=yes 附加倍率 = ×1.25
-  汽車未鋪面道路成本倍率 = ×3.00
-  汽車未鋪面窄幅道路附加倍率 = ×1.50
-  汽車 Destination 道路成本倍率 = ×1.20
-  汽車 Conditional 限制道路成本倍率 = ×5.00
-  汽車窄幅 Service／Track 成本倍率 = ×4.00
-  汽車人工指定避免道路成本倍率 = ×20.00
-  汽車窄幅道路判定寬度 = 3.50 m
-======================================================================
-載入路線規劃設定檔
-設定檔： /content/input_route_config.xlsx
-交通工具設定：只算機車
-每點停留時間：3 分鐘
-每日可勘查時間：5 小時
-機車平均速度：30 km/h
-機車路網資格：普通重型機車｜高速／快速公路主線與匝道：禁止
-機車道路成本倍率：臺31～39橋下×0.95 | 臺61～89平面側車道×0.95 | Motorcycle designated×0.85 | Motor_vehicle designated×0.90 | Service×1.00 | Living Street×1.00 | Track×2.00 | Unpaved×2.00 | Destination×1.15
-汽車平面道路平均速度：40 km/h
-汽車高速公路平均速度：100 km/h
-汽車快速公路平均速度：70 km/h
-汽車道路成本倍率：Service×1.30 | Alley×3.50 | Driveway×3.00 | Parking Aisle×4.00 | Living Street×1.20 | Track×6.00 | Unpaved×3.00 | Destination×1.20 | Conditional×5.00 | 窄幅加權×4.00 | 人工避免×20.00
-汽車人工路段設定檔：找不到 /content/input_car_forbidden_segments.xlsx → 略過
+.85.7.46_SHARED_SNAP_GROUPS] {"shared_snap_node_group_count": 1, "shared_snap_point_count": 2, "groups": [{"snap_node_id": 14338744824, "members": ["桃園市八德區營盤段06830000", "桃園市八德區營盤段07000000"]}], "stable_member_order": "Cell2 original row index ascending"}
+全域初始路線：115 點 | 起點=農業部農糧署北區分署
+初始全域道路成本：177.40 km
 
 ======================================================================
-Cell 4 續跑進度
+第二階段：全部點位一起做全域道路路線最佳化
 ======================================================================
-進度檔案位置： /content/巡田最速適_Cell4_Fallback/CELL4_CHECKPOINTS
-儲存位置：/content（未掛載 Drive）
+V65.64.23 全域最佳化前 Virtual anchor 順序可行化：移動 0 次
+全域最佳化前道路成本：177.40 km
+最佳化視窗：前後各 24 個位置
+無意義繞回判定：近 8 站、直接道路距離 ≤ 3000 m、路徑繞行至少 1200 m
+調整路線順序第 1: 成本 177.43 公里等效值 | 耗時 0.1 秒
+調整路線順序第 2: 成本 174.43 公里等效值 | 耗時 0.1 秒
+調整路線順序第 3: 成本 174.11 公里等效值 | 耗時 0.1 秒
+調整路線順序第 4: 成本 173.23 公里等效值 | 耗時 0.1 秒
+調整路線順序第 5: 成本 173.06 公里等效值 | 耗時 0.1 秒
+調整路線順序第 6: 成本 172.97 公里等效值 | 耗時 0.1 秒
+調整路線順序第 7: 成本 172.97 公里等效值 | 耗時 0.1 秒
+調整路線順序第 8: 成本 172.97 公里等效值 | 耗時 0.1 秒
+調整路線順序第 9: 成本 173.23 公里等效值 | 耗時 0.1 秒
+調整路線順序第 10: 成本 173.20 公里等效值 | 耗時 0.1 秒
+交換路線順序第 1: 成本 172.97 公里等效值 | 耗時 0.1 秒
+交換路線順序第 2: 成本 172.92 公里等效值 | 耗時 0.1 秒
+交換路線順序第 3: 成本 172.92 公里等效值 | 耗時 0.1 秒
+交換路線順序第 4: 無進一步改善
 
-======================================================================
-Cell 4 RAM 安全檢查
-======================================================================
-RAM 總量：12.67 GB
-RAM 可用：10.16 GB
-BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
-CELL4_RUN_ID=20261118T100342283239Z_31745df5db
-CELL4_SOURCE_SHA256=f1449461efa4a511a6f6da17fa4086a94435bce4f9540ddd72f565d57fcbd13e
-CELL4_SOURCE_KIND=PYTHON_FILE
-CELL4_SOURCE_DETECTION=CURRENT_VERSION_CONTENT_MATCH
-CELL4_INPUT_SHA256=91634f33ca1a4c9ea1a16912d27df802732310cfaf271be1bf490d520a99d233
-CELL4_ROUTE_CONFIG_SHA256=c73238f3ec4f368693756dc3e597b5458ab92de9e8790e4cb64b93f15a180466
-
-INPUT_CHECKPOINT_GATE_PATH= /content/result.xlsx
-INPUT_CHECKPOINT_GATE_SHA1= c8df7c94990b679c51b6805206c0fce2b108c1ab
-INPUT_CHECKPOINT_GATE_SIGNATURE= 35b2fa4f4ddba5335f6b
-Cell 4 執行簽章： 35b2fa4f4ddba5335f6b
-Cell 4 交通工具分模式續跑進度： /content/巡田最速適_Cell4_Fallback/CELL4_CHECKPOINTS
-需要重新計算：機車（MOTOR）
-
-################################################################################
-開始執行：機車（MOTOR）
-################################################################################
-MOTOR Crossing / U-turn 限制：關閉（不納入路線最佳化目標函數）
-======================================================================
-OSMnx 版本： 2.1.2
-NetworkX 版本： 3.7
-======================================================================
-道路網類型：MOTOR 專屬自訂 drive_service+track | cache_profile=fro_motor_drive_service_track_v1
-[CELL4_READ_START] 機車 Cell2 result.xlsx | path=/content/result.xlsx | source_size=31.36 KiB
-[CELL4_STAGE_START] 讀取 Excel：機車 Cell2 result.xlsx
-[CELL4_STAGE_DONE] 讀取 Excel：機車 Cell2 result.xlsx | elapsed=0.11s | status=PASS
-[CELL4_READ_DONE] 機車 Cell2 result.xlsx | rows=115 | columns=37 | source_size=31.36 KiB | source_read_rate=0.28 MiB/s | elapsed=0.11s
-原始資料筆數： 115
+全域最佳化完成：改善 13 次
+全域道路成本：172.57 km
+全域目標函數：199.50 公里等效值
+全域 Crossing：11
+全域 U-turn：6
+V65.64.23 全域最佳化內建 Virtual anchor forward-crossing：0 段
 
 ======================================================================
-自動取得固定起點
+第三階段前置：建立實際道路距離矩陣（供每日工時計算）
 ======================================================================
-有效點數： 115
-固定起點： 農業部農糧署北區分署
-固定起點經度： 121.30936300
-固定起點緯度： 24.98845400
-固定起點座標：[ 121.30936300, 24.98845400]
-v65.66 RAM 預檢：115 點；座標跨度約 32.8 × 13.1 km；距離矩陣輸出約 0.1 MiB，採列分塊計算。
-Haversine 直線距離矩陣完成。
-[RAM] Haversine 完成 | process RSS=1.08 GiB | system available=10.16 GiB
-[RAM] Local XY 完成 | process RSS=1.08 GiB | system available=10.16 GiB
-[RAM] 開始建立 OSM 下載範圍 | process RSS=1.08 GiB | system available=10.16 GiB
-下載範圍幾何：115 點；改採投影後凸包 buffer（7000 m + 1 m 安全餘裕），避免逐點 buffer/union。
-下載範圍幾何建立完成。
-[RAM] OSM 下載範圍幾何完成 | process RSS=1.08 GiB | system available=10.16 GiB
+建立 scipy CSR 實際道路長度矩陣...
+  CSR 節點=80,002 | directed 道路段=192,753
+計算所有查核點之間的道路距離...
+ROAD Dijkstra：來源 115 筆分成 8 批，每批最多 16 筆；不保留 predecessor
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 1/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 1/8 | elapsed=0.30s | status=PASS
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 16/115 sources (13.9%) | speed=53.05 sources/s | elapsed=0.3s | ETA=1.9s | batch=1/8; chunk_sources=16; working_set≈9.77 MiB; predecessor=off
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 2/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 2/8 | elapsed=0.29s | status=PASS
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 32/115 sources (27.8%) | speed=53.51 sources/s | elapsed=0.6s | ETA=1.6s | batch=2/8; chunk_sources=16; working_set≈9.77 MiB; predecessor=off
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 3/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 3/8 | elapsed=0.27s | status=PASS
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 4/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 4/8 | elapsed=0.28s | status=PASS
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 64/115 sources (55.7%) | speed=55.33 sources/s | elapsed=1.2s | ETA=0.9s | batch=4/8; chunk_sources=16; working_set≈9.77 MiB; predecessor=off
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 5/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 5/8 | elapsed=0.27s | status=PASS
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 6/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 6/8 | elapsed=0.27s | status=PASS
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 96/115 sources (83.5%) | speed=56.38 sources/s | elapsed=1.7s | ETA=0.3s | batch=6/8; chunk_sources=16; working_set≈9.77 MiB; predecessor=off
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 7/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 7/8 | elapsed=0.27s | status=PASS
+[CELL4_STAGE_START] ROAD Dijkstra Dijkstra batch 8/8
+[CELL4_STAGE_DONE] ROAD Dijkstra Dijkstra batch 8/8 | elapsed=0.04s | status=PASS
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 115/115 sources (100.0%) | speed=56.84 sources/s | elapsed=2.0s | ETA=0.0s | batch=8/8; chunk_sources=3; working_set≈1.83 MiB; predecessor=off
+[CELL4_PROGRESS] ROAD Dijkstra Dijkstra 多來源矩陣 | 115/115 sources (100.0%) | speed=56.79 sources/s | elapsed=2.0s | ETA=0.0s | batches=8; predecessor=off
+實際道路矩陣非對角可達率：100.00%
+
+建立機車旅行時間矩陣（平均 30.0 km/h）
+  TIME CSR 節點=80,002 | directed 道路段=192,753
+計算所有查核點之間的行車時間...
+TIME Dijkstra：來源 115 筆分成 8 批，每批最多 16 筆；predecessor 磁碟映射
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 1/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 1/8 | elapsed=0.21s | status=PASS
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 16/115 sources (13.9%) | speed=72.44 sources/s | elapsed=0.2s | ETA=1.4s | batch=1/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 2/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 2/8 | elapsed=0.21s | status=PASS
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 32/115 sources (27.8%) | speed=71.44 sources/s | elapsed=0.4s | ETA=1.2s | batch=2/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 3/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 3/8 | elapsed=0.22s | status=PASS
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 4/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 4/8 | elapsed=0.20s | status=PASS
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 64/115 sources (55.7%) | speed=71.62 sources/s | elapsed=0.9s | ETA=0.7s | batch=4/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 5/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 5/8 | elapsed=0.21s | status=PASS
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 6/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 6/8 | elapsed=0.20s | status=PASS
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 96/115 sources (83.5%) | speed=72.48 sources/s | elapsed=1.3s | ETA=0.3s | batch=6/8; chunk_sources=16; working_set≈14.65 MiB; predecessor=disk-memmap
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 7/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 7/8 | elapsed=0.21s | status=PASS
+[CELL4_STAGE_START] TIME Dijkstra Dijkstra batch 8/8
+[CELL4_STAGE_DONE] TIME Dijkstra Dijkstra batch 8/8 | elapsed=0.04s | status=PASS
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 115/115 sources (100.0%) | speed=72.07 sources/s | elapsed=1.6s | ETA=0.0s | batch=8/8; chunk_sources=3; working_set≈2.75 MiB; predecessor=disk-memmap
+[CELL4_PROGRESS] TIME Dijkstra Dijkstra 多來源矩陣 | 115/115 sources (100.0%) | speed=71.96 sources/s | elapsed=1.6s | ETA=0.0s | batches=8; predecessor=disk-memmap
+[V65.85_ORDER_TRACE] TARGET_BINDINGS={"P33": {"matches": [], "unique_index": null}, "P34": {"matches": [], "unique_index": null}, "P35": {"matches": [], "unique_index": null}}
+[V65.85_ORDER_TRACE] TARGET_BINDING_BLOCKED; expected exactly one row per target.
+全域路線：維持目前方向 | 首站=桃園市八德區茄苳段07360000 (4.70 km)
+V65.64.23 Virtual anchor 實際通過順序修正：0 次
+✅ V65.64.23 全域路線修正後 Virtual anchor forward-crossing：0 段
+實際旅行時間矩陣非對角可達率：100.00%
+[V65.85_CLUSTER_TARGET_BINDINGS] {"02170001": {"matches": [], "unique_index": null}, "02180000": {"matches": [], "unique_index": null}, "02190000": {"matches": [], "unique_index": null}, "02200000": {"matches": [], "unique_index": null}, "02210000": {"matches": [], "unique_index": null}}
 
 ======================================================================
-OSM 下載範圍
+附加方案：所有點位一次跑完（不受每日時間限制；單日最終方案將於實際 OSM 路線比較後決定）
 ======================================================================
-west/south/east/north： (120.91483656443899, 24.832391110469842, 121.37864805364879, 25.077308798650666)
-buffer：7000 m
-下載方式：先用矩形範圍；失敗時改用區域範圍
-[RAM] OSM graph 載入／下載前 | process RSS=1.08 GiB | system available=10.16 GiB
+v65.64.23：全點一次方案正式納入 Virtual anchor＋一般案件物理通過順序硬性限制。
+[V65.85.7_VA_REPAIR_STEP] {"label": "全點一次 seed TIME_VA round 1", "pass": 1, "edge_pos0": 3, "from_point": 9, "to_point": 7, "offending_points": [10, 8], "old_positions0": {"10": 6, "8": 5}, "new_positions0": {"10": 4, "8": 5}, "before_order_sha256_prefix": "342d5ade45379c73", "after_order_sha256_prefix": "cdd84386cff53022", "repeated_order_first_seen_pass": null}
+[V65.85.7_VA_REPAIR_STEP] {"label": "全點一次 seed TIME_VA round 1", "pass": 2, "edge_pos0": 102, "from_point": 23, "to_point": 22, "offending_points": [111], "old_positions0": {"111": 105}, "new_positions0": {"111": 103}, "before_order_sha256_prefix": "cdd84386cff53022", "after_order_sha256_prefix": "8458ae71e9798183", "repeated_order_first_seen_pass": null}
+[V65.85.7_VA_REPAIR_SUMMARY] {"label": "全點一次 seed TIME_VA round 1", "max_passes": 256, "passes_completed": 3, "moves_count": 3, "stop_reason": "NO_VA_CROSSING_REMAINS", "cycle_detected": false, "cycle_length": null, "cycle_first_seen_pass": null, "cycle_repeat_pass": null, "initial_order_sha256": "342d5ade45379c736bd366626dd27ca55b09b4e8f4fd089fff6f22e999e7b510", "step_records_count": 2, "step_records_sample": [{"label": "全點一次 seed TIME_VA round 1", "pass": 1, "edge_pos0": 3, "from_point": 9, "to_point": 7, "offending_points": [10, 8], "old_positions0": {"10": 6, "8": 5}, "new_positions0": {"10": 4, "8": 5}, "before_order_sha256_prefix": "342d5ade45379c73", "after_order_sha256_prefix": "cdd84386cff53022", "repeated_order_first_seen_pass": null}, {"label": "全點一次 seed TIME_VA round 1", "pass": 2, "edge_pos0": 102, "from_point": 23, "to_point": 22, "offending_points": [111], "old_positions0": {"111": 105}, "new_positions0": {"111": 103}, "before_order_sha256_prefix": "cdd84386cff53022", "after_order_sha256_prefix": "8458ae71e9798183", "repeated_order_first_seen_pass": null}], "final_va_crossing_count": 0, "final_va_crossing_sample": [], "final_order_sha256": "8458ae71e9798183197530f42d2c177fd89d29c8fef63ad37945441d8a45e3c7", "final_order_preview": [0, 3, 2, 9, 10, 8, 7, 1, 16, 17, 13, 11]}
+[V65.85.7_COMBINED_ORDER_REPAIR_ROUND] {"label": "全點一次 seed", "round": 1, "max_rounds": 32, "va_moves_this_round": 3, "physical_moves_this_round": 0, "va_moves_total": 3, "physical_moves_total": 0, "va_crossing_count_after_round": 0, "physical_crossing_count_after_round": 0, "va_crossing_sample": [], "physical_crossing_sample": [], "va_repair_stop_reason": "NO_VA_CROSSING_REMAINS", "va_repair_cycle_detected": false, "va_repair_cycle_length": null, "feasible_after_round": true, "order_changed": true, "repeated_order_first_seen_round": null}
+[V65.85.7_COMBINED_ORDER_REPAIR_SUMMARY] {"label": "全點一次 seed", "stop_reason": "FEASIBLE", "rounds_completed": 1, "max_rounds": 32, "va_moves_total": 3, "physical_moves_total": 0, "va_crossing_count_final": 0, "physical_crossing_count_final": 0, "va_crossing_sample_final": [], "physical_crossing_sample_final": [], "feasible_final": true}
+[V65.85.7.46_SHARED_SNAP_SEED_NORMALIZATION] {"normalized_group_count": 1, "normalized_groups": [{"members": [11, 13], "before_members": [13, 11], "after_members": [11, 13], "was_contiguous": true}], "stable_member_order": "Cell2 original row index ascending"}
+V65.85 全點一次 seed TIME-based Virtual anchor 可行化：移動 3 次
+[V65.85_ONE_SHOT_2OPT] {"pass": 1, "reverse_start_pos0": 35, "reverse_end_pos0": 38, "before_min": 348.95446653274485, "after_min": 348.5345964505136, "improvement_min": 0.41987008223122757, "improving_candidate_count": 4}
+[V65.85_ONE_SHOT_2OPT] {"pass": 2, "reverse_start_pos0": 92, "reverse_end_pos0": 99, "before_min": 348.5345964505136, "after_min": 348.23821245051363, "improvement_min": 0.2963839999999891, "improving_candidate_count": 3}
+[V65.85_ONE_SHOT_2OPT] pass=3 no feasible improving candidate | improving_candidates=2
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 1/110 windows (0.9%) | speed=210,748.14 windows/s | elapsed=0.0s | ETA=0.0s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=8; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=16; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=24; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 28/110 windows (25.5%) | speed=8.39 windows/s | elapsed=3.3s | ETA=9.8s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=32; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=40; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=48; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 55/110 windows (50.0%) | speed=5.81 windows/s | elapsed=9.5s | ETA=9.5s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=56; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=64; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=72; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=80; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 83/110 windows (75.5%) | speed=6.07 windows/s | elapsed=13.7s | ETA=4.4s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=88; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=96; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=104; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.23 windows/s | elapsed=17.7s | ETA=0.0s
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.17 windows/s | elapsed=17.8s | ETA=0.0s | scored=110; candidates=59
+[V65.85.7_ONE_SHOT_BLOCK_PERMUTATION] {"pass": 1, "accepted": true, "block_size": 5, "start_pos0": 106, "block_before_names": ["桃園市大溪區社角段06740000", "桃園市八德區連城段02580000", "桃園市大溪區仁德段00460000", "桃園市大溪區社角段05600000", "桃園市大溪區瑞興段18980000"], "block_after_names": ["桃園市大溪區社角段06740000", "桃園市大溪區社角段05600000", "桃園市大溪區仁德段00460000", "桃園市大溪區瑞興段18980000", "桃園市八德區連城段02580000"], "before_closed_time_min": 348.23821245051363, "after_closed_time_min": 347.6716688505136, "improvement_min": 0.5665436000000454, "tie_break_applied": false, "spatial_sweep_before_m": 119746.73967676598, "spatial_sweep_after_m": 118548.4849354446, "spatial_sweep_delta_m": -1198.254741321376, "windows_scanned": 110, "candidate_permutations_scored": 59, "strict_time_improvement_candidates": 2, "equal_time_spatial_tiebreak_candidates": 57, "candidate_validation_count": 1, "validation_cap": 512, "virtual_anchor_rejections": 0, "physical_order_rejections": 0, "cluster_before": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}, "cluster_after": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}}
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "一次完成路線 round 1", "forward_closed_time_min": 347.6716688505136, "reverse_closed_time_min": 347.8591113695706, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.6716688505136}
+[V65.85_ONE_SHOT_OPTIMIZATION_ROUND] {"round": 1, "before_min": 361.06776361870675, "after_min": 347.6716688505136, "improvement_min": 13.396094768193166, "changed_order": true, "two_opt_accepted": 2, "five_block_permutation_accepted": 1}
+[V65.85_ONE_SHOT_2OPT] pass=1 no feasible improving candidate | improving_candidates=2
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 1/110 windows (0.9%) | speed=220,022.02 windows/s | elapsed=0.0s | ETA=0.0s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=8; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=16; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=24; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 28/110 windows (25.5%) | speed=5.15 windows/s | elapsed=5.4s | ETA=15.9s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=32; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=40; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=48; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 55/110 windows (50.0%) | speed=5.85 windows/s | elapsed=9.4s | ETA=9.4s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=56; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=64; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=72; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=80; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 83/110 windows (75.5%) | speed=6.13 windows/s | elapsed=13.5s | ETA=4.4s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=88; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=96; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=104; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=5.72 windows/s | elapsed=19.2s | ETA=0.0s
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=5.65 windows/s | elapsed=19.5s | ETA=0.0s | scored=110; candidates=57
+[V65.85.7_ONE_SHOT_BLOCK_PERMUTATION] {"pass": 1, "accepted": true, "block_size": 5, "start_pos0": 73, "block_before_names": ["桃園市新屋區大牛欄段下埔頂小段00370002", "桃園市新屋區下田心子段赤牛欄小段11290000", "桃園市新屋區東勢段甲頭厝小段09130000", "桃園市新屋區東勢段甲頭厝小段09120001", "桃園市新屋區東勢段甲頭厝小段08340000"], "block_after_names": ["桃園市新屋區大牛欄段下埔頂小段00370002", "桃園市新屋區下田心子段赤牛欄小段11290000", "桃園市新屋區東勢段甲頭厝小段08340000", "桃園市新屋區東勢段甲頭厝小段09130000", "桃園市新屋區東勢段甲頭厝小段09120001"], "before_closed_time_min": 347.6716688505136, "after_closed_time_min": 347.67166885051347, "improvement_min": 1.1368683772161603e-13, "tie_break_applied": true, "spatial_sweep_before_m": 118548.4849354446, "spatial_sweep_after_m": 118452.97898225559, "spatial_sweep_delta_m": -95.50595318901469, "windows_scanned": 110, "candidate_permutations_scored": 57, "strict_time_improvement_candidates": 0, "equal_time_spatial_tiebreak_candidates": 57, "candidate_validation_count": 4, "validation_cap": 512, "virtual_anchor_rejections": 3, "physical_order_rejections": 3, "cluster_before": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}, "cluster_after": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}}
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "一次完成路線 round 2", "forward_closed_time_min": 347.67166885051347, "reverse_closed_time_min": 347.8591113695706, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.67166885051347}
+[V65.85_ONE_SHOT_OPTIMIZATION_ROUND] {"round": 2, "before_min": 347.6716688505136, "after_min": 347.67166885051347, "improvement_min": 1.1368683772161603e-13, "changed_order": true, "two_opt_accepted": 0, "five_block_permutation_accepted": 1}
+[V65.85_ONE_SHOT_2OPT] pass=1 no feasible improving candidate | improving_candidates=2
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 1/110 windows (0.9%) | speed=306,184.93 windows/s | elapsed=0.0s | ETA=0.0s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=8; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=16; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=24; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 28/110 windows (25.5%) | speed=8.39 windows/s | elapsed=3.3s | ETA=9.8s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=32; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=40; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=48; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 55/110 windows (50.0%) | speed=7.51 windows/s | elapsed=7.3s | ETA=7.3s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=56; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=64; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=72; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=80; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 83/110 windows (75.5%) | speed=6.28 windows/s | elapsed=13.2s | ETA=4.3s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=88; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=96; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=104; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.23 windows/s | elapsed=17.7s | ETA=0.0s
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.18 windows/s | elapsed=17.8s | ETA=0.0s | scored=110; candidates=51
+[V65.85.7_ONE_SHOT_BLOCK_PERMUTATION] {"pass": 1, "accepted": true, "block_size": 5, "start_pos0": 94, "block_before_names": ["桃園市平鎮區福林段08010000", "桃園市平鎮區福林段08050000", "桃園市平鎮區福林段07980000", "桃園市平鎮區福林段07970000", "桃園市平鎮區福林段07990000"], "block_after_names": ["桃園市平鎮區福林段08050000", "桃園市平鎮區福林段07990000", "桃園市平鎮區福林段07970000", "桃園市平鎮區福林段07980000", "桃園市平鎮區福林段08010000"], "before_closed_time_min": 347.67166885051347, "after_closed_time_min": 347.67166885051347, "improvement_min": 0.0, "tie_break_applied": true, "spatial_sweep_before_m": 118452.97898225559, "spatial_sweep_after_m": 118381.73372864237, "spatial_sweep_delta_m": -71.24525361321867, "windows_scanned": 110, "candidate_permutations_scored": 51, "strict_time_improvement_candidates": 0, "equal_time_spatial_tiebreak_candidates": 51, "candidate_validation_count": 8, "validation_cap": 512, "virtual_anchor_rejections": 7, "physical_order_rejections": 7, "cluster_before": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}, "cluster_after": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}}
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "一次完成路線 round 3", "forward_closed_time_min": 347.67166885051347, "reverse_closed_time_min": 347.8591113695706, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.67166885051347}
+[V65.85_ONE_SHOT_OPTIMIZATION_ROUND] {"round": 3, "before_min": 347.67166885051347, "after_min": 347.67166885051347, "improvement_min": 0.0, "changed_order": true, "two_opt_accepted": 0, "five_block_permutation_accepted": 1}
+[V65.85_ONE_SHOT_2OPT] pass=1 no feasible improving candidate | improving_candidates=2
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 1/110 windows (0.9%) | speed=314,960.67 windows/s | elapsed=0.0s | ETA=0.0s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=8; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=16; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=24; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 28/110 windows (25.5%) | speed=8.40 windows/s | elapsed=3.3s | ETA=9.8s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=32; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=40; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=48; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 55/110 windows (50.0%) | speed=6.16 windows/s | elapsed=8.9s | ETA=8.9s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=56; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=64; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=72; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=80; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 83/110 windows (75.5%) | speed=6.10 windows/s | elapsed=13.6s | ETA=4.4s
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=88; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=96; candidate_scoring=running
+[V65.85.7_ONE_SHOT_BLOCK_PROGRESS] pass=1; scored_windows=104; candidate_scoring=running
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.26 windows/s | elapsed=17.6s | ETA=0.0s
+[CELL4_PROGRESS] 一次完成五點區塊掃描 pass=1 | 110/110 windows (100.0%) | speed=6.20 windows/s | elapsed=17.7s | ETA=0.0s | scored=110; candidates=40
+[V65.85.7_ONE_SHOT_BLOCK_PERMUTATION] {"pass": 1, "accepted": true, "block_size": 5, "start_pos0": 86, "block_before_names": ["桃園市平鎮區南華段09750001", "桃園市平鎮區南華段09750000", "桃園市平鎮區南華段14820000", "桃園市平鎮區中興段04820000", "桃園市平鎮區中興段04800000"], "block_after_names": ["桃園市平鎮區南華段09750001", "桃園市平鎮區南華段09750000", "桃園市平鎮區南華段14820000", "桃園市平鎮區中興段04800000", "桃園市平鎮區中興段04820000"], "before_closed_time_min": 347.67166885051347, "after_closed_time_min": 347.67166885051347, "improvement_min": 0.0, "tie_break_applied": true, "spatial_sweep_before_m": 118381.73372864237, "spatial_sweep_after_m": 118322.6092000442, "spatial_sweep_delta_m": -59.12452859817131, "windows_scanned": 110, "candidate_permutations_scored": 40, "strict_time_improvement_candidates": 0, "equal_time_spatial_tiebreak_candidates": 40, "candidate_validation_count": 11, "validation_cap": 512, "virtual_anchor_rejections": 10, "physical_order_rejections": 10, "cluster_before": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}, "cluster_after": {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}}
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "一次完成路線 round 4", "forward_closed_time_min": 347.67166885051347, "reverse_closed_time_min": 347.85911136957066, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.67166885051347}
+[V65.85_ONE_SHOT_OPTIMIZATION_ROUND] {"round": 4, "before_min": 347.67166885051347, "after_min": 347.67166885051347, "improvement_min": 0.0, "changed_order": true, "two_opt_accepted": 0, "five_block_permutation_accepted": 1}
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "一次完成路線最終方向", "forward_closed_time_min": 347.67166885051347, "reverse_closed_time_min": 347.85911136957066, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.67166885051347}
+V65.64.23 全點一次 Virtual anchor 候選硬限制：relocate 拒絕=3、swap 拒絕=1
+V65.64.23 全點一次一般案件 physical 候選硬限制：relocate 拒絕=0、swap 拒絕=0
+V65.85 一次完成 TIME-based Virtual anchor pair cache：242 組
+[V65.85.7_VA_REPAIR_SUMMARY] {"label": "全點一次最終驗證 TIME_VA round 1", "max_passes": 256, "passes_completed": 1, "moves_count": 0, "stop_reason": "NO_VA_CROSSING_REMAINS", "cycle_detected": false, "cycle_length": null, "cycle_first_seen_pass": null, "cycle_repeat_pass": null, "initial_order_sha256": "71cf1ef0c2c6b458f55f8a38517912123cddca2bd52a30a8cb52d59c7d953786", "step_records_count": 0, "step_records_sample": [], "final_va_crossing_count": 0, "final_va_crossing_sample": [], "final_order_sha256": "71cf1ef0c2c6b458f55f8a38517912123cddca2bd52a30a8cb52d59c7d953786", "final_order_preview": [0, 3, 2, 9, 10, 8, 7, 1, 16, 17, 11, 13]}
+[V65.85.7_COMBINED_ORDER_REPAIR_ROUND] {"label": "全點一次最終驗證", "round": 1, "max_rounds": 32, "va_moves_this_round": 0, "physical_moves_this_round": 0, "va_moves_total": 0, "physical_moves_total": 0, "va_crossing_count_after_round": 0, "physical_crossing_count_after_round": 0, "va_crossing_sample": [], "physical_crossing_sample": [], "va_repair_stop_reason": "NO_VA_CROSSING_REMAINS", "va_repair_cycle_detected": false, "va_repair_cycle_length": null, "feasible_after_round": true, "order_changed": false, "repeated_order_first_seen_round": 0}
+[V65.85.7_COMBINED_ORDER_REPAIR_SUMMARY] {"label": "全點一次最終驗證", "stop_reason": "FEASIBLE", "rounds_completed": 1, "max_rounds": 32, "va_moves_total": 0, "physical_moves_total": 0, "va_crossing_count_final": 0, "physical_crossing_count_final": 0, "va_crossing_sample_final": [], "physical_crossing_sample_final": [], "feasible_final": true}
+V65.85 全點一次 TIME-based Virtual anchor 最終可行化：0 次
+[V65.85_ONE_SHOT_ORIENTATION] {"label": "TIME-based 修復後最終方向", "forward_closed_time_min": 347.67166885051347, "reverse_closed_time_min": 347.85911136957066, "forward_feasible": true, "reverse_feasible": false, "chosen": "FORWARD_ONLY_FEASIBLE", "chosen_closed_time_min": 347.67166885051347}
+✅ V65.85 全點一次 TIME-based Virtual anchor forward-crossing：0 段
+✅ V65.85 全點一次一般案件 TIME-based physical forward-crossing：0 段
+[V65.85_ONE_SHOT_VA_COST_ALIGNMENT] {"predecessor": "TIME_PREDECESSOR", "cache_pairs": 242, "forward_crossings": 0, "route_weight_va_cache_used_for_one_shot_hard_check": false}
+[V65.85_ONE_SHOT_CLUSTER_FINAL] {"status": "TARGET_BINDING_NOT_UNIQUE", "matches": {"02170001": [], "02180000": [], "02190000": [], "02200000": [], "02210000": []}}
+[V65.85_TARGET_ADJACENCY_TEST] {"point_A": "桃園市大園區和平段06450000（使用者所稱第2點）", "point_B": "桃園市大園區和平段06580000（使用者所稱第87點）", "A_matches": [], "B_matches": [], "current_A_visit_no": null, "current_B_visit_no": null, "baseline_matrix_time_min": 347.67166885051347, "forced_A_then_B_time_min": null, "forced_move_delta_min": null, "forced_order_virtual_anchor_feasible": null, "forced_order_physical_feasible": null, "forced_order_combined_feasible": null, "interpretation": "TARGET_NOT_UNIQUE_OR_MISSING"}
+全點一次跑完：114 個查核點 | 起點＋查核點共 115 點 | 無每日工時上限
+獨立初始閉合旅行時間：6.02 hr
+最佳化後閉合旅行時間：5.79 hr
+全點一次跑完首站：桃園市八德區茄苳段07370000 | 起點→首站：4.83 km | 約 9.7 min
+點位處理時間：5.70 hr
+預估總外勤時間：11.49 hr
 
 ======================================================================
-下載 OpenStreetMap 道路圖（v35：矩形範圍 優先；快取可由 FORCE_REFRESH_OSM_CACHE 控制）
+第四階段：每日工時＋固定起點往返共同最佳化
 ======================================================================
-[CELL4_STAGE_START] MOTOR OSM 快取新鮮度驗證／載入
-OSM 快取未命中，需下載最新路網。
-[CELL4_STAGE_DONE] MOTOR OSM 快取新鮮度驗證／載入 | elapsed=0.00s | status=PASS
-MOTOR OSM cache miss：優先取得 Geofabrik 台灣每日 PBF 快照；Overpass 保留為備援。
-[CELL4_STAGE_START] Geofabrik PBF MOTOR 優先建圖
-Geofabrik 台灣 PBF 快取命中；遠端版本未變。 Last-Modified=Wed, 18 Nov 2026 00:01:39 GMT; size=328,606,718 bytes
-[OSM_SOURCE=GEOFABRIK_PBF] 從本機台灣 PBF 解析範圍：west=120.9148366, south=24.8323911, east=121.3786481, north=25.0773088
-[CELL4_HEARTBEAT] Geofabrik PBF MOTOR 優先建圖 | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
-[CELL4_HEARTBEAT] Geofabrik PBF MOTOR 優先建圖 | still_running=True | elapsed=60.1s | 此步驟尚無逐筆回呼；程序仍在執行。
-Building the graph of taiwan-latest.osm.pbf took 01:27
-[OSM_SOURCE=GEOFABRIK_PBF] graph 建立完成：nodes=83,283; edges=203,294; freshness_verified=True
-[CELL4_STAGE_DONE] Geofabrik PBF MOTOR 優先建圖 | elapsed=89.19s | status=PASS
-[CELL4_STAGE_START] 寫入／壓縮 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz
-[CELL4_STAGE_DONE] 寫入／壓縮 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz | elapsed=6.56s | status=PASS
-[CELL4_CACHE_WRITE_DONE] /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz | size=17.96 MiB
-Geofabrik PBF 來源證據已保存：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz.source.json | last_modified=Wed, 18 Nov 2026 00:01:39 GMT | freshness_verified=True
-OSM 路網已寫入快取：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 1/203,294 edges (0.0%) | speed=19,175.09 edges/s | elapsed=0.0s | ETA=10.6s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 50,824/203,294 edges (25.0%) | speed=148,082.13 edges/s | elapsed=0.3s | ETA=1.0s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 101,647/203,294 edges (50.0%) | speed=148,275.97 edges/s | elapsed=0.7s | ETA=0.7s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 152,471/203,294 edges (75.0%) | speed=145,398.80 edges/s | elapsed=1.0s | ETA=0.3s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 203,294/203,294 edges (100.0%) | speed=146,000.44 edges/s | elapsed=1.4s | ETA=0.0s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 203,294/203,294 edges (100.0%) | speed=145,522.55 edges/s | elapsed=1.4s | ETA=0.0s | highway counts ready
-V65.82 MOTOR 原始自訂路網：節點=83,283 | directed edges=203,294 | track=3,454 | service=103,747 | residential=44,445 | living_street=1,330
-本次不下載 OSM，直接使用已取得的路網快取／圖形。
-[CELL4_OSM_PROVENANCE] {"evidence_status": "PBF_REMOTE_SIGNATURE_RECORDED", "fingerprint_sha256": null, "fingerprint_status": null, "graph_edges": 203294, "graph_nodes": 83283, "mode": "MOTOR", "network_type": "fro_motor_drive_service_track_v1", "pbf_remote_version_signature": "43081854893940312546f1538c909457189da415b751b7872e27a05b4627b4b4", "source_type": "geofabrik_taiwan_pbf", "source_type_inferred": false}
-下載 OSM 水路 / 水體資料，面狀水域作硬阻隔、線狀水路保留作鄰水資訊...
-水體資料查詢端點 1/3：https://overpass-api.de/api
-[CELL4_STAGE_START] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api
-[CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
-[CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | still_running=True | elapsed=60.0s | 此步驟尚無逐筆回呼；程序仍在執行。
-[CELL4_STAGE_DONE] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | elapsed=61.34s | status=ERROR | error=ResponseStatusCodeError: 'overpass-api.de' responded: 502 Bad Gateway # 502 Gateway Timeout
-
-This Overpass API server is currently at capacity. All query workers are busy
-and the request queue is full.
-
-## What to do
-
-Retry your request using exponential backoff: wait a short interval, then retry.
-If the request fails again
-水體查詢端點失敗：https://overpass-api.de/api | transient=True | ResponseStatusCodeError: 'overpass-api.de' responded: 502 Bad Gateway # 502 Gateway Timeout
-
-This Overpass API server is currently at capacity. All query workers are busy
-and the request queue is full.
-
-## What to do
-
-Retry your request using exponential backoff: wait a short interval, then retry.
-If the request fails again, double the wait time and retry again.
-
-## For heavy or automated use
-
-This public endpoint is intended for browser-based and human-operated tools.
-For automated or high-volume use, run a local Overpass API instance:
-
-https://github.com/b1tw153/Overpass-API/blob/main/README.md
-
-Overpass 端點切換冷卻 2 秒。
-水體資料查詢端點 2/3：https://overpass.private.coffee/api
-[CELL4_STAGE_START] 機車 OSM 水路／水體資料下載 https://overpass.private.coffee/api
-[CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass.private.coffee/api | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
+每日出門時間上限：5.0 小時 | 每點處理：3 分鐘 | 機車平均行駛速度：30.0 km/h
+ 每日往返路線計算：使用 Numba 加速
+建立每日分界 DP 區段成本快取...
+最少工作日：4 天；固定天數後以『實際總工時最小』為主要目標。
+全域每日分界 DP：候選切點 1～113；DP 目標總工時=953.99 分鐘等效值
+維持全域近→遠查核順序；取消跨日 point transfer / swap 4 pass，改由全域 DP 一次共同決定分界。
+[V97_PRE_GEOMETRY_ROUTE_WORK] {"daily_route_optimizer_skipped": true, "daily_direction_comparison_skipped": true, "fixed_day_count_from_existing_workday_dp": 4, "daily_point_counts_before_geometry": [46, 21, 36, 11]}
+最終每日分界共同最佳化完成：953.99 分鐘等效值
+每日分界 1：未發現明顯近點／反向重跑風險。
+每日分界 2：前日末點→52 / 次日首點→114 | 直接=2.71 km | 經起點=62.38 km | 額外往返=59.68 km | 懲罰=17.51 min
+每日分界 3：未發現明顯近點／反向重跑風險。
+最終每日分界連續性檢查：953.99 分鐘等效值
+[V97_PRE_GEOMETRY_ROUTE_WORK] daily_boundary_rebalance=SKIPPED
+每日地理集中最佳化完成：接受 0 次分界調整 | 兩日合計實際 OSM 改善 0.00 min
+[V97_PRE_GEOMETRY_ROUTE_WORK] cross_day_point_exchange=SKIPPED
+跨日交換全日合計改善：0.00 min
+[V97_PRE_GEOMETRY_ROUTE_WORK] daily_direction_switch=SKIPPED
+[V97_PRE_GEOMETRY_ROUTE_WORK] daily_relocate_swap_2opt_block_refinement=SKIPPED
+[V65.85.7.47_SHARED_SNAP_STAGE_AUDIT] {"stage": "BEFORE_V97_GEOMETRY_FIRST_TEST", "status": "PASS", "shared_snap_node_group_count": 1, "shared_snap_point_count": 2, "days": 4, "violations": []}
+[V97_PRE_GEOMETRY_ROUTE_WORK] {"global_250m_road_component_count": 67, "capacity_lower_bound_probe": "SKIPPED", "single_group_osm_route_probe": "SKIPPED", "capacity_forced_group_split": "DISABLED", "shared_snap_groups_remain_atomic": true}
+[V99_GROUP_WORKLOAD_MODEL] {"version": "v65.85.7.133", "natural_group_count": 67, "point_count": 114, "group_definition": "250M_MOTOR_OSM_ROAD_CONNECTED_COMPONENT; SHARED_SNAP_ATOMIC", "group_workload_definition": "POINT_SERVICE_MINUTES + 1.5x_SYMMETRIC_DIRECTED_OSM_TIME_D_MST", "inter_group_cost": "MIN_DIRECTED_OSM_TIME_D_BETWEEN_GROUP_MEMBERS; GREEDY_MULTI_START_CLOSED_DAY_ESTIMATE", "group_point_counts": [2, 4, 1, 2, 1, 1, 2, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 2, 1, 8, 3, 1, 5, 1, 1, 1, 4, 1, 1, 3, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 3, 1, 2, 1, 1, 5, 3, 2, 3, 1, 1, 3, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1], "group_internal_mst_minutes": [0.2656, 0.9369, 0.0, 0.2039, 0.0, 0.0, 0.4193, 0.0, 0.0, 0.0, 0.3081, 0.0, 0.0, 0.0, 0.1306, 0.0, 0.0, 0.0244, 0.0, 1.0743, 0.2773, 0.0, 0.6361, 0.0, 0.0, 0.0, 0.2499, 0.0, 0.0, 0.1872, 0.0, 0.0, 0.0, 0.0, 0.0409, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1617, 0.0, 0.4465, 0.0, 0.0, 0.4256, 0.1879, 0.0467, 0.0983, 0.0, 0.0, 0.4782, 0.0, 0.0, 0.0, 0.0, 0.0, 0.6821, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "group_workload_minutes": [6.3985, 13.4053, 3.0, 6.3058, 3.0, 3.0, 6.629, 3.0, 3.0, 3.0, 9.4621, 3.0, 3.0, 3.0, 9.1958, 3.0, 3.0, 6.0365, 3.0, 25.6114, 9.416, 3.0, 15.9541, 3.0, 3.0, 3.0, 12.3749, 3.0, 3.0, 9.2807, 3.0, 3.0, 3.0, 3.0, 6.0614, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 9.2426, 3.0, 6.6697, 3.0, 3.0, 15.6384, 9.2819, 6.0701, 9.1475, 3.0, 3.0, 9.7173, 3.0, 3.0, 3.0, 3.0, 3.0, 13.0231, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0], "ranking_uses_equal_point_count": false, "daily_service_time_included": true, "depot_outbound_and_return_estimated": true}
+[V101_BASE_N_SEARCH_PROFILE] {"baseline_days": 4, "geometry_per_angle_limit": 64, "near_cut_count_per_boundary": 32, "exact_hull_scan_limit": 900, "geometry_pool_limit": 96, "actual_osm_route_candidate_limit": 24, "candidate_diversity": "MAX_3_PER_SORTED_DAILY_POINT_COUNT_PROFILE; MAX_6_PER_5_DEGREE_ANGLE_BUCKET", "escalation_policy": "ONLY_AFTER_ALL_TESTED_BASE_N_CANDIDATES_FAIL_HARD_CHECKS"}
 
 [CELL4_EXECUTION_ERROR]
 Traceback (most recent call last):
-  File "/content/Cell4_v65.85.7.133 (2).py", line 34259, in <module>
+  File "/content/Cell4_v65.85.7.133 (3).py", line 34259, in <module>
     _payload = run_vehicle_mode(
         vehicle_mode=_mode,
     ...<8 lines>...
         shared_context=None,
     )
-  File "/content/Cell4_v65.85.7.133 (2).py", line 5642, in run_vehicle_mode
-    water_features, water_source_endpoint = _download_water_features_with_failover(
-                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        download_polygon, f"{VEHICLE_LABEL} OSM 水路／水體資料下載"
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/Cell4_v65.85.7.133 (3).py", line 29179, in run_vehicle_mode
+    batches = _v65_85_23_integrated_alns_split_optimizer(batches)
+  File "/content/Cell4_v65.85.7.133 (3).py", line 24563, in _v65_85_23_integrated_alns_split_optimizer
+    _v96_geometry_stats) = _v97_pick_geometry(_v96_selected_day_count, _exhaustive=True)
+                           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/Cell4_v65.85.7.133 (3).py", line 24356, in _v97_pick_geometry
+    _candidates, _builder_stats = _v97_projection_geometry_candidates(
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        _group_sequence,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        _near_cut_count_override=_near_cut_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     )
     ^
-  File "/content/Cell4_v65.85.7.133 (2).py", line 1589, in _download_water_features_with_failover
-    features = _cell4_run_with_heartbeat(
-        f"{stage_label} {endpoint}",
-    ...<2 lines>...
-        tags=WATER_OSM_QUERY_TAGS,
-    )
-  File "/content/Cell4_v65.85.7.133 (2).py", line 942, in _cell4_run_with_heartbeat
-    result = function(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/osmnx/features.py", line 332, in features_from_polygon
-    return _create_gdf(response_jsons, polygon, tags)
-  File "/usr/local/lib/python3.13/dist-packages/osmnx/features.py", line 406, in _create_gdf
-    for response_json in response_jsons:
-                         ^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 432, in _download_overpass_features
-    yield _overpass_request(OrderedDict(data=query_str))
-          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 460, in _overpass_request
-    pause = _get_overpass_pause(settings.overpass_url)
-  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 181, in _get_overpass_pause
-    response = requests.get(
-        url,
-    ...<2 lines>...
-        **settings.requests_kwargs,
-    )
-  File "/usr/local/lib/python3.13/dist-packages/requests/api.py", line 73, in get
-    return request("get", url, params=params, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/requests/api.py", line 59, in request
-    return session.request(method=method, url=url, **kwargs)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/requests/sessions.py", line 589, in request
-    resp = self.send(prep, **send_kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/requests/sessions.py", line 703, in send
-    r = adapter.send(request, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/requests/adapters.py", line 667, in send
-    resp = conn.urlopen(
-        method=request.method,
-    ...<9 lines>...
-        chunked=chunked,
-    )
-  File "/usr/local/lib/python3.13/dist-packages/urllib3/connectionpool.py", line 787, in urlopen
-    response = self._make_request(
-        conn,
-    ...<10 lines>...
-        **response_kw,
-    )
-  File "/usr/local/lib/python3.13/dist-packages/urllib3/connectionpool.py", line 534, in _make_request
-    response = conn.getresponse()
-  File "/usr/local/lib/python3.13/dist-packages/urllib3/connection.py", line 565, in getresponse
-    httplib_response = super().getresponse()
-  File "/usr/lib/python3.13/http/client.py", line 1478, in getresponse
-    response.begin()
-    ~~~~~~~~~~~~~~^^
-  File "/usr/lib/python3.13/http/client.py", line 343, in begin
-    version, status, reason = self._read_status()
-                              ~~~~~~~~~~~~~~~~~^^
-  File "/usr/lib/python3.13/http/client.py", line 304, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
-  File "/usr/lib/python3.13/socket.py", line 723, in readinto
-    return self._sock.recv_into(b)
-           ~~~~~~~~~~~~~~~~~~~~^^^
-  File "/usr/lib/python3.13/ssl.py", line 1315, in recv_into
-    return self.read(nbytes, buffer)
-           ~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.13/ssl.py", line 1149, in read
-    return self._sslobj.read(len, buffer)
-           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/content/Cell4_v65.85.7.133 (3).py", line 23478, in _v97_projection_geometry_candidates
+    _rank_indices = np.asarray(sorted(
+                               ~~~~~~^
+        (int(x) for x in _shortlist126),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        ),
+        ^^
+    )[:_limit126], dtype=np.int64)
+    ^
+  File "/content/Cell4_v65.85.7.133 (3).py", line 23481, in <lambda>
+    float(np.sum(np.maximum(
+                 ~~~~~~~~~~^
+        0.0, _workloads_matrix[_row126] - float(max_day_min)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))),
+    ^
 KeyboardInterrupt
 
 
 [CELL4_EXECUTION_STATUS]=FAILED
-[CELL4_RUN_FINISHED_TW]=2026-11-18T18:07:21+08:00
+[CELL4_RUN_FINISHED_TW]=2026-11-18T18:17:06+08:00
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-18/Cell4_v65.85.7.133_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
