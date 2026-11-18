@@ -1,7 +1,7 @@
 ==============================================================================
 CELL4_VERSION=v65.85.7.133
 CELL4_LOG_PATH=/content/Cell4_v65.85.7.133_執行結果.txt
-CELL4_RUN_STARTED_TW=2026-11-18T18:00:57+08:00
+CELL4_RUN_STARTED_TW=2026-11-18T18:03:27+08:00
 ==============================================================================
 [GITHUB_TOKEN_PREFLIGHT]=AVAILABLE
 INPUT_FRESHNESS_STATUS=PASS_SELECTED_LATEST_MODIFIED
@@ -24,8 +24,8 @@ Google Drive 未預先掛載；本次快取、檢查點及診斷備份改存 /co
 ======================================================================
 [CELL4_READ_START] 路線設定檔 RouteConfig | path=/content/input_route_config.xlsx | source_size=12.20 KiB
 [CELL4_STAGE_START] 讀取 Excel：路線設定檔 RouteConfig
-[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | elapsed=0.03s | status=PASS
-[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.36 MiB/s | elapsed=0.03s
+[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | elapsed=0.04s | status=PASS
+[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.26 MiB/s | elapsed=0.05s
 路線設定檔關鍵值檢查：
   交通工具 = '只算機車'
   每點停留時間 = 3
@@ -83,9 +83,9 @@ Cell 4 續跑進度
 Cell 4 RAM 安全檢查
 ======================================================================
 RAM 總量：12.67 GB
-RAM 可用：10.74 GB
+RAM 可用：10.16 GB
 BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
-CELL4_RUN_ID=20261118T100112903984Z_fb5d54a08a
+CELL4_RUN_ID=20261118T100342283239Z_31745df5db
 CELL4_SOURCE_SHA256=f1449461efa4a511a6f6da17fa4086a94435bce4f9540ddd72f565d57fcbd13e
 CELL4_SOURCE_KIND=PYTHON_FILE
 CELL4_SOURCE_DETECTION=CURRENT_VERSION_CONTENT_MATCH
@@ -110,8 +110,8 @@ NetworkX 版本： 3.7
 道路網類型：MOTOR 專屬自訂 drive_service+track | cache_profile=fro_motor_drive_service_track_v1
 [CELL4_READ_START] 機車 Cell2 result.xlsx | path=/content/result.xlsx | source_size=31.36 KiB
 [CELL4_STAGE_START] 讀取 Excel：機車 Cell2 result.xlsx
-[CELL4_STAGE_DONE] 讀取 Excel：機車 Cell2 result.xlsx | elapsed=0.12s | status=PASS
-[CELL4_READ_DONE] 機車 Cell2 result.xlsx | rows=115 | columns=37 | source_size=31.36 KiB | source_read_rate=0.25 MiB/s | elapsed=0.12s
+[CELL4_STAGE_DONE] 讀取 Excel：機車 Cell2 result.xlsx | elapsed=0.11s | status=PASS
+[CELL4_READ_DONE] 機車 Cell2 result.xlsx | rows=115 | columns=37 | source_size=31.36 KiB | source_read_rate=0.28 MiB/s | elapsed=0.11s
 原始資料筆數： 115
 
 ======================================================================
@@ -124,12 +124,12 @@ NetworkX 版本： 3.7
 固定起點座標：[ 121.30936300, 24.98845400]
 v65.66 RAM 預檢：115 點；座標跨度約 32.8 × 13.1 km；距離矩陣輸出約 0.1 MiB，採列分塊計算。
 Haversine 直線距離矩陣完成。
-[RAM] Haversine 完成 | process RSS=0.63 GiB | system available=10.74 GiB
-[RAM] Local XY 完成 | process RSS=0.63 GiB | system available=10.74 GiB
-[RAM] 開始建立 OSM 下載範圍 | process RSS=0.63 GiB | system available=10.74 GiB
+[RAM] Haversine 完成 | process RSS=1.08 GiB | system available=10.16 GiB
+[RAM] Local XY 完成 | process RSS=1.08 GiB | system available=10.16 GiB
+[RAM] 開始建立 OSM 下載範圍 | process RSS=1.08 GiB | system available=10.16 GiB
 下載範圍幾何：115 點；改採投影後凸包 buffer（7000 m + 1 m 安全餘裕），避免逐點 buffer/union。
 下載範圍幾何建立完成。
-[RAM] OSM 下載範圍幾何完成 | process RSS=0.63 GiB | system available=10.74 GiB
+[RAM] OSM 下載範圍幾何完成 | process RSS=1.08 GiB | system available=10.16 GiB
 
 ======================================================================
 OSM 下載範圍
@@ -137,196 +137,442 @@ OSM 下載範圍
 west/south/east/north： (120.91483656443899, 24.832391110469842, 121.37864805364879, 25.077308798650666)
 buffer：7000 m
 下載方式：先用矩形範圍；失敗時改用區域範圍
-[RAM] OSM graph 載入／下載前 | process RSS=0.63 GiB | system available=10.74 GiB
+[RAM] OSM graph 載入／下載前 | process RSS=1.08 GiB | system available=10.16 GiB
 
 ======================================================================
 下載 OpenStreetMap 道路圖（v35：矩形範圍 優先；快取可由 FORCE_REFRESH_OSM_CACHE 控制）
 ======================================================================
 [CELL4_STAGE_START] MOTOR OSM 快取新鮮度驗證／載入
 OSM 快取未命中，需下載最新路網。
-[CELL4_STAGE_DONE] MOTOR OSM 快取新鮮度驗證／載入 | elapsed=0.01s | status=PASS
+[CELL4_STAGE_DONE] MOTOR OSM 快取新鮮度驗證／載入 | elapsed=0.00s | status=PASS
 MOTOR OSM cache miss：優先取得 Geofabrik 台灣每日 PBF 快照；Overpass 保留為備援。
 [CELL4_STAGE_START] Geofabrik PBF MOTOR 優先建圖
-Geofabrik 台灣 PBF 需更新／首次下載。 遠端 Last-Modified=Wed, 18 Nov 2026 00:01:39 GMT; 預期大小=328606718
-Geofabrik PBF 下載進度：33,554,432 bytes
-Geofabrik PBF 下載進度：67,108,864 bytes
-Geofabrik PBF 下載進度：100,663,296 bytes
-[CELL4_HEARTBEAT] Geofabrik PBF MOTOR 優先建圖 | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
-Geofabrik PBF 下載進度：134,217,728 bytes
-Geofabrik PBF 下載進度：167,772,160 bytes
-Geofabrik PBF 下載進度：201,326,592 bytes
-Geofabrik PBF 下載進度：234,881,024 bytes
-[CELL4_HEARTBEAT] Geofabrik PBF MOTOR 優先建圖 | still_running=True | elapsed=60.0s | 此步驟尚無逐筆回呼；程序仍在執行。
-Geofabrik PBF 下載進度：268,435,456 bytes
-Geofabrik PBF 下載進度：301,989,888 bytes
-Geofabrik 台灣 PBF 已保存：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/taiwan-latest.osm.pbf | size=328,606,718 bytes | SHA256=16e35ff21c254f81649bd1692f8bb1ba3a5eb6276a6603433c4e25459b4a0259
-安裝 PBF 解析器 pyrosm==0.26.0（只在 PBF 備援時需要）...
+Geofabrik 台灣 PBF 快取命中；遠端版本未變。 Last-Modified=Wed, 18 Nov 2026 00:01:39 GMT; size=328,606,718 bytes
 [OSM_SOURCE=GEOFABRIK_PBF] 從本機台灣 PBF 解析範圍：west=120.9148366, south=24.8323911, east=121.3786481, north=25.0773088
-[CELL4_HEARTBEAT] Geofabrik PBF MOTOR 優先建圖 | still_running=True | elapsed=90.0s | 此步驟尚無逐筆回呼；程序仍在執行。
-Building the graph of taiwan-latest.osm.pbf took 00:22
+[CELL4_HEARTBEAT] Geofabrik PBF MOTOR 優先建圖 | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
+[CELL4_HEARTBEAT] Geofabrik PBF MOTOR 優先建圖 | still_running=True | elapsed=60.1s | 此步驟尚無逐筆回呼；程序仍在執行。
+Building the graph of taiwan-latest.osm.pbf took 01:27
+[OSM_SOURCE=GEOFABRIK_PBF] graph 建立完成：nodes=83,283; edges=203,294; freshness_verified=True
+[CELL4_STAGE_DONE] Geofabrik PBF MOTOR 優先建圖 | elapsed=89.19s | status=PASS
+[CELL4_STAGE_START] 寫入／壓縮 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz
+[CELL4_STAGE_DONE] 寫入／壓縮 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz | elapsed=6.56s | status=PASS
+[CELL4_CACHE_WRITE_DONE] /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz | size=17.96 MiB
+Geofabrik PBF 來源證據已保存：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz.source.json | last_modified=Wed, 18 Nov 2026 00:01:39 GMT | freshness_verified=True
+OSM 路網已寫入快取：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 1/203,294 edges (0.0%) | speed=19,175.09 edges/s | elapsed=0.0s | ETA=10.6s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 50,824/203,294 edges (25.0%) | speed=148,082.13 edges/s | elapsed=0.3s | ETA=1.0s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 101,647/203,294 edges (50.0%) | speed=148,275.97 edges/s | elapsed=0.7s | ETA=0.7s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 152,471/203,294 edges (75.0%) | speed=145,398.80 edges/s | elapsed=1.0s | ETA=0.3s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 203,294/203,294 edges (100.0%) | speed=146,000.44 edges/s | elapsed=1.4s | ETA=0.0s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 203,294/203,294 edges (100.0%) | speed=145,522.55 edges/s | elapsed=1.4s | ETA=0.0s | highway counts ready
+V65.82 MOTOR 原始自訂路網：節點=83,283 | directed edges=203,294 | track=3,454 | service=103,747 | residential=44,445 | living_street=1,330
+本次不下載 OSM，直接使用已取得的路網快取／圖形。
+[CELL4_OSM_PROVENANCE] {"evidence_status": "PBF_REMOTE_SIGNATURE_RECORDED", "fingerprint_sha256": null, "fingerprint_status": null, "graph_edges": 203294, "graph_nodes": 83283, "mode": "MOTOR", "network_type": "fro_motor_drive_service_track_v1", "pbf_remote_version_signature": "43081854893940312546f1538c909457189da415b751b7872e27a05b4627b4b4", "source_type": "geofabrik_taiwan_pbf", "source_type_inferred": false}
+下載 OSM 水路 / 水體資料，面狀水域作硬阻隔、線狀水路保留作鄰水資訊...
+水體資料查詢端點 1/3：https://overpass-api.de/api
+[CELL4_STAGE_START] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api
+[CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
+[CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | still_running=True | elapsed=60.0s | 此步驟尚無逐筆回呼；程序仍在執行。
+[CELL4_STAGE_DONE] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | elapsed=61.34s | status=ERROR | error=ResponseStatusCodeError: 'overpass-api.de' responded: 502 Bad Gateway # 502 Gateway Timeout
+
+This Overpass API server is currently at capacity. All query workers are busy
+and the request queue is full.
+
+## What to do
+
+Retry your request using exponential backoff: wait a short interval, then retry.
+If the request fails again
+水體查詢端點失敗：https://overpass-api.de/api | transient=True | ResponseStatusCodeError: 'overpass-api.de' responded: 502 Bad Gateway # 502 Gateway Timeout
+
+This Overpass API server is currently at capacity. All query workers are busy
+and the request queue is full.
+
+## What to do
+
+Retry your request using exponential backoff: wait a short interval, then retry.
+If the request fails again, double the wait time and retry again.
+
+## For heavy or automated use
+
+This public endpoint is intended for browser-based and human-operated tools.
+For automated or high-volume use, run a local Overpass API instance:
+
+https://github.com/b1tw153/Overpass-API/blob/main/README.md
+
+Overpass 端點切換冷卻 2 秒。
+水體資料查詢端點 2/3：https://overpass.private.coffee/api
+[CELL4_STAGE_START] 機車 OSM 水路／水體資料下載 https://overpass.private.coffee/api
+[CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass.private.coffee/api | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
 
 [CELL4_EXECUTION_ERROR]
 Traceback (most recent call last):
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/pool.py", line 437, in _decode_threads
-    results = _map_tracked(
-        pool,
-    ...<3 lines>...
-        progress,
-    )
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/pool.py", line 257, in _map_tracked
-    _, pending = wait(pending, timeout=_PROGRESS_INTERVAL)
-                 ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.13/concurrent/futures/_base.py", line 306, in wait
-    waiter.event.wait(timeout)
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "/usr/lib/python3.13/threading.py", line 660, in wait
-    signaled = self._cond.wait(timeout)
-  File "/usr/lib/python3.13/threading.py", line 363, in wait
-    gotit = waiter.acquire(True, timeout)
-KeyboardInterrupt
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/content/Cell4_v65.85.7.133 (1).py", line 34259, in <module>
+  File "/content/Cell4_v65.85.7.133 (2).py", line 34259, in <module>
     _payload = run_vehicle_mode(
         vehicle_mode=_mode,
     ...<8 lines>...
         shared_context=None,
     )
-  File "/content/Cell4_v65.85.7.133 (1).py", line 5461, in run_vehicle_mode
-    G = _load_or_download_v65_82_motor_graph(bounds, download_polygon)
-  File "/content/Cell4_v65.85.7.133 (1).py", line 4322, in _load_or_download_v65_82_motor_graph
-    graph, graph_source_info = _cell4_run_with_heartbeat(
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~^
-        "Geofabrik PBF MOTOR 優先建圖",
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<3 lines>...
-        motor_custom=True,
-        ^^^^^^^^^^^^^^^^^^
+  File "/content/Cell4_v65.85.7.133 (2).py", line 5642, in run_vehicle_mode
+    water_features, water_source_endpoint = _download_water_features_with_failover(
+                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        download_polygon, f"{VEHICLE_LABEL} OSM 水路／水體資料下載"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     )
     ^
-  File "/content/Cell4_v65.85.7.133 (1).py", line 942, in _cell4_run_with_heartbeat
+  File "/content/Cell4_v65.85.7.133 (2).py", line 1589, in _download_water_features_with_failover
+    features = _cell4_run_with_heartbeat(
+        f"{stage_label} {endpoint}",
+    ...<2 lines>...
+        tags=WATER_OSM_QUERY_TAGS,
+    )
+  File "/content/Cell4_v65.85.7.133 (2).py", line 942, in _cell4_run_with_heartbeat
     result = function(*args, **kwargs)
-  File "/content/Cell4_v65.85.7.133 (1).py", line 1854, in _build_graph_from_geofabrik_pbf
-    graph = osm.get_graph(
-        network_type="drive_service",
-    ...<7 lines>...
-        filter_type="keep",
+  File "/usr/local/lib/python3.13/dist-packages/osmnx/features.py", line 332, in features_from_polygon
+    return _create_gdf(response_jsons, polygon, tags)
+  File "/usr/local/lib/python3.13/dist-packages/osmnx/features.py", line 406, in _create_gdf
+    for response_json in response_jsons:
+                         ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 432, in _download_overpass_features
+    yield _overpass_request(OrderedDict(data=query_str))
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 460, in _overpass_request
+    pause = _get_overpass_pause(settings.overpass_url)
+  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 181, in _get_overpass_pause
+    response = requests.get(
+        url,
+    ...<2 lines>...
+        **settings.requests_kwargs,
     )
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/_log.py", line 151, in wrapper
-    return func(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/pyrosm.py", line 1675, in get_graph
-    nodes, edges = self._read_engine(
-                   ~~~~~~~~~~~~~~~~~^
-        graph_network,
-        ^^^^^^^^^^^^^^
-    ...<6 lines>...
-        tags_to_keep=tags_to_keep,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/requests/adapters.py", line 667, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
     )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/pyrosm.py", line 348, in _read_engine
-    return reader(self.filepath, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/readers.py", line 899, in graph_network
-    return _decode_network(
-        filepath, filter_spec, bounding_box, workers, steps, assemble, unix_time
+  File "/usr/local/lib/python3.13/dist-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
     )
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/readers.py", line 847, in _decode_network
-    return _decode_and_run(
-        filepath,
-    ...<7 lines>...
-        unix_time=unix_time,
-    )
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/pool.py", line 482, in _decode_and_run
-    shard_paths, pool_ok = _decode_all(
-                           ~~~~~~~~~~~^
-        filepath,
-        ^^^^^^^^^
-    ...<13 lines>...
-        unix_time,
-        ^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/pool.py", line 370, in _decode_all
-    return _decode_threads(tasks, workers, settings, progress), workers > 1
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/pool.py", line 432, in _decode_threads
-    with ThreadPoolExecutor(workers) as pool:
-         ~~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "/usr/lib/python3.13/concurrent/futures/_base.py", line 653, in __exit__
-    self.shutdown(wait=True)
-    ~~~~~~~~~~~~~^^^^^^^^^^^
-  File "/usr/lib/python3.13/concurrent/futures/thread.py", line 239, in shutdown
-    t.join()
-    ~~~~~~^^
-  File "/usr/lib/python3.13/threading.py", line 1095, in join
-    self._handle.join(timeout)
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/urllib3/connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+  File "/usr/local/lib/python3.13/dist-packages/urllib3/connection.py", line 565, in getresponse
+    httplib_response = super().getresponse()
+  File "/usr/lib/python3.13/http/client.py", line 1478, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/client.py", line 343, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/client.py", line 304, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socket.py", line 723, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.13/ssl.py", line 1315, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/ssl.py", line 1149, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
 KeyboardInterrupt
 
 
 [CELL4_EXECUTION_STATUS]=FAILED
-[CELL4_RUN_FINISHED_TW]=2026-11-18T18:03:00+08:00
+[CELL4_RUN_FINISHED_TW]=2026-11-18T18:07:21+08:00
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-18/Cell4_v65.85.7.133_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
-build_graph_from_geofabrik_pbf
-    graph = osm.get_graph(
-        network_type="drive_service",
-    ...<7 lines>...
-        filter_type="keep",
+UT_SELECTED_MTIME_NS=1794995916862202787
+INPUT_CANDIDATE_AUDIT=[{"mtime_ns": 1794995916862202787, "path": "/content/result.xlsx", "sha256": "91634f33ca1a4c9ea1a16912d27df802732310cfaf271be1bf490d520a99d233", "size_bytes": 32114}]
+ROUTE_CONFIG_SELECTION=NEW_UPLOAD | PATH=/content/input_route_config.xlsx
+已使用本次上傳的路線設定檔：/content/input_route_config.xlsx
+Cell 4 v65.85.7.133｜Cell 2 輸入：/content/result.xlsx
+CELL4_PROGRESS_REPORTING=ENABLED | interval=20s | heartbeat=30s | upload_card=INLINE_CELL_OUTPUT
+======================================================================
+Cell 4 儲存模式： CONTENT
+Cell 4 OSM 快取： /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE
+v82 OSM 來源策略：MOTOR cache miss 優先 Geofabrik 每日 PBF；Overpass 作備援；水體快取依同一 PBF 版本識別。
+v81 跨日重複道路：不設舊基準硬上限；仍列入全域最佳化目標。
+Google Drive 未預先掛載；本次快取、檢查點及診斷備份改存 /content。
+注意：/content 是 Colab 暫存空間，Runtime 中斷或重啟後資料可能消失。
+======================================================================
+[CELL4_READ_START] 路線設定檔 RouteConfig | path=/content/input_route_config.xlsx | source_size=12.20 KiB
+[CELL4_STAGE_START] 讀取 Excel：路線設定檔 RouteConfig
+[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | elapsed=0.04s | status=PASS
+[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.26 MiB/s | elapsed=0.05s
+路線設定檔關鍵值檢查：
+  交通工具 = '只算機車'
+  每點停留時間 = 3
+  每日可勘查時間 = 5
+  機車平均速度 = 30
+  汽車平面道路平均速度 = 40
+  汽車高速公路平均速度 = 100
+  汽車快速公路平均速度 = 70
+  臺31～臺39高鐵橋下道路成本倍率 = ×0.95
+  臺61～臺89快速公路平面側車道成本倍率 = ×0.95
+  Motorcycle designated 道路成本倍率 = ×0.85
+  Motor_vehicle designated 道路成本倍率 = ×0.90
+  Service 道路成本倍率 = ×1.00
+  Living Street 道路成本倍率 = ×1.00
+  Track 產業道路成本倍率 = ×2.00
+  未鋪面路面成本倍率 = ×2.00
+  Destination 限制道路成本倍率 = ×1.15
+  汽車 Service 一般道路成本倍率 = ×1.30
+  汽車 Service Alley 成本倍率 = ×3.50
+  汽車 Service Driveway 成本倍率 = ×3.00
+  汽車 Service Parking Aisle 成本倍率 = ×4.00
+  汽車 Living Street 成本倍率 = ×1.20
+  汽車 Track 產業道路成本倍率 = ×6.00
+  汽車 Track grade4／grade5 附加倍率 = ×1.30
+  汽車 Track／Service narrow=yes 附加倍率 = ×1.25
+  汽車未鋪面道路成本倍率 = ×3.00
+  汽車未鋪面窄幅道路附加倍率 = ×1.50
+  汽車 Destination 道路成本倍率 = ×1.20
+  汽車 Conditional 限制道路成本倍率 = ×5.00
+  汽車窄幅 Service／Track 成本倍率 = ×4.00
+  汽車人工指定避免道路成本倍率 = ×20.00
+  汽車窄幅道路判定寬度 = 3.50 m
+======================================================================
+載入路線規劃設定檔
+設定檔： /content/input_route_config.xlsx
+交通工具設定：只算機車
+每點停留時間：3 分鐘
+每日可勘查時間：5 小時
+機車平均速度：30 km/h
+機車路網資格：普通重型機車｜高速／快速公路主線與匝道：禁止
+機車道路成本倍率：臺31～39橋下×0.95 | 臺61～89平面側車道×0.95 | Motorcycle designated×0.85 | Motor_vehicle designated×0.90 | Service×1.00 | Living Street×1.00 | Track×2.00 | Unpaved×2.00 | Destination×1.15
+汽車平面道路平均速度：40 km/h
+汽車高速公路平均速度：100 km/h
+汽車快速公路平均速度：70 km/h
+汽車道路成本倍率：Service×1.30 | Alley×3.50 | Driveway×3.00 | Parking Aisle×4.00 | Living Street×1.20 | Track×6.00 | Unpaved×3.00 | Destination×1.20 | Conditional×5.00 | 窄幅加權×4.00 | 人工避免×20.00
+汽車人工路段設定檔：找不到 /content/input_car_forbidden_segments.xlsx → 略過
+
+======================================================================
+Cell 4 續跑進度
+======================================================================
+進度檔案位置： /content/巡田最速適_Cell4_Fallback/CELL4_CHECKPOINTS
+儲存位置：/content（未掛載 Drive）
+
+======================================================================
+Cell 4 RAM 安全檢查
+======================================================================
+RAM 總量：12.67 GB
+RAM 可用：10.16 GB
+BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
+CELL4_RUN_ID=20261118T100342283239Z_31745df5db
+CELL4_SOURCE_SHA256=f1449461efa4a511a6f6da17fa4086a94435bce4f9540ddd72f565d57fcbd13e
+CELL4_SOURCE_KIND=PYTHON_FILE
+CELL4_SOURCE_DETECTION=CURRENT_VERSION_CONTENT_MATCH
+CELL4_INPUT_SHA256=91634f33ca1a4c9ea1a16912d27df802732310cfaf271be1bf490d520a99d233
+CELL4_ROUTE_CONFIG_SHA256=c73238f3ec4f368693756dc3e597b5458ab92de9e8790e4cb64b93f15a180466
+
+INPUT_CHECKPOINT_GATE_PATH= /content/result.xlsx
+INPUT_CHECKPOINT_GATE_SHA1= c8df7c94990b679c51b6805206c0fce2b108c1ab
+INPUT_CHECKPOINT_GATE_SIGNATURE= 35b2fa4f4ddba5335f6b
+Cell 4 執行簽章： 35b2fa4f4ddba5335f6b
+Cell 4 交通工具分模式續跑進度： /content/巡田最速適_Cell4_Fallback/CELL4_CHECKPOINTS
+需要重新計算：機車（MOTOR）
+
+################################################################################
+開始執行：機車（MOTOR）
+################################################################################
+MOTOR Crossing / U-turn 限制：關閉（不納入路線最佳化目標函數）
+======================================================================
+OSMnx 版本： 2.1.2
+NetworkX 版本： 3.7
+======================================================================
+道路網類型：MOTOR 專屬自訂 drive_service+track | cache_profile=fro_motor_drive_service_track_v1
+[CELL4_READ_START] 機車 Cell2 result.xlsx | path=/content/result.xlsx | source_size=31.36 KiB
+[CELL4_STAGE_START] 讀取 Excel：機車 Cell2 result.xlsx
+[CELL4_STAGE_DONE] 讀取 Excel：機車 Cell2 result.xlsx | elapsed=0.11s | status=PASS
+[CELL4_READ_DONE] 機車 Cell2 result.xlsx | rows=115 | columns=37 | source_size=31.36 KiB | source_read_rate=0.28 MiB/s | elapsed=0.11s
+原始資料筆數： 115
+
+======================================================================
+自動取得固定起點
+======================================================================
+有效點數： 115
+固定起點： 農業部農糧署北區分署
+固定起點經度： 121.30936300
+固定起點緯度： 24.98845400
+固定起點座標：[ 121.30936300, 24.98845400]
+v65.66 RAM 預檢：115 點；座標跨度約 32.8 × 13.1 km；距離矩陣輸出約 0.1 MiB，採列分塊計算。
+Haversine 直線距離矩陣完成。
+[RAM] Haversine 完成 | process RSS=1.08 GiB | system available=10.16 GiB
+[RAM] Local XY 完成 | process RSS=1.08 GiB | system available=10.16 GiB
+[RAM] 開始建立 OSM 下載範圍 | process RSS=1.08 GiB | system available=10.16 GiB
+下載範圍幾何：115 點；改採投影後凸包 buffer（7000 m + 1 m 安全餘裕），避免逐點 buffer/union。
+下載範圍幾何建立完成。
+[RAM] OSM 下載範圍幾何完成 | process RSS=1.08 GiB | system available=10.16 GiB
+
+======================================================================
+OSM 下載範圍
+======================================================================
+west/south/east/north： (120.91483656443899, 24.832391110469842, 121.37864805364879, 25.077308798650666)
+buffer：7000 m
+下載方式：先用矩形範圍；失敗時改用區域範圍
+[RAM] OSM graph 載入／下載前 | process RSS=1.08 GiB | system available=10.16 GiB
+
+======================================================================
+下載 OpenStreetMap 道路圖（v35：矩形範圍 優先；快取可由 FORCE_REFRESH_OSM_CACHE 控制）
+======================================================================
+[CELL4_STAGE_START] MOTOR OSM 快取新鮮度驗證／載入
+OSM 快取未命中，需下載最新路網。
+[CELL4_STAGE_DONE] MOTOR OSM 快取新鮮度驗證／載入 | elapsed=0.00s | status=PASS
+MOTOR OSM cache miss：優先取得 Geofabrik 台灣每日 PBF 快照；Overpass 保留為備援。
+[CELL4_STAGE_START] Geofabrik PBF MOTOR 優先建圖
+Geofabrik 台灣 PBF 快取命中；遠端版本未變。 Last-Modified=Wed, 18 Nov 2026 00:01:39 GMT; size=328,606,718 bytes
+[OSM_SOURCE=GEOFABRIK_PBF] 從本機台灣 PBF 解析範圍：west=120.9148366, south=24.8323911, east=121.3786481, north=25.0773088
+[CELL4_HEARTBEAT] Geofabrik PBF MOTOR 優先建圖 | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
+[CELL4_HEARTBEAT] Geofabrik PBF MOTOR 優先建圖 | still_running=True | elapsed=60.1s | 此步驟尚無逐筆回呼；程序仍在執行。
+Building the graph of taiwan-latest.osm.pbf took 01:27
+[OSM_SOURCE=GEOFABRIK_PBF] graph 建立完成：nodes=83,283; edges=203,294; freshness_verified=True
+[CELL4_STAGE_DONE] Geofabrik PBF MOTOR 優先建圖 | elapsed=89.19s | status=PASS
+[CELL4_STAGE_START] 寫入／壓縮 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz
+[CELL4_STAGE_DONE] 寫入／壓縮 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz | elapsed=6.56s | status=PASS
+[CELL4_CACHE_WRITE_DONE] /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz | size=17.96 MiB
+Geofabrik PBF 來源證據已保存：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz.source.json | last_modified=Wed, 18 Nov 2026 00:01:39 GMT | freshness_verified=True
+OSM 路網已寫入快取：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_a5dc085538e451ff.pkl.gz
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 1/203,294 edges (0.0%) | speed=19,175.09 edges/s | elapsed=0.0s | ETA=10.6s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 50,824/203,294 edges (25.0%) | speed=148,082.13 edges/s | elapsed=0.3s | ETA=1.0s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 101,647/203,294 edges (50.0%) | speed=148,275.97 edges/s | elapsed=0.7s | ETA=0.7s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 152,471/203,294 edges (75.0%) | speed=145,398.80 edges/s | elapsed=1.0s | ETA=0.3s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 203,294/203,294 edges (100.0%) | speed=146,000.44 edges/s | elapsed=1.4s | ETA=0.0s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 203,294/203,294 edges (100.0%) | speed=145,522.55 edges/s | elapsed=1.4s | ETA=0.0s | highway counts ready
+V65.82 MOTOR 原始自訂路網：節點=83,283 | directed edges=203,294 | track=3,454 | service=103,747 | residential=44,445 | living_street=1,330
+本次不下載 OSM，直接使用已取得的路網快取／圖形。
+[CELL4_OSM_PROVENANCE] {"evidence_status": "PBF_REMOTE_SIGNATURE_RECORDED", "fingerprint_sha256": null, "fingerprint_status": null, "graph_edges": 203294, "graph_nodes": 83283, "mode": "MOTOR", "network_type": "fro_motor_drive_service_track_v1", "pbf_remote_version_signature": "43081854893940312546f1538c909457189da415b751b7872e27a05b4627b4b4", "source_type": "geofabrik_taiwan_pbf", "source_type_inferred": false}
+下載 OSM 水路 / 水體資料，面狀水域作硬阻隔、線狀水路保留作鄰水資訊...
+水體資料查詢端點 1/3：https://overpass-api.de/api
+[CELL4_STAGE_START] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api
+[CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
+[CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | still_running=True | elapsed=60.0s | 此步驟尚無逐筆回呼；程序仍在執行。
+[CELL4_STAGE_DONE] 機車 OSM 水路／水體資料下載 https://overpass-api.de/api | elapsed=61.34s | status=ERROR | error=ResponseStatusCodeError: 'overpass-api.de' responded: 502 Bad Gateway # 502 Gateway Timeout
+
+This Overpass API server is currently at capacity. All query workers are busy
+and the request queue is full.
+
+## What to do
+
+Retry your request using exponential backoff: wait a short interval, then retry.
+If the request fails again
+水體查詢端點失敗：https://overpass-api.de/api | transient=True | ResponseStatusCodeError: 'overpass-api.de' responded: 502 Bad Gateway # 502 Gateway Timeout
+
+This Overpass API server is currently at capacity. All query workers are busy
+and the request queue is full.
+
+## What to do
+
+Retry your request using exponential backoff: wait a short interval, then retry.
+If the request fails again, double the wait time and retry again.
+
+## For heavy or automated use
+
+This public endpoint is intended for browser-based and human-operated tools.
+For automated or high-volume use, run a local Overpass API instance:
+
+https://github.com/b1tw153/Overpass-API/blob/main/README.md
+
+Overpass 端點切換冷卻 2 秒。
+水體資料查詢端點 2/3：https://overpass.private.coffee/api
+[CELL4_STAGE_START] 機車 OSM 水路／水體資料下載 https://overpass.private.coffee/api
+[CELL4_HEARTBEAT] 機車 OSM 水路／水體資料下載 https://overpass.private.coffee/api | still_running=True | elapsed=30.0s | 此步驟尚無逐筆回呼；程序仍在執行。
+
+[CELL4_EXECUTION_ERROR]
+Traceback (most recent call last):
+  File "/content/Cell4_v65.85.7.133 (2).py", line 34259, in <module>
+    _payload = run_vehicle_mode(
+        vehicle_mode=_mode,
+    ...<8 lines>...
+        shared_context=None,
     )
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/_log.py", line 151, in wrapper
-    return func(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/pyrosm.py", line 1675, in get_graph
-    nodes, edges = self._read_engine(
-                   ~~~~~~~~~~~~~~~~~^
-        graph_network,
-        ^^^^^^^^^^^^^^
-    ...<6 lines>...
-        tags_to_keep=tags_to_keep,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/Cell4_v65.85.7.133 (2).py", line 5642, in run_vehicle_mode
+    water_features, water_source_endpoint = _download_water_features_with_failover(
+                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        download_polygon, f"{VEHICLE_LABEL} OSM 水路／水體資料下載"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     )
     ^
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/pyrosm.py", line 348, in _read_engine
-    return reader(self.filepath, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/readers.py", line 899, in graph_network
-    return _decode_network(
-        filepath, filter_spec, bounding_box, workers, steps, assemble, unix_time
+  File "/content/Cell4_v65.85.7.133 (2).py", line 1589, in _download_water_features_with_failover
+    features = _cell4_run_with_heartbeat(
+        f"{stage_label} {endpoint}",
+    ...<2 lines>...
+        tags=WATER_OSM_QUERY_TAGS,
     )
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/readers.py", line 847, in _decode_network
-    return _decode_and_run(
-        filepath,
-    ...<7 lines>...
-        unix_time=unix_time,
+  File "/content/Cell4_v65.85.7.133 (2).py", line 942, in _cell4_run_with_heartbeat
+    result = function(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/osmnx/features.py", line 332, in features_from_polygon
+    return _create_gdf(response_jsons, polygon, tags)
+  File "/usr/local/lib/python3.13/dist-packages/osmnx/features.py", line 406, in _create_gdf
+    for response_json in response_jsons:
+                         ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 432, in _download_overpass_features
+    yield _overpass_request(OrderedDict(data=query_str))
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 460, in _overpass_request
+    pause = _get_overpass_pause(settings.overpass_url)
+  File "/usr/local/lib/python3.13/dist-packages/osmnx/_overpass.py", line 181, in _get_overpass_pause
+    response = requests.get(
+        url,
+    ...<2 lines>...
+        **settings.requests_kwargs,
     )
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/pool.py", line 482, in _decode_and_run
-    shard_paths, pool_ok = _decode_all(
-                           ~~~~~~~~~~~^
-        filepath,
-        ^^^^^^^^^
-    ...<13 lines>...
-        unix_time,
-        ^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/requests/adapters.py", line 667, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
     )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/pool.py", line 370, in _decode_all
-    return _decode_threads(tasks, workers, settings, progress), workers > 1
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/pyrosm/engine/pool.py", line 432, in _decode_threads
-    with ThreadPoolExecutor(workers) as pool:
-         ~~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "/usr/lib/python3.13/concurrent/futures/_base.py", line 653, in __exit__
-    self.shutdown(wait=True)
-    ~~~~~~~~~~~~~^^^^^^^^^^^
-  File "/usr/lib/python3.13/concurrent/futures/thread.py", line 239, in shutdown
-    t.join()
-    ~~~~~~^^
-  File "/usr/lib/python3.13/threading.py", line 1095, in join
-    self._handle.join(timeout)
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/urllib3/connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+  File "/usr/local/lib/python3.13/dist-packages/urllib3/connection.py", line 565, in getresponse
+    httplib_response = super().getresponse()
+  File "/usr/lib/python3.13/http/client.py", line 1478, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/client.py", line 343, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/client.py", line 304, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socket.py", line 723, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.13/ssl.py", line 1315, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/ssl.py", line 1149, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
 KeyboardInterrupt
 
 
 [CELL4_EXECUTION_STATUS]=FAILED
-[CELL4_RUN_FINISHED_TW]=2026-11-18T18:03:00+08:00
+[CELL4_RUN_FINISHED_TW]=2026-11-18T18:07:21+08:00
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-18/Cell4_v65.85.7.133_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
