@@ -1,0 +1,7016 @@
+# ============================================================
+# 巡田最速適｜Cell 2 v8.7: NLSC 地號／地址批次座標查詢【429快速切換備援＋冷卻斷路】
+# ============================================================
+#
+# 功能：
+#
+# 1. 自動尋找：
+#      /content/input.xlsx
+#      /content/input.xls
+#      /content/input.csv
+#
+# 2. 輸入欄位（固定 9 欄）：
+#      縣市
+#      鄉鎮市區
+#      地段
+#      地號
+#      本筆面積(公頃)
+#      申請面積(公頃)
+#      地址
+#      名稱
+#      勘查狀態
+#
+#      注意：
+#      查詢方式不再由輸入檔提供，程式會自動判斷：
+#        有地段＋地號 → 地號定位（即使同時有地址）
+#        只有地址 → 地址定位
+#      若地號案件同時有地址：
+#        經度／緯度主座標保留地號定位結果
+#        另存「地址經度／地址緯度」供 Cell 4 判斷實際進場道路。
+#      本筆面積(公頃)、申請面積(公頃)、名稱、勘查狀態均直接沿用輸入檔，
+#      不向 NLSC 查詢，也不由 NLSC 結果覆蓋。
+#      讀檔後先排除已完成類狀態（完成／已完成／勘查完成／已勘查／OK／Done 等），不查座標、不寫入任何交接結果。
+#      其餘案件才進入座標查詢；勘查狀態空白或不明值仍視同「未勘查」。
+#
+# v8.7 變更：DIRECT 首次 429 即切換瀏覽器備援；全域冷卻期間跳過 DIRECT、不逐筆等待；Retry-After 可解析秒數及 HTTP-date。
+# v8.6 變更：讀檔後先排除勘查完成類案件（完成／已完成／勘查完成／已勘查／OK／Done 等），
+#       不查詢座標、不納入 result.xlsx／partial／error／gmap.csv。
+#       若全批皆排除，正式 result.xlsx 會覆寫為 0 筆空表，避免舊資料誤交接。
+
+# 3. 查詢方式：
+#      地號：縣市＋鄉鎮市區＋地段＋地號
+#      地址：縣市＋鄉鎮市區＋地址
+#      地址可沒有路名，例如「○○里○鄰○○5號」
+##
+# 3. 鄉鎮市區名稱支援：
+#      八德   -> 八德區
+#      大溪   -> 大溪區
+#      新豐   -> 新豐鄉
+#      關西   -> 關西鎮
+#      竹北   -> 竹北市
+#
+#      完整名稱也可：
+#      八德區、新豐鄉、竹北市
+#
+# 4. 地段名稱支援：
+#      完整名稱
+#      特定地段別名標準化
+#      地段名稱由 NLSC 正式選單自動匹配
+#      省略「段」
+#      省略「小段」
+#      同時省略「段／小段」
+#      中間省略「段／小段」
+#      ? 單字元萬用字元
+#
+#      例如：
+#      茄苳
+#          -> 茄苳段
+#
+#      下田心子下田心子
+#          -> 下田心子段下田心子小段
+#
+#      十五間十五間尾
+#          -> 十五間段十五間尾小段
+#
+#      ?榔上?榔
+#          -> 槺榔段上槺榔小段
+#
+# 5. 地號格式：
+#      1208       -> 12080000
+#      4820000    -> 04820000
+#      9880000    -> 09880000
+#      12080000   -> 12080000
+#      17420013   -> 17420013
+#      1208-0000  -> 12080000
+#
+# 6. 使用 NLSC 真實網頁流程查詢
+#      地號：定位查詢 → 地號
+#      地址：定位查詢 → 其他定位 → 門牌
+#
+# 7. 地址查詢攔截門牌定位服務回應
+#    地號查詢攔截 qryTileMapIndex response
+#
+# 8. 取得：
+#      經度
+#      緯度
+#      TWD97_X
+#      TWD97_Y
+#      bbox
+#
+# 9. HTTP 502 / 503 / 504 自動重試
+#
+# 10. timeout 自動重試
+#     timeout 時重新載入 NLSC，
+#     重新設定縣市／鄉鎮市區／地段／地號
+#
+# 11. 原始 response：
+#      /content/nlsc_raw/
+#
+# 12. 成功結果：
+#      /content/result.xlsx
+#
+#      輸入檔「名稱」／本筆面積(公頃)／申請面積(公頃)
+#      原樣帶入結果，不向 NLSC 查詢。
+#
+# 13. 失敗結果：
+#      /content/result_error.xlsx
+#
+# 14. 續跑機制：
+#      若已存在 result_partial.xlsx 或 result.xlsx，
+#      程式會先讀取上一輪結果。
+#      狀態為 OK 的案件直接沿用，不再向 NLSC 查詢；
+#      只有上次失敗的案件才會重新查詢。
+#      每完成 1 筆即寫入 result_partial.xlsx；手動取消後也可直接續跑。
+#      完成後才建立新的 result.xlsx。
+#
+# 15. 每完成 1 筆就寫入 result_partial.xlsx；手動取消後可直接續跑。
+#
+# 16. Google Maps 匯入 CSV：
+#      /content/gmap.csv
+#
+#     欄位：
+#       Name
+#       Latitude
+#       Longitude
+#
+#     名稱：
+#       鄉鎮市區（保留鄉／鎮／市／區）
+#       +
+#       段名（移除「段」「小段」）
+#       +
+#       8碼地號
+#
+#     例如：
+#       八德區茄苳07370000
+#       新豐鄉福興後湖子16490000
+#
+#     座標順序：
+#       緯度、經度
+#
+# ============================================================
+
+
+# ============================================================
+# 0. 自動安裝套件
+# ============================================================
+
+import sys
+import subprocess
+import importlib.util
+
+
+def ensure_package(
+    package_name,
+    import_name=None
+):
+
+    if import_name is None:
+        import_name = package_name
+
+    if importlib.util.find_spec(
+        import_name
+    ) is None:
+
+        print(
+            f"正在安裝套件：{package_name}"
+        )
+
+        subprocess.check_call([
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "-q",
+            package_name
+        ])
+
+
+ensure_package(
+    "openpyxl"
+)
+
+ensure_package(
+    "pyproj"
+)
+
+ensure_package(
+    "playwright"
+)
+
+
+# .xls
+try:
+    import xlrd
+except Exception:
+
+    try:
+
+        ensure_package(
+            "xlrd"
+        )
+
+    except Exception:
+        pass
+
+
+# Chromium
+subprocess.run(
+    [
+        sys.executable,
+        "-m",
+        "playwright",
+        "install",
+        "chromium"
+    ],
+    check=False
+)
+
+
+# ============================================================
+# 1. 匯入
+# ============================================================
+
+import json
+import re
+import time
+import hashlib
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
+import traceback
+import csv
+import math
+
+from pathlib import Path
+from urllib.parse import (
+    urlparse,
+    parse_qs
+)
+
+import openpyxl
+
+from pyproj import Transformer
+
+from playwright.async_api import (
+    async_playwright,
+)
+
+
+# ============================================================
+# 2. 基本設定
+# ============================================================
+
+BASE_DIR = Path(
+    "/content"
+)
+
+INPUT_CANDIDATES = [
+
+    BASE_DIR / "input.xlsx",
+
+    BASE_DIR / "input.xls",
+
+    BASE_DIR / "input.csv",
+]
+
+
+# ============================================================
+# 輸出檔案
+# ============================================================
+
+SUCCESS_OUTPUT_XLSX = (
+    BASE_DIR / "result.xlsx"
+)
+
+ERROR_OUTPUT_XLSX = (
+    BASE_DIR / "result_error.xlsx"
+)
+
+GMAP_OUTPUT_CSV = (
+    BASE_DIR / "gmap.csv"
+)
+
+
+# ============================================================
+# NLSC
+# ============================================================
+
+NLSC_URL = (
+    "https://maps.nlsc.gov.tw/"
+    "T09/mobilemap.action"
+)
+
+
+# ============================================================
+# 原始 response
+# ============================================================
+
+RAW_DIR = (
+    BASE_DIR / "nlsc_raw"
+)
+
+# v8.4.1：地號案件若另有地址，地址查詢 response 另存，避免覆蓋地號 response。
+ADDRESS_RAW_DIR = (
+    BASE_DIR / "nlsc_raw_address"
+)
+
+
+# ============================================================
+# 查詢設定
+# ============================================================
+
+DELAY_BETWEEN_ROWS = 0.0
+
+# v8.7：主流程 DELAY=0；DIRECT 本身使用 1 秒最小請求間隔。
+RESPONSE_TIMEOUT = 30000
+
+SECTION_POLL_INTERVAL = 0.25
+
+SECTION_MAX_POLLS = 40
+
+MAX_RETRIES = 3
+
+RETRY_BACKOFF = [
+    2,
+    4,
+    8,
+]
+
+# v8.7：DIRECT 最小請求間隔提高至 1 秒。
+DIRECT_MIN_INTERVAL_SECONDS = 1.0
+
+# v8.7：同一案件 DIRECT 第一次遇到 429 就立即切換瀏覽器備援，不再同筆重打。
+# Retry-After 有提供時完全尊重伺服器秒數／HTTP-date；缺少時才使用本地退避值。
+DIRECT_429_BACKOFF = [15, 30, 60]
+DIRECT_MAX_ATTEMPTS = 2  # 保留原有非 429 暫時性錯誤重試；429 分支會直接 break
+DIRECT_429_MAX_SERVER_WAIT_SECONDS = 3600.0
+
+# v8.4.1：地號案件若同時有地址，是否再查一次 NLSC 門牌座標。
+# True：主座標維持地號；另存「地址經度／地址緯度」。
+ENABLE_SECONDARY_ADDRESS_GEOCODE = True
+
+RETRY_STATUS_CODES = {
+    502,
+    503,
+    504,
+}
+
+
+# ============================================================
+# 3. 基本文字
+# ============================================================
+
+def clean_text(
+    value
+):
+
+    if value is None:
+        return ""
+
+    return str(
+        value
+    ).strip()
+
+
+# ============================================================
+# 3A. 勘查狀態標準化／已完成案件排除
+# ============================================================
+# 已完成狀態在讀檔後立即排除，必須早於續跑快取、NLSC 查詢與所有輸出。
+# 中文支援常見勘查／查勘／巡查完成說法；英文不區分大小寫。
+# 明確的未完成／進行中描述優先，不會因為包含「完成」字樣而誤剔除。
+
+VALID_INSPECTION_STATUS = {
+    "未勘查",
+    "已完成",
+}
+
+_COMPLETED_INSPECTION_MARKERS_ZH = (
+    "已完成",
+    "完成",
+    "勘查完成",
+    "完成勘查",
+    "已勘查",
+    "勘查完畢",
+    "已勘察",
+    "勘察完成",
+    "完成勘察",
+    "已查勘",
+    "查勘完成",
+    "完成查勘",
+    "已巡查",
+    "巡查完成",
+    "完成巡查",
+    "已巡田",
+    "巡田完成",
+    "完成巡田",
+    "已查驗",
+    "查驗完成",
+    "驗收完成",
+    "已勘測",
+    "勘測完成",
+    "已踏勘",
+    "踏勘完成",
+    "已訪查",
+    "訪查完成",
+    "已查訪",
+    "查訪完成",
+    "已訪視",
+    "訪視完成",
+    "已巡勘",
+    "巡勘完成",
+    "已結案",
+    "結案",
+    "處理完成",
+)
+
+_NOT_COMPLETED_INSPECTION_MARKERS_ZH = (
+    "尚未完成",
+    "還未完成",
+    "還沒完成",
+    "未完成",
+    "不算完成",
+    "部分完成",
+    "部份完成",
+    "尚未勘查",
+    "未勘查",
+    "還未勘查",
+    "還沒勘查",
+    "尚未勘察",
+    "未勘察",
+    "待勘查",
+    "待勘察",
+    "尚未查勘",
+    "未查勘",
+    "待查勘",
+    "尚未巡查",
+    "未巡查",
+    "待巡查",
+    "進行中",
+    "處理中",
+)
+
+_COMPLETED_INSPECTION_WORDS_EN = {
+    "ok",
+    "okay",
+    "done",
+    "complete",
+    "completed",
+    "checked",
+    "inspected",
+    "passed",
+    "finished",
+    "closed",
+    "resolved",
+    "verified",
+}
+
+_NOT_COMPLETED_INSPECTION_WORDS_EN = {
+    "not",
+    "incomplete",
+    "unfinished",
+    "pending",
+    "processing",
+    "todo",
+    "waiting",
+}
+
+
+def is_completed_inspection_status(value):
+    """判斷輸入狀態是否代表已完成；空白、未完成及不明值一律不排除。"""
+    raw = clean_text(value)
+    if not raw:
+        return False
+
+    normalized = unicodedata.normalize("NFKC", raw).casefold()
+    compact = re.sub(r"[\W_]+", "", normalized, flags=re.UNICODE)
+
+    # 先辨識明確的未完成／進行中描述，避免「未完成」被「完成」誤判。
+    if any(marker in compact for marker in _NOT_COMPLETED_INSPECTION_MARKERS_ZH):
+        return False
+
+    english_words = re.findall(r"[a-z]+", normalized)
+    english_word_set = set(english_words)
+    english_phrase = " ".join(english_words)
+
+    if english_word_set & _NOT_COMPLETED_INSPECTION_WORDS_EN:
+        return False
+    if any(
+        phrase in english_phrase
+        for phrase in (
+            "not ok",
+            "not okay",
+            "not done",
+            "not complete",
+            "not completed",
+            "not checked",
+            "not inspected",
+            "not passed",
+            "not yet",
+        )
+    ):
+        return False
+
+    if any(marker in compact for marker in _COMPLETED_INSPECTION_MARKERS_ZH):
+        return True
+
+    if english_word_set & _COMPLETED_INSPECTION_WORDS_EN:
+        return True
+
+    return False
+
+
+def split_completed_inspection_rows(rows):
+    """回傳 (待處理資料, 已完成排除清單)；保留原始資料順序。"""
+    active_rows = []
+    excluded_rows = []
+
+    for input_index, row in enumerate(rows, start=1):
+        raw_status = clean_text(row.get("勘查狀態", ""))
+        if is_completed_inspection_status(raw_status):
+            excluded_rows.append({
+                "input_index": input_index,
+                "status": raw_status,
+                "row": row,
+            })
+        else:
+            active_rows.append(row)
+
+    return active_rows, excluded_rows
+
+
+def normalize_inspection_status(value):
+    status = clean_text(value)
+
+    if not status:
+        return "未勘查"
+
+    if status in VALID_INSPECTION_STATUS:
+        return status
+
+    print(
+        f"  [WARN] 勘查狀態「{status}」不是允許值，"
+        "自動視同「未勘查」。"
+    )
+    return "未勘查"
+
+
+# ============================================================
+# 4. 地號正規化
+# ============================================================
+
+def normalize_landno(
+    value
+):
+
+    value = clean_text(
+        value
+    )
+
+    # Excel 可能讀成 1208.0
+    if re.fullmatch(
+        r"\d+\.0",
+        value
+    ):
+
+        value = value[:-2]
+
+    # 含「-」的母號－子號格式：前、後各固定 4 碼後串接
+    # 例如：106-5 -> 01060005；1-1 -> 00010001
+    # 同時兼容全形連字號：106－5
+    if "-" in value or "－" in value:
+
+        value = value.replace("－", "-")
+        parts = value.split("-")
+
+        if len(parts) == 2:
+
+            main_no = clean_text(parts[0])
+            sub_no = clean_text(parts[1])
+
+            if (
+                re.fullmatch(r"\d+", main_no)
+                and
+                re.fullmatch(r"\d+", sub_no)
+            ):
+
+                return (
+                    main_no.zfill(4)
+                    +
+                    sub_no.zfill(4)
+                )
+
+        # 非標準「-」格式則原樣保留，避免誤改資料
+        return value
+
+    # 純數字
+    if re.fullmatch(
+        r"\d+",
+        value
+    ):
+
+        # 4碼母號
+        if len(value) == 4:
+
+            return (
+                value
+                + "0000"
+            )
+
+        # 少於4碼
+        if len(value) < 4:
+
+            return (
+                value.zfill(4)
+                + "0000"
+            )
+
+        # 少於8碼
+        if len(value) < 8:
+
+            return value.zfill(8)
+
+        return value
+
+    return value
+
+
+# ============================================================
+# 5. 地號格式測試
+# ============================================================
+
+LANDNO_TESTS = {
+
+    "1208":
+        "12080000",
+
+    "4820000":
+        "04820000",
+
+    "9880000":
+        "09880000",
+
+    "12080000":
+        "12080000",
+
+    "17420013":
+        "17420013",
+
+    "1208-0000":
+        "12080000",
+
+    "106-5":
+        "01060005",
+
+    "1-1":
+        "00010001",
+
+    "12-34":
+        "00120034",
+
+    "106－5":
+        "01060005",
+
+    "12":
+        "00120000",
+}
+
+
+for source, expected in (
+    LANDNO_TESTS.items()
+):
+
+    actual = normalize_landno(
+        source
+    )
+
+    if actual != expected:
+
+        raise RuntimeError(
+            "地號格式測試失敗："
+            f"{source} -> {actual}；"
+            f"預期 {expected}"
+        )
+
+
+print(
+    "地號格式測試：全部通過"
+)
+
+
+# ============================================================
+# 6. 地段名稱處理
+# ============================================================
+
+def normalize_section_name_variants(
+    name
+):
+
+    name = clean_text(
+        name
+    )
+
+    if not name:
+        return []
+
+    variants = []
+    seen = set()
+
+    def add(
+        value
+    ):
+
+        value = clean_text(
+            value
+        )
+
+        if (
+            value
+            and
+            value not in seen
+        ):
+
+            seen.add(
+                value
+            )
+
+            variants.append(
+                value
+            )
+
+    # 原始
+    add(
+        name
+    )
+
+    # 去尾端「小段」
+    if name.endswith(
+        "小段"
+    ):
+
+        add(
+            name[:-2]
+        )
+
+    # 去尾端「段」
+    if name.endswith(
+        "段"
+    ):
+
+        add(
+            name[:-1]
+        )
+
+    # 補「段」
+    if not name.endswith(
+        "段"
+    ):
+
+        add(
+            name + "段"
+        )
+
+    # 補「小段」
+    if not name.endswith(
+        "小段"
+    ):
+
+        add(
+            name + "小段"
+        )
+
+    return variants
+
+
+def canonical_section_name(
+    name
+):
+
+    """
+    移除全部「段」「小段」
+
+    例如：
+
+    下田心子段下田心子小段
+    ->
+    下田心子下田心子
+
+    十五間段十五間尾小段
+    ->
+    十五間十五間尾
+
+    福興段後湖子小段
+    ->
+    福興後湖子
+    """
+
+    name = clean_text(
+        name
+    )
+
+    name = name.replace(
+        "小段",
+        ""
+    )
+
+    name = name.replace(
+        "段",
+        ""
+    )
+
+    return name
+
+
+# ------------------------------------------------------------
+# 地段查詢標準化
+#
+# 不建立人工地段別名對照表。
+# 原始地段保留不動，實際由 NLSC 地段選單自動比對正式名稱。
+# ------------------------------------------------------------
+def normalize_section_for_query(
+    city,
+    area,
+    section
+):
+    """
+    不建立人工地段別名表。
+
+    保留原始地段文字，實際送入 NLSC 選單後，
+    由既有 section_name_matches() 自動比對正式地段名稱。
+
+    既有比對規則包含：
+      - 完整名稱
+      - 省略「段」
+      - 省略「小段」
+      - 同時省略「段／小段」
+      - 中間省略「段／小段」
+      - 「?」單字元萬用字元
+
+    例如：
+      桃園武陵
+      → 自動命中 NLSC 的桃園段武陵小段
+    """
+
+    return clean_text(section)
+
+
+# 不使用人工別名的標準化測試
+SECTION_QUERY_TESTS = {
+    ("桃園", "桃園", "桃園武陵"): "桃園武陵",
+    ("桃園市", "桃園區", "桃園武陵"): "桃園武陵",
+    ("桃園市", "桃園區", "桃園段武陵"): "桃園段武陵",
+    ("桃園市", "桃園區", "武陵"): "武陵",
+}
+
+for (test_city, test_area, test_section), expected in SECTION_QUERY_TESTS.items():
+    actual = normalize_section_for_query(
+        test_city,
+        test_area,
+        test_section
+    )
+    if actual != expected:
+        raise RuntimeError(
+            "地段查詢標準化測試失敗："
+            f"{test_city}/{test_area}/{test_section} -> {actual}；"
+            f"預期 {expected}"
+        )
+
+print("地段查詢標準化測試：全部通過（無人工別名）")
+
+def wildcard_fullmatch(
+    requested,
+    actual
+):
+
+    """
+    ? = 任意一個字元
+    """
+
+    pattern = (
+        "^"
+        +
+        re.escape(
+            requested
+        ).replace(
+            r"\?",
+            "."
+        )
+        +
+        "$"
+    )
+
+    try:
+
+        return bool(
+            re.fullmatch(
+                pattern,
+                actual
+            )
+        )
+
+    except Exception:
+
+        return False
+
+
+def section_name_matches(
+    requested,
+    actual
+):
+
+    requested = clean_text(
+        requested
+    )
+
+    actual = clean_text(
+        actual
+    )
+
+    if (
+        not requested
+        or
+        not actual
+    ):
+        return False
+
+    # 完整相等
+    if requested == actual:
+        return True
+
+    requested_variants = (
+        normalize_section_name_variants(
+            requested
+        )
+    )
+
+    actual_variants = (
+        normalize_section_name_variants(
+            actual
+        )
+    )
+
+    # variants
+    for req in requested_variants:
+
+        for act in actual_variants:
+
+            if req == act:
+                return True
+
+    # 移除所有段／小段
+    requested_canonical = (
+        canonical_section_name(
+            requested
+        )
+    )
+
+    actual_canonical = (
+        canonical_section_name(
+            actual
+        )
+    )
+
+    if (
+        requested_canonical
+        ==
+        actual_canonical
+    ):
+        return True
+
+    # ?
+    if wildcard_fullmatch(
+        requested,
+        actual
+    ):
+        return True
+
+    for req in requested_variants:
+
+        if wildcard_fullmatch(
+            req,
+            actual
+        ):
+
+            return True
+
+    for act in actual_variants:
+
+        if wildcard_fullmatch(
+            requested,
+            act
+        ):
+
+            return True
+
+    # ?
+    # + 移除段／小段
+    if wildcard_fullmatch(
+        requested_canonical,
+        actual_canonical
+    ):
+
+        return True
+
+    return False
+
+
+# 地段名稱比對測試：不建立人工對照表
+SECTION_MATCH_TESTS = [
+    ("桃園武陵", "桃園段武陵小段", True),
+    ("茄苳", "茄苳段", True),
+    ("?榔上?榔", "槺榔段上槺榔小段", True),
+    ("下田心子下田心子", "下田心子段下田心子小段", True),
+    ("十五間十五間尾", "十五間段十五間尾小段", True),
+    ("不存在", "桃園段武陵小段", False),
+]
+
+for requested, actual, expected in SECTION_MATCH_TESTS:
+    result = section_name_matches(
+        requested,
+        actual
+    )
+    if result != expected:
+        raise RuntimeError(
+            "地段名稱比對測試失敗："
+            f"{requested} vs {actual} -> {result}；"
+            f"預期 {expected}"
+        )
+
+print("地段名稱比對測試：全部通過")
+
+
+def find_option_value(
+    options,
+    requested_name
+):
+
+    candidates = []
+
+    for option in options:
+
+        text = clean_text(
+            option.get(
+                "text"
+            )
+        )
+
+        value = clean_text(
+            option.get(
+                "value"
+            )
+        )
+
+        if section_name_matches(
+            requested_name,
+            text
+        ):
+
+            candidates.append({
+                "text": text,
+                "value": value,
+            })
+
+    if len(candidates) == 1:
+
+        return candidates[0]
+
+    if len(candidates) > 1:
+
+        print(
+            f"  [WARN] 地段名稱「"
+            f"{requested_name}"
+            f"」有多個候選："
+            +
+            "、".join(
+                x["text"]
+                for x in candidates
+            )
+        )
+
+    return None
+
+
+# ============================================================
+# 7. 鄉鎮市區名稱處理（地號／地址共用 NLSC 正式名稱自動匹配）
+# ============================================================
+
+def normalize_area_name_variants(
+    name
+):
+
+    """
+    支援：
+
+      八德
+      八德區
+
+      大溪
+      大溪區
+
+      新豐
+      新豐鄉
+
+      關西
+      關西鎮
+
+      竹北
+      竹北市
+    """
+
+    name = clean_text(
+        name
+    )
+
+    if not name:
+        return []
+
+    variants = []
+
+    seen = set()
+
+    def add(
+        value
+    ):
+
+        value = clean_text(
+            value
+        )
+
+        if (
+            value
+            and
+            value not in seen
+        ):
+
+            seen.add(
+                value
+            )
+
+            variants.append(
+                value
+            )
+
+    # 原始
+    add(
+        name
+    )
+
+    # 移除最後鄉鎮市區字尾
+    base = name
+
+    for suffix in [
+        "鄉",
+        "鎮",
+        "市",
+        "區",
+    ]:
+
+        if base.endswith(
+            suffix
+        ):
+
+            base = (
+                base[:-1]
+            )
+
+            break
+
+    add(
+        base
+    )
+
+    # 補鄉鎮市區尾字
+    add(
+        base + "區"
+    )
+
+    add(
+        base + "鄉"
+    )
+
+    add(
+        base + "鎮"
+    )
+
+    add(
+        base + "市"
+    )
+
+    return variants
+
+
+def area_name_matches(
+    requested,
+    actual
+):
+
+    requested = clean_text(
+        requested
+    )
+
+    actual = clean_text(
+        actual
+    )
+
+    if (
+        not requested
+        or
+        not actual
+    ):
+        return False
+
+    # 完整相等
+    if requested == actual:
+        return True
+
+    requested_variants = (
+        normalize_area_name_variants(
+            requested
+        )
+    )
+
+    actual_variants = (
+        normalize_area_name_variants(
+            actual
+        )
+    )
+
+    for req in requested_variants:
+
+        for act in actual_variants:
+
+            if req == act:
+                return True
+
+    return False
+
+
+# ============================================================
+# 8. select options
+# ============================================================
+
+async def get_options(
+    page,
+    selector
+):
+
+    return await page.eval_on_selector_all(
+        selector,
+        """
+        els => els.map(x => ({
+            text: (x.textContent || '').trim(),
+            value: x.value || ''
+        }))
+        """
+    )
+
+
+# ============================================================
+# 9. 設定縣市 / 鄉鎮市區 / 地段
+# ============================================================
+
+async def resolve_nlsc_area_name(
+    page,
+    city,
+    area,
+):
+    """
+    依 NLSC 實際鄉鎮市區選單，自動找出正式名稱。
+
+    支援輸入省略「鄉／鎮／市／區」：
+      八德   -> 八德區
+      新豐   -> 新豐鄉
+      關西   -> 關西鎮
+      竹北   -> 竹北市
+
+    回傳 NLSC 實際選項文字與 value；不自行猜測正式名稱。
+    """
+    city = clean_text(city)
+    area = clean_text(area)
+
+    if not city or not area:
+        raise RuntimeError(
+            f"鄉鎮市區自動匹配需要：縣市、鄉鎮市區｜{city} / {area}"
+        )
+
+    await page.select_option(
+        "#land_city",
+        label=city,
+        force=True,
+    )
+
+    matched = None
+
+    for _ in range(SECTION_MAX_POLLS):
+        try:
+            options = await get_options(
+                page,
+                "#land_area_office option",
+            )
+
+            for option in options:
+                option_text = clean_text(option.get("text", ""))
+                option_value = clean_text(option.get("value", ""))
+
+                if not option_text or not option_value:
+                    continue
+
+                if area_name_matches(area, option_text):
+                    matched = {
+                        "area_text": option_text,
+                        "area_value": option_value,
+                    }
+                    break
+
+            if matched is not None:
+                break
+
+        except Exception:
+            pass
+
+        await page.wait_for_timeout(
+            int(SECTION_POLL_INTERVAL * 1000)
+        )
+
+    if matched is None:
+        raise RuntimeError(
+            "找不到鄉鎮市區："
+            f"{city} / {area}"
+        )
+
+    actual_area = matched["area_text"]
+
+    if actual_area != area:
+        print(
+            f"  鄉鎮市區自動調整：{area} -> {actual_area}"
+        )
+    else:
+        print(
+            f"  鄉鎮市區已匹配：{area} -> {actual_area}"
+        )
+
+    return matched
+
+
+async def set_nlsc_section(
+    page,
+    city,
+    area,
+    section
+):
+
+    city = clean_text(
+        city
+    )
+
+    area = clean_text(
+        area
+    )
+
+    section = clean_text(
+        section
+    )
+
+    # --------------------------------------------------------
+    # 縣市
+    # --------------------------------------------------------
+
+    await page.select_option(
+        "#land_city",
+        label=city,
+        force=True
+    )
+
+    # --------------------------------------------------------
+    # 鄉鎮市區：依 NLSC 實際選單自動匹配正式名稱
+    # --------------------------------------------------------
+
+    area_info = await resolve_nlsc_area_name(
+        page,
+        city,
+        area,
+    )
+
+    area_value = area_info["area_value"]
+    matched_area_text = area_info["area_text"]
+
+    # --------------------------------------------------------
+    # 設定鄉鎮市區
+    # --------------------------------------------------------
+
+    await page.evaluate(
+        """
+        ({value}) => {
+
+            const el =
+                document.querySelector(
+                    '#land_area_office'
+                );
+
+            if (!el) {
+
+                throw new Error(
+                    '#land_area_office not found'
+                );
+            }
+
+            el.value = value;
+
+            el.dispatchEvent(
+                new Event(
+                    'change',
+                    {
+                        bubbles: true
+                    }
+                )
+            );
+        }
+        """,
+        {
+            "value":
+                area_value
+        }
+    )
+
+    # --------------------------------------------------------
+    # 等地段清單
+    # --------------------------------------------------------
+
+    section_option = None
+
+    for _ in range(
+        SECTION_MAX_POLLS
+    ):
+
+        try:
+
+            options = (
+                await get_options(
+                    page,
+                    "#land_section option"
+                )
+            )
+
+            options = [
+                option
+                for option in options
+                if (
+                    option["value"]
+                    and
+                    option["text"]
+                )
+            ]
+
+            section_option = (
+                find_option_value(
+                    options,
+                    section
+                )
+            )
+
+            if (
+                section_option
+                is not None
+            ):
+
+                break
+
+        except Exception:
+            pass
+
+        await page.wait_for_timeout(
+            int(
+                SECTION_POLL_INTERVAL
+                * 1000
+            )
+        )
+
+    if section_option is None:
+
+        try:
+
+            debug_options = (
+                await get_options(
+                    page,
+                    "#land_section option"
+                )
+            )
+
+            debug_names = [
+
+                clean_text(
+                    x["text"]
+                )
+
+                for x in debug_options
+
+                if (
+                    x["value"]
+                    and
+                    x["text"]
+                )
+            ]
+
+            print(
+                "  [DEBUG] "
+                "目前地段選單前20項："
+            )
+
+            for name in (
+                debug_names[:20]
+            ):
+
+                print(
+                    f"    {name}"
+                )
+
+        except Exception:
+            pass
+
+        raise RuntimeError(
+            "找不到地段："
+            f"{city} / "
+            f"{area} / "
+            f"{section}"
+        )
+
+    # --------------------------------------------------------
+    # 設定地段
+    # --------------------------------------------------------
+
+    await page.evaluate(
+        """
+        ({value}) => {
+
+            const el =
+                document.querySelector(
+                    '#land_section'
+                );
+
+            if (!el) {
+
+                throw new Error(
+                    '#land_section not found'
+                );
+            }
+
+            el.value = value;
+
+            el.dispatchEvent(
+                new Event(
+                    'change',
+                    {
+                        bubbles: true
+                    }
+                )
+            );
+        }
+        """,
+        {
+            "value":
+                section_option["value"]
+        }
+    )
+
+    # --------------------------------------------------------
+    # sectioncode
+    # --------------------------------------------------------
+
+    section_code = ""
+
+    for _ in range(
+        SECTION_MAX_POLLS
+    ):
+
+        try:
+
+            section_code = (
+                await page.input_value(
+                    "#land_sectioncode"
+                )
+            )
+
+        except Exception:
+
+            section_code = ""
+
+        if clean_text(
+            section_code
+        ):
+            break
+
+        await page.wait_for_timeout(
+            int(
+                SECTION_POLL_INTERVAL
+                * 1000
+            )
+        )
+
+    return {
+
+        "area_text":
+            matched_area_text,
+
+        "area_value":
+            area_value,
+
+        "section_text":
+            section_option["text"],
+
+        "section_value":
+            section_option["value"],
+
+        "section_code":
+            clean_text(
+                section_code
+            ),
+    }
+
+
+# ============================================================
+# 10. 填地號
+# ============================================================
+
+async def fill_landno(
+    page,
+    normalized_landno
+):
+
+    await page.evaluate(
+        """
+        ({value}) => {
+
+            const el =
+                document.querySelector(
+                    '#landcode'
+                );
+
+            if (!el) {
+
+                throw new Error(
+                    '#landcode not found'
+                );
+            }
+
+            el.value = value;
+
+            el.dispatchEvent(
+                new Event(
+                    'input',
+                    {
+                        bubbles: true
+                    }
+                )
+            );
+
+            el.dispatchEvent(
+                new Event(
+                    'change',
+                    {
+                        bubbles: true
+                    }
+                )
+            );
+        }
+        """,
+        {
+            "value":
+                normalized_landno
+        }
+    )
+
+
+# ============================================================
+# 11. 觸發 NLSC 查詢
+# ============================================================
+
+async def trigger_nlsc_query(
+    page
+):
+
+    await page.evaluate(
+        """
+        () => {
+
+            const btn =
+                document.querySelector(
+                    '#qt-land-submit'
+                );
+
+            if (!btn) {
+
+                throw new Error(
+                    '#qt-land-submit not found'
+                );
+            }
+
+            if (
+                window.jQuery
+                &&
+                typeof
+                window.jQuery.fn.trigger
+                === 'function'
+            ) {
+
+                window.jQuery(
+                    '#qt-land-submit'
+                ).trigger(
+                    'click'
+                );
+
+                return;
+            }
+
+            if (
+                typeof
+                window.qtLandLoad
+                !== 'function'
+            ) {
+
+                throw new Error(
+                    'qtLandLoad function not found'
+                );
+            }
+
+            window.qtLandLoad(
+                'land_city',
+                'land_area_office',
+                'land_section',
+                'land_sectioncode',
+                'landcode',
+                'qt-land-ctn'
+            );
+        }
+        """
+    )
+
+
+# ============================================================
+# 12. NLSC 頁面初始化
+# ============================================================
+
+async def initialize_nlsc_page(
+    page
+):
+
+    print(
+        "  正在重新初始化 NLSC 頁面..."
+    )
+
+    await page.goto(
+        NLSC_URL,
+        wait_until="domcontentloaded",
+        timeout=60000
+    )
+
+    required_selectors = [
+
+        "#land_city",
+
+        "#land_area_office",
+
+        "#land_section",
+
+        "#land_sectioncode",
+
+        "#landcode",
+
+        "#qt-land-submit",
+    ]
+
+    for selector in (
+        required_selectors
+    ):
+
+        await page.wait_for_selector(
+            selector,
+            state="attached",
+            timeout=60000
+        )
+
+    await page.wait_for_timeout(
+        1500
+    )
+
+    print(
+        "  NLSC 頁面重新初始化完成"
+    )
+
+
+# ============================================================
+# 13. JSONP 解析
+# ============================================================
+
+def jsonp_to_json(
+    text
+):
+
+    text = text.strip()
+
+    # 純 JSON
+    if (
+        text.startswith("[")
+        or
+        text.startswith("{")
+    ):
+
+        return json.loads(
+            text
+        )
+
+    # JSONP
+    match = re.search(
+        r"^[^(]+\((.*)\)\s*;?\s*$",
+        text,
+        re.S
+    )
+
+    if match:
+
+        return json.loads(
+            match.group(1).strip()
+        )
+
+    raise ValueError(
+        "無法解析 JSON / JSONP"
+    )
+
+
+# ============================================================
+# 14. NLSC response 解析
+# ============================================================
+
+def parse_nlsc_response(
+    body
+):
+
+    result = {
+
+        "ok": False,
+
+        "error": "",
+
+        "json": None,
+
+        "record": None,
+    }
+
+    if not body:
+
+        result["error"] = (
+            "EMPTY_RESPONSE"
+        )
+
+        return result
+
+    try:
+
+        data = jsonp_to_json(
+            body
+        )
+
+        result["json"] = data
+
+    except Exception as e:
+
+        result["error"] = (
+            f"INVALID_JSONP: {e}"
+        )
+
+        return result
+
+    try:
+
+        record = data[0][0]
+
+    except Exception:
+
+        result["error"] = (
+            "INVALID_RESPONSE_STRUCTURE"
+        )
+
+        return result
+
+    if not isinstance(
+        record,
+        dict
+    ):
+
+        result["error"] = (
+            "INVALID_RECORD"
+        )
+
+        return result
+
+    if (
+        "cx" not in record
+        or
+        "cy" not in record
+    ):
+
+        result["error"] = (
+            "NO_COORDINATE"
+        )
+
+        result["record"] = record
+
+        return result
+
+    try:
+
+        record["cx"] = float(
+            record["cx"]
+        )
+
+        record["cy"] = float(
+            record["cy"]
+        )
+
+        for key in [
+            "lx",
+            "ly",
+            "rx",
+            "ry",
+        ]:
+
+            if (
+                key in record
+                and
+                record[key]
+                not in (
+                    None,
+                    ""
+                )
+            ):
+
+                record[key] = float(
+                    record[key]
+                )
+
+    except Exception as e:
+
+        result["error"] = (
+            f"COORDINATE_PARSE_ERROR: {e}"
+        )
+
+        result["record"] = record
+
+        return result
+
+    result["ok"] = True
+
+    result["record"] = record
+
+    return result
+
+
+# ============================================================
+# 15. WGS84 -> TWD97
+# ============================================================
+
+transformer = (
+    Transformer.from_crs(
+        "EPSG:4326",
+        "EPSG:3826",
+        always_xy=True
+    )
+)
+
+
+def convert_to_twd97(
+    lon,
+    lat
+):
+
+    x, y = transformer.transform(
+        lon,
+        lat
+    )
+
+    return (
+        float(x),
+        float(y)
+    )
+
+
+# ============================================================
+# 16. 儲存原始 response
+# ============================================================
+
+def save_raw_response(
+    row_number,
+    status_code,
+    response_url,
+    body
+):
+
+    RAW_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    filename = (
+        RAW_DIR
+        /
+        f"row_{row_number:06d}.txt"
+    )
+
+    content = [
+
+        f"HTTP_STATUS={status_code}",
+
+        f"URL={response_url}",
+
+        "",
+
+        body
+        if body is not None
+        else ""
+    ]
+
+    filename.write_text(
+        "\n".join(
+            content
+        ),
+        encoding="utf-8"
+    )
+
+    return str(
+        filename
+    )
+
+
+# ============================================================
+# 17. URL Query Parameter
+# ============================================================
+
+def get_query_parameter(
+    url,
+    key
+):
+
+    try:
+
+        query = parse_qs(
+            urlparse(
+                url
+            ).query
+        )
+
+        values = query.get(
+            key
+        )
+
+        if values:
+            return values[0]
+
+    except Exception:
+        pass
+
+    return ""
+
+
+# ============================================================
+# 18. qryTileMapIndex response
+# ============================================================
+
+def is_land_query_response(
+    response
+):
+
+    try:
+
+        return (
+            "qryTileMapIndex"
+            in response.url
+        )
+
+    except Exception:
+
+        return False
+
+
+
+# ============================================================
+# 19A. 地址查詢輔助工具
+# ============================================================
+
+def normalize_address_text(value):
+    """
+    地址比對用標準化：
+    - Unicode NFKC
+    - 移除空白
+    - 臺／台統一
+    - 不自行新增或刪除「路、街、里、鄰」等地址文字
+    """
+    import unicodedata
+
+    value = clean_text(value)
+    if not value:
+        return ""
+
+    value = unicodedata.normalize("NFKC", value)
+    value = value.replace("臺", "台")
+    value = re.sub(r"\s+", "", value)
+    value = value.replace("　", "")
+    return value
+
+
+def build_full_address(city, area, address):
+    """
+    建立 NLSC 門牌查詢地址，避免縣市／鄉鎮市區重複拼接。
+
+    例：
+      桃園市 + 桃園市 + 大同路111號
+        -> 桃園市大同路111號
+
+      桃園市 + 桃園區 + 大同路111號
+        -> 桃園市桃園區大同路111號
+
+      若地址本身已包含完整縣市或鄉鎮市區前綴，也避免再次重複。
+    """
+    city = clean_text(city)
+    area = clean_text(area)
+    address = clean_text(address)
+
+    if not address:
+        return f"{city}{area}"
+
+    # 地址本身已是完整或部分完整地址時，避免重複。
+    if city and address.startswith(city):
+        return address
+
+    # 鄉鎮市區欄若誤填成與縣市相同，例如：桃園市 + 桃園市，僅保留一次。
+    if area and area == city:
+        return f"{city}{address}"
+
+    # 地址本身已包含鄉鎮市區，但沒有包含縣市。
+    if area and address.startswith(area):
+        return f"{city}{address}"
+
+    return f"{city}{area}{address}"
+
+
+def parse_address_location_response(body):
+    """
+    解析 NLSC TextQueryAddress / 門牌查詢回應。
+
+    NLSC 門牌服務實際回應可能使用 XML：
+      <ITEM>
+        <CONTENT>...</CONTENT>
+        <LOCATION>121.309363,24.988454</LOCATION>
+      </ITEM>
+
+    也支援舊版 addressItem XML，以及 JSON/JSONP 容錯。
+    """
+    body = clean_text(body)
+    if not body:
+        raise ValueError("ADDRESS_EMPTY_RESPONSE")
+
+    records = []
+
+    # --------------------------------------------------------
+    # XML
+    # --------------------------------------------------------
+    try:
+        import xml.etree.ElementTree as ET
+        root = ET.fromstring(body)
+        for item in root.iter():
+            tag = item.tag.split("}", 1)[-1].lower()
+            if tag not in {"item", "addressitem"}:
+                continue
+
+            content = ""
+            location = ""
+            for child in item.iter():
+                ctag = child.tag.split("}", 1)[-1].lower()
+                text = clean_text(child.text)
+                if ctag == "content" and text:
+                    content = text
+                elif ctag == "location" and text:
+                    location = text
+
+            if location:
+                m = re.search(
+                    r"(-?\d+(?:\.\d+)?)\s*[,，]\s*(-?\d+(?:\.\d+)?)",
+                    location,
+                )
+                if m:
+                    records.append({
+                        "address": content,
+                        "lon": float(m.group(1)),
+                        "lat": float(m.group(2)),
+                    })
+
+        if records:
+            return records
+    except Exception:
+        pass
+
+    # --------------------------------------------------------
+    # JSON / JSONP
+    # --------------------------------------------------------
+    try:
+        data = jsonp_to_json(body)
+
+        def walk(obj):
+            if isinstance(obj, dict):
+                loc = obj.get("location") or obj.get("Location")
+                content = (
+                    obj.get("content")
+                    or obj.get("Content")
+                    or obj.get("address")
+                    or obj.get("Address")
+                    or ""
+                )
+                if isinstance(loc, str):
+                    m = re.search(
+                        r"(-?\d+(?:\.\d+)?)\s*[,，]\s*(-?\d+(?:\.\d+)?)",
+                        loc,
+                    )
+                    if m:
+                        records.append({
+                            "address": clean_text(content),
+                            "lon": float(m.group(1)),
+                            "lat": float(m.group(2)),
+                        })
+                for v in obj.values():
+                    walk(v)
+            elif isinstance(obj, list):
+                for v in obj:
+                    walk(v)
+
+        walk(data)
+        if records:
+            return records
+    except Exception:
+        pass
+
+    # --------------------------------------------------------
+    # 最後容錯：直接從 response 文字找「location」座標
+    # --------------------------------------------------------
+    matches = re.findall(
+        r"(?:location|Location)[^0-9-]*(-?\d+(?:\.\d+)?)\s*[,，]\s*(-?\d+(?:\.\d+)?)",
+        body,
+    )
+    for lon, lat in matches:
+        records.append({
+            "address": "",
+            "lon": float(lon),
+            "lat": float(lat),
+        })
+
+    if not records:
+        raise ValueError("ADDRESS_NO_COORDINATE")
+
+    return records
+
+
+def choose_best_address_record(records, full_query_address):
+    """在多筆門牌搜尋結果中，選擇與查詢文字最接近者。"""
+    from difflib import SequenceMatcher
+
+    if not records:
+        raise ValueError("ADDRESS_NO_RESULT")
+
+    target = normalize_address_text(full_query_address)
+
+    scored = []
+    for r in records:
+        addr = normalize_address_text(r.get("address", ""))
+        score = 0.0
+        if target and addr:
+            if target == addr:
+                score = 2.0
+            elif target in addr or addr in target:
+                score = 1.5
+            else:
+                score = SequenceMatcher(None, target, addr).ratio()
+        scored.append((score, r))
+
+    scored.sort(key=lambda x: x[0], reverse=True)
+    best_score, best = scored[0]
+    best = dict(best)
+    best["match_score"] = float(best_score)
+    best["result_count"] = len(records)
+    return best
+
+
+async def click_visible_text_js(page, texts):
+    """依可見文字尋找並點擊元素；網站改版時比固定 CSS selector 有韌性。"""
+    return await page.evaluate(
+        """
+        (texts) => {
+            const wanted = texts.map(x => String(x));
+            const els = Array.from(document.querySelectorAll(
+                'a,button,input[type="button"],input[type="submit"],span,div,li,label'
+            ));
+
+            function visible(el) {
+                const s = getComputedStyle(el);
+                const r = el.getBoundingClientRect();
+                return s.display !== 'none' && s.visibility !== 'hidden' &&
+                       r.width > 0 && r.height > 0;
+            }
+
+            for (const exact of [true, false]) {
+                for (const el of els) {
+                    if (!visible(el)) continue;
+                    const text = (el.innerText || el.value || el.title || '').trim();
+                    if (!text) continue;
+                    const hit = wanted.some(w => exact ? text === w : text.includes(w));
+                    if (hit) {
+                        try { el.scrollIntoView({block:'center'}); } catch(e) {}
+                        try { el.click(); } catch(e) {}
+                        return {ok:true, text, tag:el.tagName, id:el.id || ''};
+                    }
+                }
+            }
+            return {ok:false, text:'', tag:'', id:''};
+        }
+        """,
+        texts,
+    )
+
+
+async def fill_address_ui_and_submit(page, full_address):
+    """
+    開啟 NLSC「定位查詢→門牌」後：
+    1. 尋找可見的地址/門牌輸入框
+    2. 填入完整地址
+    3. 在同一查詢區塊尋找「搜尋／搜索」按鈕並觸發
+    """
+    # 開啟定位查詢
+    info = await click_visible_text_js(page, ["定位查詢"])
+    if info.get("ok"):
+        await page.wait_for_timeout(500)
+
+    # 切到門牌
+    info = await click_visible_text_js(page, ["門牌"])
+    if info.get("ok"):
+        await page.wait_for_timeout(500)
+
+    # 用 JS 找地址欄與同區塊搜尋按鈕
+    result = await page.evaluate(
+        """
+        (address) => {
+            const all = Array.from(document.querySelectorAll('input,textarea'));
+            const visible = el => {
+                const s = getComputedStyle(el);
+                const r = el.getBoundingClientRect();
+                return s.display !== 'none' && s.visibility !== 'hidden' &&
+                       r.width > 0 && r.height > 0;
+            };
+
+            function attrs(el) {
+                return [
+                    el.id || '', el.name || '', el.placeholder || '',
+                    el.title || '', el.getAttribute('aria-label') || '',
+                    el.className || ''
+                ].join(' ').toLowerCase();
+            }
+
+            let best = null;
+            let bestScore = -1;
+
+            for (const el of all) {
+                if (!visible(el)) continue;
+                const a = attrs(el);
+                let score = 0;
+                if (/(地址|門牌|addr|address)/i.test(a)) score += 100;
+                if ((el.value || '').trim() === '') score += 5;
+                if (el.tagName === 'INPUT' && ['text','search',''].includes((el.type || '').toLowerCase())) score += 3;
+                if (score > bestScore) { bestScore = score; best = el; }
+            }
+
+            // 第二順位：可見文字輸入框中，所在祖先文字含「門牌／地址」
+            if (!best) {
+                for (const el of all) {
+                    if (!visible(el)) continue;
+                    let p = el;
+                    let context = '';
+                    for (let i=0; i<5 && p; i++, p=p.parentElement) {
+                        context += ' ' + (p.innerText || '');
+                    }
+                    if (/門牌|地址/.test(context)) { best = el; break; }
+                }
+            }
+
+            if (!best) return {ok:false, reason:'ADDRESS_INPUT_NOT_FOUND'};
+
+            best.focus();
+            const setter = Object.getOwnPropertyDescriptor(
+                best.tagName === 'TEXTAREA' ? window.HTMLTextAreaElement.prototype :
+                window.HTMLInputElement.prototype,
+                'value'
+            )?.set;
+            if (setter) setter.call(best, address);
+            else best.value = address;
+            best.dispatchEvent(new Event('input', {bubbles:true}));
+            best.dispatchEvent(new Event('change', {bubbles:true}));
+
+            let root = best;
+            for (let i=0; i<7 && root; i++, root=root.parentElement) {
+                const txt = (root.innerText || '');
+                if (!/門牌|地址/.test(txt)) continue;
+                const btns = Array.from(root.querySelectorAll(
+                    'button,input[type="button"],input[type="submit"],a,span'
+                )).filter(visible);
+                const btn = btns.find(el => /^(搜尋|搜索|查詢)$/.test(
+                    (el.innerText || el.value || el.title || '').trim()
+                ));
+                if (btn) {
+                    try { btn.scrollIntoView({block:'center'}); } catch(e) {}
+                    try { btn.click(); } catch(e) {}
+                    return {
+                        ok:true,
+                        input_id:best.id || '',
+                        input_name:best.name || '',
+                        button_text:(btn.innerText || btn.value || btn.title || '').trim()
+                    };
+                }
+            }
+
+            // 全頁尋找一次
+            const btns = Array.from(document.querySelectorAll(
+                'button,input[type="button"],input[type="submit"],a,span'
+            )).filter(visible);
+            const btn = btns.find(el => /^(搜尋|搜索|查詢)$/.test(
+                (el.innerText || el.value || el.title || '').trim()
+            ));
+            if (btn) {
+                try { btn.click(); } catch(e) {}
+                return {
+                    ok:true,
+                    input_id:best.id || '',
+                    input_name:best.name || '',
+                    button_text:(btn.innerText || btn.value || btn.title || '').trim()
+                };
+            }
+
+            return {
+                ok:false,
+                reason:'ADDRESS_SEARCH_BUTTON_NOT_FOUND',
+                input_id:best.id || '',
+                input_name:best.name || ''
+            };
+        }
+        """,
+        full_address,
+    )
+
+    if not result.get("ok"):
+        raise RuntimeError(str(result))
+
+    await page.wait_for_timeout(1200)
+    return result
+
+
+async def query_one_address_browser(
+    page,
+    row_number,
+    city,
+    area,
+    address,
+):
+    """單筆地址定位：使用 NLSC 圖臺的門牌定位介面。"""
+    city = clean_text(city)
+    area = clean_text(area)
+    address = clean_text(address)
+
+    if not city or not area or not address:
+        raise ValueError("地址查詢需要：縣市、鄉鎮市區、地址")
+
+    # 地址查詢也比照地號查詢：
+    # 鄉鎮市區若省略「鄉／鎮／市／區」，直接依 NLSC 實際選單
+    # 自動找出正式名稱，例如「新豐」->「新豐鄉」。
+    area_info = await resolve_nlsc_area_name(
+        page,
+        city,
+        area,
+    )
+    resolved_area = area_info["area_text"]
+
+    full_address = build_full_address(
+        city,
+        resolved_area,
+        address,
+    )
+    last_error = ""
+    last_status = None
+    last_url = ""
+    last_body = ""
+    last_raw_file = ""
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            print(
+                f"  第 {attempt}/{MAX_RETRIES} 次查詢："
+                f"地址={full_address}"
+            )
+
+            def address_response_filter(response):
+                """
+                NLSC 地址查詢實際會觸發：
+                  https://api.nlsc.gov.tw/MapSearch/QuerySearch...
+
+                舊版只比對 textqueryaddress / textquerymap / addressquery，
+                因此新版改成同步 predicate 後反而可能完全等不到實際 API，
+                最後變成 30 秒 Timeout。
+
+                現在同時支援實際 QuerySearch 與舊版 URL 關鍵字。
+                """
+                try:
+                    url = response.url
+                    low = url.lower()
+                    if "api.nlsc.gov.tw" not in low:
+                        return False
+
+                    return (
+                        "mapsearch/querysearch" in low
+                        or "querysearch" in low
+                        or "textqueryaddress" in low
+                        or "textquerymap" in low
+                        or "addressquery" in low
+                    )
+                except Exception:
+                    return False
+
+            async with page.expect_response(
+                address_response_filter,
+                timeout=RESPONSE_TIMEOUT
+            ) as response_info:
+                await fill_address_ui_and_submit(
+                    page,
+                    full_address
+                )
+
+            response = await response_info.value
+            status_code = response.status
+            response_url = response.url
+            try:
+                body = await response.text()
+            except Exception:
+                body = ""
+
+            last_status = status_code
+            last_url = response_url
+            last_body = body
+
+            print(f"  HTTP={status_code}")
+
+            if status_code == 200:
+                records = parse_address_location_response(body)
+                chosen = choose_best_address_record(
+                    records,
+                    full_address
+                )
+
+                lon = float(chosen["lon"])
+                lat = float(chosen["lat"])
+                twd97_x, twd97_y = convert_to_twd97(lon, lat)
+
+                raw_file = save_raw_response(
+                    row_number,
+                    status_code,
+                    response_url,
+                    body
+                )
+
+                quality = (
+                    "地址單筆結果"
+                    if chosen["result_count"] == 1
+                    else "地址多筆取最相符"
+                )
+
+                return {
+                    "縣市": city,
+                    "鄉鎮市區": resolved_area,                    "地段": "",
+                    "查詢地段": "",
+                    "地號": "",
+                    "地址": address,
+                    "查詢方式": "地址",
+                    "定位來源": "NLSC門牌定位",
+                    "完整查詢地址": full_address,
+                    "命中地址": chosen.get("address", ""),
+                    "定位品質": quality,
+                    "查詢地號": "",
+                    "office": "",
+                    "sect": "",
+                    "狀態": "OK",
+                    "HTTP狀態": status_code,
+                    "經度": lon,
+                    "緯度": lat,
+                    "TWD97_X": twd97_x,
+                    "TWD97_Y": twd97_y,
+                    "左下經度": "",
+                    "左下緯度": "",
+                    "右上經度": "",
+                    "右上緯度": "",
+                    "response_url": response_url,
+                    "raw_file": raw_file,
+                    "錯誤": "",
+                    "嘗試次數": attempt,
+                }
+
+            if status_code in RETRY_STATUS_CODES and attempt < MAX_RETRIES:
+                wait_seconds = RETRY_BACKOFF[min(attempt - 1, len(RETRY_BACKOFF)-1)]
+                print(f"  HTTP {status_code}，{wait_seconds} 秒後自動重試...")
+                await page.wait_for_timeout(wait_seconds * 1000)
+                continue
+
+            last_error = f"HTTP_{status_code}"
+            break
+
+        except Exception as e:
+            last_error = f"{type(e).__name__}: {e}"
+            print(f"  地址查詢例外：{last_error}")
+            if attempt < MAX_RETRIES:
+                wait_seconds = RETRY_BACKOFF[min(attempt - 1, len(RETRY_BACKOFF)-1)]
+                print(f"  {wait_seconds} 秒後自動重試...")
+                await page.wait_for_timeout(wait_seconds * 1000)
+                continue
+            break
+
+    if last_status in RETRY_STATUS_CODES:
+        status_text = "HTTP_ERROR"
+    elif "timeout" in last_error.lower():
+        status_text = "TIMEOUT"
+    else:
+        status_text = "ERROR"
+
+    if last_body:
+        try:
+            last_raw_file = save_raw_response(
+                row_number,
+                last_status if last_status is not None else 0,
+                last_url,
+                last_body
+            )
+        except Exception:
+            pass
+
+    return {
+        "縣市": city,
+        "鄉鎮市區": resolved_area,        "地段": "",
+        "查詢地段": "",
+        "地號": "",
+        "地址": address,
+        "查詢方式": "地址",
+        "定位來源": "NLSC門牌定位",
+        "完整查詢地址": full_address,
+        "命中地址": "",
+        "定位品質": "",
+        "查詢地號": "",
+        "office": "",
+        "sect": "",
+        "狀態": status_text,
+        "HTTP狀態": last_status if last_status is not None else "",
+        "經度": "",
+        "緯度": "",
+        "TWD97_X": "",
+        "TWD97_Y": "",
+        "左下經度": "",
+        "左下緯度": "",
+        "右上經度": "",
+        "右上緯度": "",
+        "response_url": last_url,
+        "raw_file": last_raw_file,
+        "錯誤": last_error,
+        "嘗試次數": MAX_RETRIES,
+    }
+
+
+# ============================================================
+# 19. 單筆查詢
+# ============================================================
+
+async def query_one_browser(
+    page,
+    row_number,
+    city,
+    area,
+    section,
+    landno,
+    section_cache
+):
+
+    original_landno = clean_text(
+        landno
+    )
+
+    normalized_landno = (
+        normalize_landno(
+            original_landno
+        )
+    )
+
+    query_section = normalize_section_for_query(
+        city,
+        area,
+        section
+    )
+
+    section_key = (
+
+        clean_text(city),
+
+        clean_text(area),
+
+        clean_text(query_section),
+    )
+
+    # --------------------------------------------------------
+    # 地段變更
+    # --------------------------------------------------------
+
+    matched_section_text = clean_text(
+        section_cache.get(
+            "section_text",
+            query_section
+        )
+    )
+
+    matched_area_text = clean_text(
+        section_cache.get(
+            "area_text",
+            area
+        )
+    )
+
+    if (
+        section_cache.get(
+            "key"
+        )
+        != section_key
+    ):
+
+        section_info = (
+            await set_nlsc_section(
+                page,
+                city,
+                area,
+                query_section
+            )
+        )
+
+        matched_section_text = clean_text(
+            section_info.get(
+                "section_text",
+                query_section
+            )
+        )
+
+        matched_area_text = clean_text(
+            section_info.get(
+                "area_text",
+                area
+            )
+        )
+
+        section_cache.clear()
+
+        section_cache.update({
+
+            "key":
+                section_key,
+
+            "area_text":
+                matched_area_text,
+
+            "area_value":
+                section_info.get(
+                    "area_value",
+                    ""
+                ),
+
+            "section_text":
+                section_info[
+                    "section_text"
+                ],
+
+            "section_value":
+                section_info[
+                    "section_value"
+                ],
+
+            "section_code":
+                section_info[
+                    "section_code"
+                ],
+        })
+
+        print(
+            "  地段已設定："
+            f"{section_info['section_text']} "
+            f"(value="
+            f"{section_info['section_value']}, "
+            f"code="
+            f"{section_info['section_code']})"
+        )
+
+    # --------------------------------------------------------
+    # 填寫地號
+    # --------------------------------------------------------
+
+    await fill_landno(
+        page,
+        normalized_landno
+    )
+
+    # --------------------------------------------------------
+    # 查詢
+    # --------------------------------------------------------
+
+    last_error = ""
+
+    last_status = None
+
+    last_url = ""
+
+    last_body = ""
+
+    last_raw_file = ""
+
+    for attempt in range(
+        1,
+        MAX_RETRIES + 1
+    ):
+
+        try:
+
+            print(
+                f"  第 {attempt}/{MAX_RETRIES} "
+                f"次查詢："
+                f"地號={normalized_landno}"
+            )
+
+            # 只抓 qryTileMapIndex
+            async with page.expect_response(
+                is_land_query_response,
+                timeout=RESPONSE_TIMEOUT
+            ) as response_info:
+
+                await trigger_nlsc_query(
+                    page
+                )
+
+            response = (
+                await response_info.value
+            )
+
+            status_code = (
+                response.status
+            )
+
+            response_url = (
+                response.url
+            )
+
+            try:
+
+                body = (
+                    await response.text()
+                )
+
+            except Exception:
+
+                body = ""
+
+            last_status = (
+                status_code
+            )
+
+            last_url = (
+                response_url
+            )
+
+            last_body = body
+
+            print(
+                f"  HTTP={status_code}"
+            )
+
+            parsed = (
+                parse_nlsc_response(
+                    body
+                )
+            )
+
+            # ------------------------------------------------
+            # 成功
+            # ------------------------------------------------
+
+            if (
+                status_code == 200
+                and
+                parsed["ok"]
+            ):
+
+                record = (
+                    parsed["record"]
+                )
+
+                lon = float(
+                    record["cx"]
+                )
+
+                lat = float(
+                    record["cy"]
+                )
+
+                twd97_x, twd97_y = (
+                    convert_to_twd97(
+                        lon,
+                        lat
+                    )
+                )
+
+                raw_file = (
+                    save_raw_response(
+                        row_number,
+                        status_code,
+                        response_url,
+                        body
+                    )
+                )
+
+                return {
+
+                    "縣市":
+                        city,
+
+                    "鄉鎮市區":
+                        matched_area_text or area,
+
+                    # NLSC 實際選中的正式地段名稱（含段／小段）
+                    "地段":
+                        matched_section_text or section,
+
+                    "查詢地段":
+                        matched_section_text or section,
+
+                    "地號": original_landno,
+                    "地址": "",
+                    "查詢方式": "地號",
+                    "定位來源": "NLSC地號定位",
+                    "完整查詢地址": "",
+                    "命中地址": "",
+                    "定位品質": "地號宗地定位",
+                    "查詢地號": normalized_landno,
+
+                    "office":
+                        get_query_parameter(
+                            response_url,
+                            "office"
+                        ),
+
+                    "sect":
+                        get_query_parameter(
+                            response_url,
+                            "sect"
+                        ),
+
+                    "狀態":
+                        "OK",
+
+                    "HTTP狀態":
+                        status_code,
+
+                    "經度":
+                        lon,
+
+                    "緯度":
+                        lat,
+
+                    "TWD97_X":
+                        twd97_x,
+
+                    "TWD97_Y":
+                        twd97_y,
+
+                    "左下經度":
+                        record.get(
+                            "lx",
+                            ""
+                        ),
+
+                    "左下緯度":
+                        record.get(
+                            "ly",
+                            ""
+                        ),
+
+                    "右上經度":
+                        record.get(
+                            "rx",
+                            ""
+                        ),
+
+                    "右上緯度":
+                        record.get(
+                            "ry",
+                            ""
+                        ),
+
+                    "response_url":
+                        response_url,
+
+                    "raw_file":
+                        raw_file,
+
+                    "錯誤":
+                        "",
+
+                    "嘗試次數":
+                        attempt,
+                }
+
+            # ------------------------------------------------
+            # 502 / 503 / 504
+            # ------------------------------------------------
+
+            if (
+                status_code
+                in RETRY_STATUS_CODES
+            ):
+
+                last_error = (
+                    f"HTTP_{status_code}"
+                )
+
+                last_raw_file = (
+                    save_raw_response(
+                        row_number,
+                        status_code,
+                        response_url,
+                        body
+                    )
+                )
+
+                if (
+                    attempt
+                    < MAX_RETRIES
+                ):
+
+                    wait_seconds = (
+                        RETRY_BACKOFF[
+                            min(
+                                attempt - 1,
+                                len(
+                                    RETRY_BACKOFF
+                                ) - 1
+                            )
+                        ]
+                    )
+
+                    print(
+                        f"  HTTP "
+                        f"{status_code}，"
+                        f"{wait_seconds} 秒後"
+                        f"自動重試..."
+                    )
+
+                    await page.wait_for_timeout(
+                        int(
+                            wait_seconds
+                            * 1000
+                        )
+                    )
+
+                    continue
+
+                break
+
+            # ------------------------------------------------
+            # HTTP 200 無座標
+            # ------------------------------------------------
+
+            if (
+                status_code == 200
+            ):
+
+                last_raw_file = (
+                    save_raw_response(
+                        row_number,
+                        status_code,
+                        response_url,
+                        body
+                    )
+                )
+
+                last_error = (
+                    parsed["error"]
+                )
+
+                print(
+                    "  HTTP=200，"
+                    "但查詢內容異常："
+                    f"{parsed['error']}"
+                )
+
+                break
+
+            # ------------------------------------------------
+            # 其他 HTTP
+            # ------------------------------------------------
+
+            last_raw_file = (
+                save_raw_response(
+                    row_number,
+                    status_code,
+                    response_url,
+                    body
+                )
+            )
+
+            last_error = (
+                f"HTTP_{status_code}"
+            )
+
+            break
+
+        # ====================================================
+        # Timeout / 例外
+        # ====================================================
+
+        except Exception as e:
+
+            last_error = (
+                f"{type(e).__name__}: {e}"
+            )
+
+            print(
+                f"  查詢例外："
+                f"{last_error}"
+            )
+
+            if (
+                attempt
+                < MAX_RETRIES
+            ):
+
+                wait_seconds = (
+                    RETRY_BACKOFF[
+                        min(
+                            attempt - 1,
+                            len(
+                                RETRY_BACKOFF
+                            ) - 1
+                        )
+                    ]
+                )
+
+                print(
+                    f"  {wait_seconds} 秒後"
+                    f"自動重試..."
+                )
+
+                await page.wait_for_timeout(
+                    int(
+                        wait_seconds
+                        * 1000
+                    )
+                )
+
+                # ------------------------------------------------
+                # Timeout：
+                # 重新載入 NLSC
+                # ------------------------------------------------
+
+                if (
+                    "TimeoutError"
+                    in type(e).__name__
+                    or
+                    "timeout"
+                    in str(e).lower()
+                ):
+
+                    try:
+
+                        await initialize_nlsc_page(
+                            page
+                        )
+
+                        section_cache.clear()
+
+                        section_info = (
+                            await set_nlsc_section(
+                                page,
+                                city,
+                                area,
+                                query_section
+                            )
+                        )
+
+                        section_cache.update({
+
+                            "key":
+                                section_key,
+
+                            "section_text":
+                                section_info[
+                                    "section_text"
+                                ],
+
+                            "section_value":
+                                section_info[
+                                    "section_value"
+                                ],
+
+                            "section_code":
+                                section_info[
+                                    "section_code"
+                                ],
+                        })
+
+                        print(
+                            "  地段重新設定："
+                            f"{section_info['section_text']}"
+                        )
+
+                        await fill_landno(
+                            page,
+                            normalized_landno
+                        )
+
+                    except Exception as recovery_error:
+
+                        print(
+                            "  頁面恢復失敗："
+                            f"{type(recovery_error).__name__}: "
+                            f"{recovery_error}"
+                        )
+
+                continue
+
+            break
+
+    # ========================================================
+    # 最終失敗
+    # ========================================================
+
+    if (
+        last_status
+        in RETRY_STATUS_CODES
+    ):
+
+        status_text = (
+            "HTTP_ERROR"
+        )
+
+    elif (
+        "Timeout"
+        in last_error
+        or
+        "timeout"
+        in last_error.lower()
+    ):
+
+        status_text = (
+            "TIMEOUT"
+        )
+
+    else:
+
+        status_text = (
+            "ERROR"
+        )
+
+    return {
+
+        "縣市":
+            city,
+
+        "鄉鎮市區":
+            area,
+
+        "地段":
+            section,
+
+        "查詢地段":
+            matched_section_text,
+
+        "地號": original_landno,
+        "地址": "",
+        "查詢方式": "地號",
+        "定位來源": "NLSC地號定位",
+        "完整查詢地址": "",
+        "命中地址": "",
+        "定位品質": "",
+        "查詢地號": normalized_landno,
+
+        "office":
+            "",
+
+        "sect":
+            section_cache.get(
+                "section_value",
+                ""
+            ),
+
+        "狀態":
+            status_text,
+
+        "HTTP狀態":
+            (
+                last_status
+                if last_status is not None
+                else ""
+            ),
+
+        "經度":
+            "",
+
+        "緯度":
+            "",
+
+        "TWD97_X":
+            "",
+
+        "TWD97_Y":
+            "",
+
+        "左下經度":
+            "",
+
+        "左下緯度":
+            "",
+
+        "右上經度":
+            "",
+
+        "右上緯度":
+            "",
+
+        "response_url":
+            last_url,
+
+        "raw_file":
+            last_raw_file,
+
+        "錯誤":
+            last_error,
+
+        "嘗試次數":
+            MAX_RETRIES,
+    }
+
+
+# ============================================================
+# 20. 執行時上傳輸入檔；取消後依序搜尋既有檔案
+# ============================================================
+
+def find_input_file():
+    """優先使用本次在 Colab 上傳的單一檔案；取消時依序讀既有候選檔。"""
+    supported_suffixes = {".xlsx", ".xls", ".csv"}
+    uploaded_payloads = None
+
+    print("=" * 70)
+    print("Cell 2 v8.6 輸入檔選擇")
+    print("請上傳本次要查詢的 .xlsx、.xls 或 .csv 檔案。")
+    print("若取消或未選擇檔案，將依序搜尋 /content/input.xlsx、input.xls、input.csv。")
+    print("=" * 70)
+
+    # Google Colab 上先開啟上傳介面；非 Colab 環境則直接走既有檔案 fallback。
+    try:
+        from google.colab import files as colab_files
+    except Exception:
+        colab_files = None
+        print("[INFO] 目前不是可用的 Google Colab 上傳環境，改查既有輸入檔。")
+
+    if colab_files is not None:
+        try:
+            uploaded_payloads = colab_files.upload()
+        except Exception as exc:
+            # 使用者取消上傳或上傳視窗未完成時，依需求 fallback 到既有檔案。
+            print(f"[INFO] 上傳未完成或已取消（{type(exc).__name__}），改查既有輸入檔。")
+            uploaded_payloads = None
+
+    if uploaded_payloads:
+        supported_uploads = []
+        unsupported_names = []
+        for uploaded_name, payload in uploaded_payloads.items():
+            safe_name = Path(str(uploaded_name)).name
+            suffix = Path(safe_name).suffix.lower()
+            if suffix not in supported_suffixes:
+                unsupported_names.append(safe_name)
+                continue
+            supported_uploads.append((safe_name, payload))
+
+        if len(supported_uploads) > 1:
+            names = [name for name, _ in supported_uploads]
+            raise RuntimeError(
+                "一次請只上傳一個輸入檔（支援 .xlsx、.xls、.csv）；"
+                f"本次收到多個可用檔案：{names}"
+            )
+
+        if len(supported_uploads) == 1:
+            uploaded_name, payload = supported_uploads[0]
+            if not isinstance(payload, (bytes, bytearray)):
+                raise TypeError(
+                    f"上傳檔案內容格式異常：{uploaded_name}"
+                )
+            destination = BASE_DIR / uploaded_name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(bytes(payload))
+            print(f"已採用本次上傳檔案：{destination}")
+            return destination
+
+        # 有上傳動作但檔案格式不支援，不把它誤判成「取消上傳」。
+        raise RuntimeError(
+            "收到上傳檔案，但沒有支援的 .xlsx、.xls 或 .csv 檔案。"
+            f"不支援檔案：{unsupported_names}"
+        )
+
+    print("未收到本次上傳檔案（已取消或未選擇），依序檢查既有檔案……")
+    for path in INPUT_CANDIDATES:
+        if path.is_file():
+            print(f"使用既有輸入檔：{path}")
+            return path
+
+    raise FileNotFoundError(
+        "未上傳輸入檔，且 /content/ 找不到既有候選檔。\n"
+        "已依序檢查：\n"
+        "  /content/input.xlsx\n"
+        "  /content/input.xls\n"
+        "  /content/input.csv"
+    )
+
+
+# ============================================================
+# 21. 讀取輸入檔
+# ============================================================
+
+def load_input_file(
+    path
+):
+
+    suffix = (
+        path.suffix.lower()
+    )
+
+    required_columns = [
+        "縣市",
+        "鄉鎮市區",
+        "地段",
+        "地號",
+        "本筆面積(公頃)",
+        "申請面積(公頃)",
+        "地址",
+        "名稱",
+        "勘查狀態",
+    ]
+
+    # 目前輸入檔不再需要「查詢方式」欄位；查詢方式由程式自動判定。
+    optional_columns = []
+
+    # ========================================================
+    # XLSX
+    # ========================================================
+
+    if suffix == ".xlsx":
+
+        wb = (
+            openpyxl.load_workbook(
+                path,
+                read_only=True,
+                data_only=True
+            )
+        )
+
+        ws = (
+            wb[
+                wb.sheetnames[0]
+            ]
+        )
+
+        rows = list(
+            ws.iter_rows(
+                values_only=True
+            )
+        )
+
+        if not rows:
+
+            wb.close()
+
+            raise RuntimeError(
+                "Excel 沒有資料"
+            )
+
+        headers = [
+            clean_text(x)
+            for x in rows[0]
+        ]
+
+        index_map = {
+            h: i
+            for i, h in enumerate(
+                headers
+            )
+        }
+
+        missing = [
+            col
+            for col in required_columns
+            if col not in index_map
+        ]
+
+        if missing:
+
+            wb.close()
+
+            raise RuntimeError(
+                "Excel 缺少欄位："
+                f"{missing}"
+            )
+
+        data = []
+
+        for row in rows[1:]:
+
+            if not any(
+                clean_text(x)
+                for x in row
+            ):
+
+                continue
+
+            item = {}
+
+            # 必要欄位一定存在；選填欄位不存在時自動視為空白。
+            for col in required_columns + optional_columns:
+
+                if col not in index_map:
+                    item[col] = ""
+                    continue
+
+                idx = index_map[col]
+
+                value = (
+                    row[idx]
+                    if idx < len(row)
+                    else ""
+                )
+
+                item[col] = (
+                    clean_text(value)
+                )
+
+            data.append(
+                item
+            )
+
+        wb.close()
+
+        return data
+
+    # ========================================================
+    # XLS
+    # ========================================================
+
+    if suffix == ".xls":
+
+        import xlrd
+
+        workbook = (
+            xlrd.open_workbook(
+                path,
+                on_demand=True
+            )
+        )
+
+        sheet = (
+            workbook.sheet_by_index(0)
+        )
+
+        headers = [
+            clean_text(
+                sheet.cell_value(
+                    0,
+                    i
+                )
+            )
+
+            for i in range(
+                sheet.ncols
+            )
+        ]
+
+        index_map = {
+            h: i
+            for i, h in enumerate(
+                headers
+            )
+        }
+
+        missing = [
+            col
+            for col in required_columns
+            if col not in index_map
+        ]
+
+        if missing:
+
+            workbook.release_resources()
+
+            raise RuntimeError(
+                "XLS 缺少欄位："
+                f"{missing}"
+            )
+
+        data = []
+
+        for r in range(
+            1,
+            sheet.nrows
+        ):
+
+            item = {}
+
+            for col in required_columns + optional_columns:
+
+                if col not in index_map:
+                    item[col] = ""
+                    continue
+
+                item[col] = clean_text(
+                    sheet.cell_value(
+                        r,
+                        index_map[col]
+                    )
+                )
+
+            if not any(
+                item.values()
+            ):
+
+                continue
+
+            data.append(
+                item
+            )
+
+        workbook.release_resources()
+
+        return data
+
+    # ========================================================
+    # CSV
+    # ========================================================
+
+    if suffix == ".csv":
+
+        encodings = [
+            "utf-8-sig",
+            "cp950",
+        ]
+
+        last_error = None
+
+        for encoding in (
+            encodings
+        ):
+
+            try:
+
+                with open(
+                    path,
+                    "r",
+                    encoding=encoding,
+                    newline=""
+                ) as f:
+
+                    reader = (
+                        csv.DictReader(
+                            f
+                        )
+                    )
+
+                    fieldnames = [
+                        clean_text(x)
+                        for x in (
+                            reader.fieldnames
+                            or []
+                        )
+                    ]
+
+                    missing = [
+                        col
+                        for col in required_columns
+                        if col not in fieldnames
+                    ]
+
+                    if missing:
+
+                        raise RuntimeError(
+                            "CSV 缺少欄位："
+                            f"{missing}"
+                        )
+
+                    data = []
+
+                    for row in reader:
+
+                        item = {
+
+                            col:
+                                clean_text(
+                                    row.get(
+                                        col,
+                                        ""
+                                    )
+                                )
+
+                            for col
+                            in required_columns + optional_columns
+                        }
+
+                        if not any(
+                            item.values()
+                        ):
+
+                            continue
+
+                        data.append(
+                            item
+                        )
+
+                    print(
+                        "CSV 編碼："
+                        f"{encoding}"
+                    )
+
+                    return data
+
+            except Exception as e:
+
+                last_error = e
+
+        raise RuntimeError(
+            "CSV 讀取失敗："
+            f"{last_error}"
+        )
+
+    raise RuntimeError(
+        "不支援的輸入格式："
+        f"{suffix}"
+    )
+
+
+# ============================================================
+# ============================================================
+# 21A. 正式資料識別
+# ============================================================
+
+def parse_area_value(value):
+    """將輸入檔面積保留為可寫入 Excel 的數值；空白維持空字串。"""
+    if value is None:
+        return ""
+    if isinstance(value, float) and math.isnan(value):
+        return ""
+    text = clean_text(value)
+    if not text:
+        return ""
+    text = text.replace(",", "")
+    try:
+        return float(text)
+    except Exception:
+        return text
+
+
+def _norm_case_part(value):
+    if value is None:
+        return ""
+    s = str(value).strip()
+    if s.endswith(".0"):
+        s = s[:-2]
+    return s
+
+
+def build_case_id(query_mode, result, row_number):
+    """建立跨 Cell 穩定案件ID。地號案件採 OFFICE_SECT_8碼地號；地址案件採雜湊。"""
+    mode = _norm_case_part(query_mode)
+    if mode == "地號":
+        office = _norm_case_part(result.get("office", "")).upper()
+        sect = _norm_case_part(result.get("sect", ""))
+        land = normalize_landno(result.get("查詢地號", result.get("地號", "")))
+        if office and sect and land:
+            return f"{office}_{sect}_{land}"
+    raw = "|".join([
+        _norm_case_part(result.get("縣市", "")),
+        _norm_case_part(result.get("鄉鎮市區", "")),
+        _norm_case_part(result.get("地段", "")),
+        _norm_case_part(result.get("地號", "")),
+        _norm_case_part(result.get("地址", "")),
+        str(mode),
+    ])
+    digest = hashlib.sha1(raw.encode("utf-8")).hexdigest()[:12]
+    return f"ADDR_{digest}" if mode == "地址" else f"ROW_{row_number:04d}_{digest}"
+
+
+# 22. Excel 輸出
+# ============================================================
+
+def save_excel_openpyxl(
+    results,
+    output_path
+):
+
+    wb = (
+        openpyxl.Workbook()
+    )
+
+    ws = (
+        wb.active
+    )
+
+    ws.title = (
+        "查詢結果"
+    )
+
+    headers = [
+
+        "名稱",
+        "查詢方式",
+        "縣市",
+        "鄉鎮市區",
+        "地段",
+        "查詢地段",
+        "地號",
+        "本筆面積(公頃)",
+        "申請面積(公頃)",
+        "地址",
+        "勘查狀態",
+        "定位來源",
+        "完整查詢地址",
+        "命中地址",
+        "定位品質",
+        "查詢地號",
+        "案件ID",
+        "office",
+        "sect",
+        "狀態",
+        "資料檢核",
+        "重複來源列",
+        "HTTP狀態",
+        "經度",
+        "緯度",
+        "TWD97_X",
+        "TWD97_Y",
+        "左下經度",
+        "左下緯度",
+        "右上經度",
+        "右上緯度",
+        "response_url",
+        "raw_file",
+        "錯誤",
+        "嘗試次數",
+        # v8.4.1：地號案件另存門牌定位座標；地址案件則與主座標相同。
+        "地址經度",
+        "地址緯度",
+    ]
+
+    ws.append(
+        headers
+    )
+
+    for result in results:
+
+        ws.append([
+            result.get(
+                header,
+                ""
+            )
+
+            for header in headers
+        ])
+
+    # --------------------------------------------------------
+    # 凍結首列
+    # --------------------------------------------------------
+
+    ws.freeze_panes = (
+        "A2"
+    )
+
+    # --------------------------------------------------------
+    # 篩選
+    # --------------------------------------------------------
+
+    ws.auto_filter.ref = (
+        ws.dimensions
+    )
+
+    # --------------------------------------------------------
+    # 欄寬
+    # --------------------------------------------------------
+
+    width_map = {
+        "A": 24, "B": 10, "C": 10, "D": 12, "E": 28, "F": 30,
+        "G": 14, "H": 16, "I": 16, "J": 38, "K": 12, "L": 20,
+        "M": 42, "N": 42, "O": 16, "P": 30, "Q": 16, "R": 10,
+        "S": 12, "T": 10, "U": 12, "V": 14, "W": 14, "X": 15,
+        "Y": 15, "Z": 15, "AA": 15, "AB": 15, "AC": 70, "AD": 55,
+        "AE": 45, "AF": 10, "AG": 15, "AH": 15,
+    }
+
+    for col, width in (
+        width_map.items()
+    ):
+
+        ws.column_dimensions[
+            col
+        ].width = width
+
+    # --------------------------------------------------------
+    # 數字格式
+    # --------------------------------------------------------
+
+    numeric_formats = {
+        "H": "0.0000",
+        "I": "0.0000",
+        "V": "0.00000000",
+        "W": "0.00000000",
+        "X": "0.000",
+        "Y": "0.000",
+        "Z": "0.00000000",
+        "AA": "0.00000000",
+        "AB": "0.00000000",
+        "AC": "0.00000000",
+        "AE": "0",
+        "AG": "0.00000000",
+        "AH": "0.00000000",
+    }
+
+    for col, fmt in (
+        numeric_formats.items()
+    ):
+
+        for row in range(
+            2,
+            ws.max_row + 1
+        ):
+
+            ws[
+                f"{col}{row}"
+            ].number_format = fmt
+
+    wb.save(
+        output_path
+    )
+
+    return output_path
+
+
+# ============================================================
+# 23. Google Maps 名稱
+# ============================================================
+
+def build_gmap_name(
+    area,
+    section,
+    landno,
+    address="",
+    city="",
+):
+
+    """建立 Google Maps 與全系統共用的正式顯示名稱。
+
+    地號案件：
+      縣市＋鄉鎮市區＋完整正式地段（含段／小段）＋8碼地號。
+
+    地址案件：
+      完整地址。
+    """
+
+    area = clean_text(area)
+    section = clean_text(section)
+    address = clean_text(address)
+    city = clean_text(city)
+
+    if address:
+        return build_full_address(city, area, address)
+
+    landno = normalize_landno(landno)
+
+    if (
+        "-" not in landno
+        and re.fullmatch(r"\d+", landno)
+    ):
+        landno = landno.zfill(8)
+
+    return "".join(
+        part
+        for part in (city, area, section, landno)
+        if part
+    )
+
+
+def build_display_name(result):
+    """建立全系統統一使用的「顯示名稱」。
+
+    顯示優先順序：
+      1. 只要輸入資料有「名稱」，地號／地址案件一律優先使用「名稱」。
+      2. 地號案件沒有名稱時：縣市＋鄉鎮市區＋正式地段（含段／小段）＋8碼地號。
+      3. 地址案件沒有名稱時：使用完整地址。
+    """
+    if result is None:
+        return ""
+
+    query_mode = clean_text(result.get("查詢方式", ""))
+    city = clean_text(result.get("縣市", ""))
+    area = clean_text(result.get("鄉鎮市區", ""))
+    section = clean_text(result.get("地段", ""))
+    resolved_section = clean_text(result.get("查詢地段", ""))
+    landno = clean_text(result.get("查詢地號", ""))
+    if not landno:
+        landno = clean_text(result.get("地號", ""))
+    address = clean_text(result.get("地址", ""))
+    custom_name = clean_text(result.get("名稱", ""))
+
+    # 統一規則：有「名稱」就優先使用名稱。
+    # 不論是地址案件或地號案件，都不再用地段／地號格式蓋掉自訂名稱。
+    if custom_name:
+        return custom_name
+
+    # 地址案件：沒有名稱才使用完整地址。
+    if query_mode == "地址" or (address and query_mode != "地號"):
+        return build_full_address(city, area, address)
+
+    # 地號案件：沒有名稱時，優先採用 NLSC 實際命中的正式地段。
+    if resolved_section and has_formal_section_marker(resolved_section):
+        section = resolved_section
+
+    return build_gmap_name(
+        area=area,
+        section=section,
+        landno=landno,
+        address="",
+        city=city,
+    )
+
+
+def has_formal_section_marker(section):
+    """判斷地段是否已取得 NLSC 正式「段／小段」名稱。
+
+    NLSC 地段正式選項包含「段」或「小段」。
+    這個判斷只用來避免續跑時永久沿用舊版沒有段／小段的結果。
+    """
+    section = clean_text(section)
+    return "段" in section
+
+
+# ============================================================
+# 24. Google Maps CSV
+# ============================================================
+
+def save_gmap_csv(
+    success_results,
+    output_path
+):
+
+    """
+    Google Maps 可匯入格式：
+
+      Name
+      Latitude
+      Longitude
+
+    注意：
+      座標順序為
+      緯度、經度
+    """
+
+    with open(
+        output_path,
+        "w",
+        encoding="utf-8-sig",
+        newline=""
+    ) as f:
+
+        writer = csv.writer(
+            f
+        )
+
+        writer.writerow([
+            "Name",
+            "Latitude",
+            "Longitude",
+        ])
+
+        for result in (
+            success_results
+        ):
+
+            if (
+                result.get(
+                    "狀態"
+                )
+                != "OK"
+            ):
+
+                continue
+
+            # 統一沿用「顯示名稱」；舊資料沒有顯示名稱時才回退到「名稱」或重建。
+            name = clean_text(result.get("顯示名稱", ""))
+            if not name:
+                name = clean_text(result.get("名稱", ""))
+            if not name:
+                name = build_display_name(result)
+
+            # 緯度
+            latitude = result.get(
+                "緯度",
+                ""
+            )
+
+            # 經度
+            longitude = result.get(
+                "經度",
+                ""
+            )
+
+            writer.writerow([
+                name,
+                latitude,
+                longitude,
+            ])
+
+    return output_path
+
+
+# ============================================================
+# 24A. 續跑／快取
+# ============================================================
+
+RESULT_PARTIAL_XLSX = BASE_DIR / "result_partial.xlsx"
+RESULT_MANIFEST = BASE_DIR / "result_manifest.json"
+RESULT_TEMP_XLSX = BASE_DIR / "result.__tmp__.xlsx"
+
+
+def normalize_area_name_for_key(name):
+    """
+    續跑案件鍵的鄉鎮市區標準化。
+    讓「桃園」與「桃園區」、「新豐」與「新豐鄉」視為同一案件，
+    避免本程式將 NLSC 自動補上的正式名稱視為新案件而重新查詢。
+    """
+    name = clean_text(name)
+    if not name:
+        return ""
+
+    base = name
+    for suffix in ("鄉", "鎮", "市", "區"):
+        if base.endswith(suffix):
+            base = base[:-1]
+            break
+
+    return _norm_case_part(base)
+
+
+def build_resume_key_from_values(
+    query_mode,
+    city,
+    area,
+    section,
+    landno,
+    address,
+):
+    """
+    建立跨次執行的穩定案件鍵。
+
+    只使用「真正用來定位」的欄位，不使用名稱與面積。
+    """
+    # 地號案件的「輸入地段」與 NLSC 成功結果可能不同：
+    # 例如輸入「社角」，NLSC 正式名稱為「社角段」。
+    # 使用 canonical_section_name() 消除「段／小段」差異，
+    # 讓第二次以後可以真正命中成功快取。
+    section_key = section
+    if _norm_case_part(query_mode) == "地號":
+        section_key = canonical_section_name(section)
+
+    values = [
+        _norm_case_part(query_mode),
+        _norm_case_part(city),
+        normalize_area_name_for_key(area),
+        _norm_case_part(section_key),
+        _norm_case_part(normalize_landno(landno)),
+        _norm_case_part(address),
+    ]
+
+    raw = "|".join(values)
+    return hashlib.sha1(raw.encode("utf-8")).hexdigest()
+
+
+def build_land_duplicate_key_from_input(row):
+    """
+    建立「重複土地」檢核鍵。
+
+    僅地號案件參與檢核；地址案件不套用。
+    唯一鍵：縣市＋鄉鎮市區＋地段＋地號。
+
+    這裡不使用名稱、面積、申請面積或勘查狀態，
+    因為「同一土地」的判定只看實際定位用的土地識別欄位。
+    """
+    city = clean_text(row.get("縣市", ""))
+    area = clean_text(row.get("鄉鎮市區", ""))
+    section = clean_text(row.get("地段", ""))
+    landno = clean_text(row.get("地號", ""))
+
+    if not (section and landno):
+        return ""
+
+    parts = [
+        _norm_case_part(city),
+        normalize_area_name_for_key(area),
+        _norm_case_part(section),
+        _norm_case_part(normalize_landno(landno)),
+    ]
+
+    if not all(parts):
+        return ""
+
+    return "|".join(parts)
+
+
+def build_resume_key_from_input(row):
+    city = clean_text(row.get("縣市", ""))
+    area = clean_text(row.get("鄉鎮市區", ""))
+    section = clean_text(row.get("地段", ""))
+    landno = clean_text(row.get("地號", ""))
+    address = clean_text(row.get("地址", ""))
+
+    if section and landno:
+        query_mode = "地號"
+    elif address:
+        query_mode = "地址"
+    else:
+        query_mode = ""
+
+    return build_resume_key_from_values(
+        query_mode,
+        city,
+        area,
+        section,
+        landno,
+        address,
+    )
+
+
+def build_resume_key_from_result(result):
+    query_mode = clean_text(result.get("查詢方式", ""))
+
+    city = clean_text(result.get("縣市", ""))
+    area = clean_text(result.get("鄉鎮市區", ""))
+    section = clean_text(result.get("地段", ""))
+    landno = clean_text(result.get("地號", ""))
+    address = clean_text(result.get("地址", ""))
+
+    if not query_mode:
+        if section and landno:
+            query_mode = "地號"
+        elif address:
+            query_mode = "地址"
+
+    return build_resume_key_from_values(
+        query_mode,
+        city,
+        area,
+        section,
+        landno,
+        address,
+    )
+
+
+def load_existing_result_xlsx(path):
+    """讀取上一輪 Excel 結果；使用目前欄位名稱。"""
+    if not path.exists():
+        return []
+
+    try:
+        wb = openpyxl.load_workbook(
+            path,
+            read_only=True,
+            data_only=True,
+        )
+        ws = wb[wb.sheetnames[0]]
+        rows = ws.iter_rows(values_only=True)
+
+        try:
+            header_row = next(rows)
+        except StopIteration:
+            wb.close()
+            return []
+
+        headers = [clean_text(x) for x in header_row]
+        results = []
+
+        for row in rows:
+            if not any(clean_text(x) for x in row):
+                continue
+
+            item = {}
+            for idx, header in enumerate(headers):
+                if not header:
+                    continue
+                value = row[idx] if idx < len(row) else ""
+
+                if header in {
+                    "本筆面積(公頃)",
+                    "申請面積(公頃)",
+                    "經度", "緯度", "地址經度", "地址緯度", "TWD97_X", "TWD97_Y",
+                    "左下經度", "左下緯度", "右上經度", "右上緯度",
+                }:
+                    item[header] = "" if value is None else value
+                else:
+                    item[header] = clean_text(value)
+
+            results.append(item)
+
+        wb.close()
+        return results
+
+    except Exception as e:
+        print(f"⚠️ 讀取續跑結果失敗：{path} -> {e}")
+        return []
+
+
+def load_all_resume_results():
+    """
+    同時讀取 result_partial.xlsx / result.xlsx / result_error.xlsx。
+
+    不能只挑最新的一個，因為舊 partial 可能保存較早的結果，
+    而 result.xlsx 可能保存另一批成功結果。合併後以 OK 優先。
+    """
+    candidates = [
+        RESULT_PARTIAL_XLSX,
+        SUCCESS_OUTPUT_XLSX,
+        ERROR_OUTPUT_XLSX,
+    ]
+
+    combined = {}
+    source_stats = []
+
+    for path in candidates:
+        if not path.exists():
+            continue
+
+        items = load_existing_result_xlsx(path)
+        source_stats.append((path, len(items)))
+
+        for item in items:
+            try:
+                key = build_resume_key_from_result(item)
+            except Exception:
+                continue
+
+            if not key:
+                continue
+
+            old = combined.get(key)
+            if old is None:
+                combined[key] = item
+                continue
+
+            old_ok = clean_text(old.get("狀態", "")) == "OK"
+            new_ok = clean_text(item.get("狀態", "")) == "OK"
+
+            if new_ok and not old_ok:
+                combined[key] = item
+            elif new_ok == old_ok:
+                # 同狀態時優先較新的檔案資料（後讀到者覆蓋）。
+                combined[key] = item
+
+    if source_stats:
+        print("既有結果檔：")
+        for path, count in source_stats:
+            print(f"  {path.name}: {count} 筆")
+
+    return list(combined.values())
+
+
+def apply_input_fields_to_result(result, row, idx):
+    """將目前 input.xlsx 的資料欄位覆蓋回結果；座標不受影響。"""
+    city = clean_text(row.get("縣市", ""))
+    area = clean_text(row.get("鄉鎮市區", ""))
+    section = clean_text(row.get("地段", ""))
+    landno = clean_text(row.get("地號", ""))
+    address = clean_text(row.get("地址", ""))
+
+    if section and landno:
+        query_mode = "地號"
+    elif address:
+        query_mode = "地址"
+    else:
+        query_mode = ""
+
+    result_area = clean_text(
+        result.get("鄉鎮市區", "")
+    )
+    keep_resolved_area = (
+        clean_text(result.get("狀態", "")) == "OK"
+        and query_mode in {"地號", "地址"}
+        and bool(result_area)
+        and area_name_matches(area, result_area)
+    )
+
+    result["名稱"] = clean_text(row.get("名稱", ""))
+    result["本筆面積(公頃)"] = parse_area_value(row.get("本筆面積(公頃)", ""))
+    result["申請面積(公頃)"] = parse_area_value(row.get("申請面積(公頃)", ""))
+    result["勘查狀態"] = normalize_inspection_status(
+        row.get("勘查狀態", "")
+    )
+    result["縣市"] = city
+    result["鄉鎮市區"] = result_area if keep_resolved_area else area
+
+    # v8.1：地號案件的「地段」改以 NLSC 實際命中的正式選單名稱為準。
+    # 例如：
+    #   輸入：下田心子下田心子
+    #   NLSC正式名稱：下田心子段下田心子小段
+    #   最終「地段」：下田心子段下田心子小段
+    # 這樣 Cell 3 → Cell 4 → Cell 5 才能完整保留「段／小段」。
+    resolved_section = clean_text(
+        result.get("查詢地段", "")
+    ) or section
+
+    result["地段"] = resolved_section
+    result["地號"] = landno
+    result["地址"] = address
+    result["查詢方式"] = query_mode
+    result["顯示名稱"] = build_display_name(result)
+
+    result["案件ID"] = build_case_id(
+        query_mode,
+        result,
+        idx,
+    )
+
+    # v8.4.1：輸入欄位套用後統一補齊雙座標欄位。
+    ensure_dual_coordinate_fields(result)
+
+    return result
+
+
+def make_checkpoint_placeholder(row, idx, status="PENDING"):
+    """建立尚未執行或尚未有結果的暫存列。只有 OK 才會被續跑跳過。"""
+    city = clean_text(row.get("縣市", ""))
+    area = clean_text(row.get("鄉鎮市區", ""))
+    section = clean_text(row.get("地段", ""))
+    landno = clean_text(row.get("地號", ""))
+    address = clean_text(row.get("地址", ""))
+    query_mode = "地號" if section and landno else ("地址" if address else "")
+
+    result = {
+        "名稱": clean_text(row.get("名稱", "")),
+        "查詢方式": query_mode,
+        "縣市": city,
+        "鄉鎮市區": area,
+        "地段": section,
+        "查詢地段": normalize_section_for_query(city, area, section) if section else "",
+        "地號": landno,
+        "本筆面積(公頃)": parse_area_value(row.get("本筆面積(公頃)", "")),
+        "申請面積(公頃)": parse_area_value(row.get("申請面積(公頃)", "")),
+        "勘查狀態": normalize_inspection_status(row.get("勘查狀態", "")),
+        "地址": address,
+        "定位來源": "",
+        "完整查詢地址": build_full_address(city, area, address) if query_mode == "地址" else "",
+        "命中地址": "",
+        "定位品質": "",
+        "查詢地號": normalize_landno(landno) if landno else "",
+        "案件ID": f"PENDING_{idx:04d}",
+        "顯示名稱": build_display_name({
+            "查詢方式": query_mode,
+            "縣市": city,
+            "鄉鎮市區": area,
+            "地段": section,
+            "地號": landno,
+            "查詢地號": normalize_landno(landno) if landno else "",
+            "地址": address,
+            "名稱": clean_text(row.get("名稱", "")),
+        }),
+        "office": "",
+        "sect": "",
+        "狀態": status,
+        "HTTP狀態": "",
+        "經度": "",
+        "緯度": "",
+        "TWD97_X": "",
+        "TWD97_Y": "",
+        "左下經度": "",
+        "左下緯度": "",
+        "右上經度": "",
+        "右上緯度": "",
+        "response_url": "",
+        "raw_file": "",
+        "錯誤": "",
+        "嘗試次數": "",
+    }
+    return result
+
+
+def save_resume_checkpoint(
+    data,
+    results_by_input_index,
+    query_result_map,
+):
+    """
+    每完成 1 筆就把目前已知狀態寫入 result_partial.xlsx。
+
+    這是續跑的核心：即使使用者在下一筆查詢途中手動取消，
+    前面已完成的 OK 資料仍然會保留下來。
+    """
+    checkpoint_results = []
+
+    for idx, row in enumerate(data, start=1):
+        result = None
+
+        if idx in query_result_map:
+            result = dict(query_result_map[idx])
+        elif idx in results_by_input_index:
+            result = dict(results_by_input_index[idx])
+
+        if result is None:
+            result = make_checkpoint_placeholder(row, idx)
+
+        result = apply_input_fields_to_result(result, row, idx)
+        checkpoint_results.append(result)
+
+    # 先寫暫存檔，再以原子替換方式更新 partial。
+    temp = BASE_DIR / "result_partial.__tmp__.xlsx"
+    try:
+        save_excel_openpyxl(checkpoint_results, temp)
+        temp.replace(RESULT_PARTIAL_XLSX)
+    finally:
+        if temp.exists():
+            try:
+                temp.unlink()
+            except Exception:
+                pass
+
+    return checkpoint_results
+
+
+# ============================================================
+# 24A. v8.4.1 雙座標處理
+# ============================================================
+
+def ensure_dual_coordinate_fields(result):
+    """確保結果具有「地址經度／地址緯度」欄位。
+
+    規則：
+      1. 地址案件：主座標就是門牌座標，雙座標複製。
+      2. 地號案件：主座標維持地號定位；若已有地址座標則保留。
+      3. 地號案件沒有地址時：地址座標留白。
+    """
+    if result is None:
+        return result
+
+    result.setdefault("地址經度", "")
+    result.setdefault("地址緯度", "")
+
+    query_mode = clean_text(result.get("查詢方式", ""))
+    main_lon = result.get("經度", "")
+    main_lat = result.get("緯度", "")
+
+    if query_mode == "地址":
+        if clean_text(result.get("地址經度", "")) == "":
+            result["地址經度"] = main_lon
+        if clean_text(result.get("地址緯度", "")) == "":
+            result["地址緯度"] = main_lat
+
+    return result
+
+
+async def query_secondary_address_coordinates(
+    page,
+    row_number,
+    city,
+    area,
+    address,
+):
+    """地號案件的次要門牌座標查詢。
+
+    地址 response 另存於 /content/nlsc_raw_address/，
+    避免覆蓋同一案件的地號 response。
+    失敗只影響地址座標，不影響主要地號定位結果。
+    """
+    global RAW_DIR
+
+    old_raw_dir = RAW_DIR
+    ADDRESS_RAW_DIR.mkdir(parents=True, exist_ok=True)
+    RAW_DIR = ADDRESS_RAW_DIR
+
+    try:
+        return await query_one_address_browser(
+            page=page,
+            row_number=row_number,
+            city=city,
+            area=area,
+            address=address,
+        )
+    finally:
+        RAW_DIR = old_raw_dir
+
+
+# ============================================================
+# 25. 主程式
+# ============================================================
+
+_CELL2_STATUS_FILTER_STATS = {
+    "input_total": 0,
+    "eligible_total": 0,
+    "completed_excluded": 0,
+    "completed_status_counts": {},
+}
+
+async def main():
+
+    start_time = time.time()
+
+    print("=" * 70)
+    print("Cell 2 v8.7 正式整合：NLSC 地號／地址批次座標查詢＋429快速備援＋雙座標")
+    print("=" * 70)
+
+    # --------------------------------------------------------
+    # 找輸入檔
+    # --------------------------------------------------------
+
+    input_file = find_input_file()
+
+    print(f"輸入檔：{input_file}")
+
+    # --------------------------------------------------------
+    # 讀目前輸入資料
+    # --------------------------------------------------------
+
+    raw_data = load_input_file(input_file)
+    input_total_count = len(raw_data)
+
+    if not raw_data:
+        raise RuntimeError("輸入檔沒有有效資料")
+
+    # 必須在讀取續跑快取、啟動 NLSC、建立 checkpoint 之前完成排除。
+    data, completed_excluded_rows = split_completed_inspection_rows(raw_data)
+    completed_status_counts = {}
+    for excluded in completed_excluded_rows:
+        status_value = excluded["status"]
+        completed_status_counts[status_value] = (
+            completed_status_counts.get(status_value, 0) + 1
+        )
+
+    _CELL2_STATUS_FILTER_STATS.update({
+        "input_total": input_total_count,
+        "eligible_total": len(data),
+        "completed_excluded": len(completed_excluded_rows),
+        "completed_status_counts": completed_status_counts,
+    })
+
+    print(f"輸入資料總筆數：{input_total_count}")
+    print(
+        f"已完成案件排除：{len(completed_excluded_rows)} 筆；"
+        f"進入座標查詢／後續交接：{len(data)} 筆。"
+    )
+    for excluded in completed_excluded_rows:
+        excluded_row = excluded["row"]
+        excluded_label = (
+            clean_text(excluded_row.get("名稱", ""))
+            or clean_text(excluded_row.get("地址", ""))
+            or " ".join(
+                part for part in (
+                    clean_text(excluded_row.get("地段", "")),
+                    clean_text(excluded_row.get("地號", "")),
+                ) if part
+            )
+            or f"輸入第 {excluded['input_index']} 筆"
+        )
+        print(
+            f"[SKIP_COMPLETED] 資料第 {excluded['input_index']} 筆｜"
+            f"狀態={excluded['status']}｜{excluded_label}｜"
+            "不查座標、不寫入 Cell3／Cell4 交接檔"
+        )
+
+    # 只有未完成／狀態不明的案件才會進入後續；空白仍視同「未勘查」。
+    for _row in data:
+        _row["勘查狀態"] = normalize_inspection_status(
+            _row.get("勘查狀態", "")
+        )
+
+    # 整批皆已完成時，覆寫正式交接檔為只有欄位標題的空白表，
+    # 並清除舊 partial/error/temp，避免上次資料殘留被 Cell3／Cell4 誤用。
+    if not data:
+        print(
+            "本批所有土地均為已完成狀態；不啟動 NLSC，也不產生任何案件座標。"
+        )
+        save_excel_openpyxl([], SUCCESS_OUTPUT_XLSX)
+        save_gmap_csv([], GMAP_OUTPUT_CSV)
+
+        for stale_path in (
+            ERROR_OUTPUT_XLSX,
+            RESULT_PARTIAL_XLSX,
+            RESULT_TEMP_XLSX,
+        ):
+            try:
+                if stale_path.exists():
+                    stale_path.unlink()
+            except Exception as exc:
+                print(f"[WARN] 無法清除舊檔 {stale_path}: {exc}")
+
+        empty_manifest = {
+            "schema_version": "1.9-completed-inspection-exclusion",
+            "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+            "input_file": str(input_file),
+            "input_total": input_total_count,
+            "eligible_total": 0,
+            "completed_excluded": len(completed_excluded_rows),
+            "completed_status_counts": completed_status_counts,
+            "total": 0,
+            "success": 0,
+            "failed": 0,
+            "complete": True,
+            "reused_success": 0,
+            "duplicate_land": 0,
+            "queried_this_run": 0,
+            "batch_fingerprint": hashlib.sha256(b"").hexdigest(),
+            "result_path": str(SUCCESS_OUTPUT_XLSX),
+            "partial_result_path": "",
+            "error_result_path": "",
+        }
+        RESULT_MANIFEST.write_text(
+            json.dumps(empty_manifest, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        print(f"空白正式交接檔：{SUCCESS_OUTPUT_XLSX}（僅欄位標題，0 筆土地）")
+        print(f"空白 Google Maps CSV：{GMAP_OUTPUT_CSV}")
+        print(f"結果狀態檔：{RESULT_MANIFEST}")
+        return []
+
+    RAW_DIR.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    # ========================================================
+    # 續跑：先讀取上一輪結果
+    # ========================================================
+
+    print()
+    print("檢查既有結果，準備續跑……")
+
+    previous_results = load_all_resume_results()
+    previous_success_map = {}
+
+    for old_result in previous_results:
+        try:
+            key = build_resume_key_from_result(old_result)
+        except Exception:
+            continue
+
+        if not key:
+            continue
+
+        old_status = clean_text(old_result.get("狀態", ""))
+        current = previous_success_map.get(key)
+
+        if current is None:
+            previous_success_map[key] = old_result
+        else:
+            current_status = clean_text(current.get("狀態", ""))
+            if old_status == "OK" and current_status != "OK":
+                previous_success_map[key] = old_result
+
+    reusable_success_count = sum(
+        1 for x in previous_success_map.values()
+        if clean_text(x.get("狀態", "")) == "OK"
+    )
+
+    if previous_results:
+        print(f"合併後可辨識案件：{len(previous_results)} 筆")
+        print(f"其中已成功可直接沿用：{reusable_success_count} 筆")
+    else:
+        print("沒有可用的既有結果，本次將全部查詢。")
+
+    # ========================================================
+    # 建立待查清單
+    # ========================================================
+
+    pending_rows = []
+    results_by_input_index = {}
+    reused_count = 0
+    duplicate_count = 0
+    seen_land_keys = {}
+
+    for idx, row in enumerate(data, start=1):
+
+        city = clean_text(row.get("縣市", ""))
+        area = clean_text(row.get("鄉鎮市區", ""))
+        section = clean_text(row.get("地段", ""))
+        landno = clean_text(row.get("地號", ""))
+        address = clean_text(row.get("地址", ""))
+
+        if section and landno:
+            query_mode = "地號"
+        elif address:
+            query_mode = "地址"
+        else:
+            query_mode = ""
+
+        # ----------------------------------------------------
+        # v1.2.4：重複土地防呆
+        #
+        # 同一「縣市＋鄉鎮市區＋地段＋地號」只允許第一筆
+        # 進入 NLSC 定位流程。後續重複列保留在結果中，
+        # 但標記為「重複土地」，不查 NLSC、不產生座標，
+        # 也不進入 Cell 3。
+        # 地址案件不套用本規則。
+        # ----------------------------------------------------
+        duplicate_key = build_land_duplicate_key_from_input(row)
+        duplicate_first_idx = (
+            seen_land_keys.get(duplicate_key)
+            if duplicate_key
+            else None
+        )
+
+        if duplicate_key and duplicate_first_idx is not None:
+            duplicate_result = make_checkpoint_placeholder(
+                row,
+                idx,
+                status="重複土地",
+            )
+            duplicate_result["資料檢核"] = "重複土地"
+            duplicate_result["重複來源列"] = duplicate_first_idx
+            duplicate_result["錯誤"] = (
+                f"與輸入第 {duplicate_first_idx} 筆土地重複；"
+                "本筆不進行 NLSC 定位查詢。"
+            )
+            duplicate_result["案件ID"] = f"DUP_{idx:04d}"
+
+            results_by_input_index[idx] = duplicate_result
+            duplicate_count += 1
+
+            print(
+                f"[{idx}/{len(data)}] DUPLICATE｜重複土地，跳過 NLSC｜"
+                f"來源第 {duplicate_first_idx} 筆｜"
+                f"{city} / {area} / {section} / {landno}"
+            )
+            continue
+
+        if duplicate_key:
+            seen_land_keys[duplicate_key] = idx
+
+        resume_key = build_resume_key_from_input(row)
+        old_result = previous_success_map.get(resume_key)
+
+        # ----------------------------------------------------
+        # v1.2.6：成功快取最高優先，永久沿用
+        # ----------------------------------------------------
+        # 只要既有結果狀態為 OK，代表本筆已成功取得座標。
+        # 第二次以後不再因「正式段／小段名稱是否存在」而重新
+        # 查詢 NLSC；正式名稱只在真正重新查詢時更新。
+        # 這樣可避免每次重跑都因舊欄位格式差異重新定位。
+        # ----------------------------------------------------
+
+        if (
+            old_result is not None
+            and clean_text(old_result.get("狀態", "")) == "OK"
+        ):
+
+            cached = dict(old_result)
+
+            # 輸入檔欄位永遠以這一輪 input.xlsx 為準。
+            cached["名稱"] = clean_text(
+                row.get("名稱", "")
+            )
+            cached["本筆面積(公頃)"] = parse_area_value(
+                row.get("本筆面積(公頃)", "")
+            )
+            cached["申請面積(公頃)"] = parse_area_value(
+                row.get("申請面積(公頃)", "")
+            )
+            cached["勘查狀態"] = normalize_inspection_status(
+                row.get("勘查狀態", "")
+            )
+            cached["縣市"] = city
+            cached_area = clean_text(
+                cached.get("鄉鎮市區", "")
+            )
+            if not area_name_matches(area, cached_area):
+                cached_area = area
+            cached["鄉鎮市區"] = cached_area or area
+
+            # 已有新版正式名稱時優先保留；沒有時才回到輸入值。
+            cached_formal_section = clean_text(
+                cached.get("查詢地段", "")
+            )
+            if query_mode == "地號" and has_formal_section_marker(cached_formal_section):
+                cached["地段"] = cached_formal_section
+                cached["查詢地段"] = cached_formal_section
+            else:
+                # v1.2.6：成功快取沿用時不再觸發任何 NLSC／地段
+                # 正規化查詢；保留既有資料，缺少正式名稱也不重查。
+                cached["地段"] = clean_text(cached.get("地段", "")) or section
+                cached["查詢地段"] = clean_text(
+                    cached.get("查詢地段", "")
+                ) or section
+
+            cached["地號"] = landno
+            cached["地址"] = address
+            cached["查詢方式"] = query_mode
+            cached["顯示名稱"] = build_display_name(cached)
+
+            # 案件ID重新整理；若為地號案件會沿用既有 office/sect。
+            cached["案件ID"] = build_case_id(
+                query_mode,
+                cached,
+                idx,
+            )
+
+            # v8.4.1：地址案件沿用舊結果時，也補齊雙座標欄位。
+            ensure_dual_coordinate_fields(cached)
+
+            results_by_input_index[idx] = cached
+            reused_count += 1
+
+            print(
+                f"[{idx}/{len(data)}] "
+                f"SKIP｜已成功，沿用既有座標｜"
+                f"{city} / {area} / "
+                f"{address if query_mode == '地址' else section + ' / ' + landno}"
+            )
+
+        else:
+            pending_rows.append({
+                "idx": idx,
+                "row": row,
+                "resume_key": resume_key,
+                "query_mode": query_mode,
+            })
+
+    print()
+    print("=" * 70)
+    print(
+        f"續跑統計：總 {len(data)} 筆｜"
+        f"直接沿用成功 {reused_count} 筆｜"
+        f"重複土地 {duplicate_count} 筆｜"
+        f"需要重新查詢 {len(pending_rows)} 筆"
+    )
+    print("=" * 70)
+
+    # 進入 NLSC 前先保存一次目前狀態；後續每完成 1 筆也會立即保存。
+    save_resume_checkpoint(
+        data,
+        results_by_input_index,
+        {},
+    )
+
+    # ========================================================
+    # 沒有待查資料：完全不啟動瀏覽器
+    # ========================================================
+
+    if not pending_rows:
+
+        results = [
+            results_by_input_index[i]
+            for i in range(1, len(data) + 1)
+        ]
+
+        success_results = [
+            result
+            for result in results
+            if clean_text(result.get("狀態", "")) == "OK"
+        ]
+
+        error_results = [
+            result
+            for result in results
+            if clean_text(result.get("狀態", "")) != "OK"
+        ]
+
+        # v1.2.4：重複土地屬資料檢核結果，不算真正查詢失敗。
+        hard_error_results = [
+            result
+            for result in error_results
+            if clean_text(result.get("狀態", "")) != "重複土地"
+        ]
+        duplicate_results = [
+            result
+            for result in error_results
+            if clean_text(result.get("狀態", "")) == "重複土地"
+        ]
+
+        # 清除舊暫存，避免下次誤判。
+        try:
+            if RESULT_PARTIAL_XLSX.exists():
+                RESULT_PARTIAL_XLSX.unlink()
+        except Exception:
+            pass
+
+        if duplicate_results:
+            save_excel_openpyxl(
+                duplicate_results,
+                ERROR_OUTPUT_XLSX,
+            )
+        else:
+            try:
+                if ERROR_OUTPUT_XLSX.exists():
+                    ERROR_OUTPUT_XLSX.unlink()
+            except Exception:
+                pass
+
+        save_excel_openpyxl(
+            success_results,
+            RESULT_TEMP_XLSX,
+        )
+        RESULT_TEMP_XLSX.replace(
+            SUCCESS_OUTPUT_XLSX
+        )
+
+        save_gmap_csv(
+            success_results,
+            GMAP_OUTPUT_CSV,
+        )
+
+        batch_fingerprint = hashlib.sha256(
+            "\n".join(
+                str(r.get("案件ID", ""))
+                for r in results
+            ).encode("utf-8")
+        ).hexdigest()
+
+        manifest = {
+            "schema_version": "1.9-completed-inspection-exclusion",
+            "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+            "input_file": str(input_file),
+            "input_total": input_total_count,
+            "eligible_total": len(data),
+            "completed_excluded": len(completed_excluded_rows),
+            "completed_status_counts": completed_status_counts,
+            "total": len(results),
+            "success": len(success_results),
+            "failed": len(hard_error_results),
+            "complete": True,
+            "reused_success": reused_count,
+            "duplicate_land": duplicate_count,
+            "queried_this_run": 0,
+            "batch_fingerprint": batch_fingerprint,
+            "result_path": str(SUCCESS_OUTPUT_XLSX),
+            "partial_result_path": "",
+            "error_result_path": str(ERROR_OUTPUT_XLSX) if duplicate_results else "",
+        }
+        RESULT_MANIFEST.write_text(
+            json.dumps(
+                manifest,
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+
+        print()
+        if hard_error_results:
+            print("仍有真正失敗案件，本次未視為完整完成。")
+        elif duplicate_results:
+            print(
+                f"唯一正常案件已完成；另有 {len(duplicate_results)} 筆重複土地列為資料檢核，不阻止正式結果輸出。"
+            )
+        else:
+            print("全部案件上次已成功，本次沒有重新抓取 NLSC。")
+        print(f"正式結果 Excel：{SUCCESS_OUTPUT_XLSX}")
+        print(f"Google Maps CSV：{GMAP_OUTPUT_CSV}")
+        if duplicate_results:
+            print(f"資料檢核結果 Excel：{ERROR_OUTPUT_XLSX}")
+        print(f"結果狀態檔：{RESULT_MANIFEST}")
+        print(
+            f"耗時：{time.time() - start_time:.1f} 秒"
+        )
+        print("全部處理結束。")
+        return results
+
+    # ========================================================
+    # 有失敗／待查案件：只對 pending_rows 啟動 NLSC
+    # ========================================================
+
+    section_cache = {}
+    query_result_map = {}
+
+    async with async_playwright() as p:
+
+        print("啟動 Chromium……")
+
+        browser = await p.chromium.launch(
+            headless=True,
+            args=[
+                "--disable-blink-features=AutomationControlled",
+                "--no-sandbox",
+                "--disable-dev-shm-usage",
+            ],
+        )
+
+        context = await browser.new_context(
+            viewport={
+                "width": 1440,
+                "height": 1000,
+            },
+            locale="zh-TW",
+            ignore_https_errors=True,
+        )
+
+        page = await context.new_page()
+
+        print(f"開啟 NLSC：{NLSC_URL}")
+
+        await initialize_nlsc_page(page)
+
+        # ----------------------------------------------------
+        # 元素檢查
+        # ----------------------------------------------------
+
+        check_result = await page.evaluate(
+            """
+            () => {
+                const ids = [
+                    'land_city',
+                    'land_area_office',
+                    'land_section',
+                    'land_sectioncode',
+                    'landcode',
+                    'qt-land-submit',
+                    'longitude',
+                    'latitude',
+                    'twd97_x',
+                    'twd97_y'
+                ];
+                const result = {};
+                for (const id of ids) {
+                    const el = document.getElementById(id);
+                    result[id] = {
+                        exists: !!el,
+                        tag: el ? el.tagName : null,
+                        display: el ? getComputedStyle(el).display : null,
+                        visibility: el ? getComputedStyle(el).visibility : null
+                    };
+                }
+                return result;
+            }
+            """
+        )
+
+        print("NLSC 元素檢查：")
+        for key, info in check_result.items():
+            print(
+                f"  #{key}: "
+                f"exists={info['exists']}, "
+                f"tag={info['tag']}, "
+                f"display={info['display']}, "
+                f"visibility={info['visibility']}"
+            )
+        print("-" * 70)
+
+        # ----------------------------------------------------
+        # 只查 pending_rows
+        # ----------------------------------------------------
+
+        for pending_pos, pending in enumerate(
+            pending_rows,
+            start=1,
+        ):
+
+            idx = pending["idx"]
+            row = pending["row"]
+
+            city = clean_text(row.get("縣市", ""))
+            area = clean_text(row.get("鄉鎮市區", ""))
+            section = clean_text(row.get("地段", ""))
+            landno = clean_text(row.get("地號", ""))
+            address = clean_text(row.get("地址", ""))
+            query_mode = pending["query_mode"]
+
+            query_section_for_log = normalize_section_for_query(
+                city,
+                area,
+                section,
+            )
+
+            if (
+                query_mode == "地號"
+                and query_section_for_log != clean_text(section)
+            ):
+                section_display = (
+                    f"{section} -> {query_section_for_log}"
+                )
+            else:
+                section_display = section
+
+            print(
+                f"[{idx}/{len(data)}] "
+                f"重新查詢 {pending_pos}/{len(pending_rows)} | "
+                f"{query_mode or '未判定'} | "
+                f"{city} / {area} / "
+                f"{address if query_mode == '地址' else section_display + ' / ' + landno}"
+            )
+
+            try:
+                if query_mode == "地址":
+                    result = await query_one_address_browser(
+                        page=page,
+                        row_number=idx,
+                        city=city,
+                        area=area,
+                        address=address,
+                    )
+
+                elif query_mode == "地號":
+                    if not section or not landno:
+                        raise ValueError(
+                            "地號查詢需要：地段、地號"
+                        )
+
+                    result = await query_one_browser(
+                        page=page,
+                        row_number=idx,
+                        city=city,
+                        area=area,
+                        section=section,
+                        landno=landno,
+                        section_cache=section_cache,
+                    )
+
+                    # v8.4.1：地號＋地址案件，主座標一定保留地號定位；
+                    # 另外查一次地址座標，供 Cell 4 判斷實際進場道路。
+                    if (
+                        ENABLE_SECONDARY_ADDRESS_GEOCODE
+                        and address
+                        and clean_text(result.get("狀態", "")) == "OK"
+                    ):
+                        print(
+                            f"  另查門牌座標：{build_full_address(city, area, address)}"
+                        )
+                        try:
+                            address_result = await query_secondary_address_coordinates(
+                                page=page,
+                                row_number=idx,
+                                city=city,
+                                area=area,
+                                address=address,
+                            )
+
+                            if clean_text(address_result.get("狀態", "")) == "OK":
+                                result["地址經度"] = address_result.get("經度", "")
+                                result["地址緯度"] = address_result.get("緯度", "")
+                                print(
+                                    "  地址座標 OK "
+                                    f"lon={float(result['地址經度']):.6f} "
+                                    f"lat={float(result['地址緯度']):.6f}"
+                                )
+                            else:
+                                print(
+                                    "  地址座標查詢未成功；主要地號座標保留。"
+                                    f" 狀態={address_result.get('狀態', '')} "
+                                    f"錯誤={address_result.get('錯誤', '')}"
+                                )
+                        except Exception as address_exc:
+                            print(
+                                "  地址座標查詢例外；主要地號座標保留。 "
+                                f"{type(address_exc).__name__}: {address_exc}"
+                            )
+
+                else:
+                    raise ValueError(
+                        "無法判定查詢方式："
+                        "請提供地號（地段＋地號）或地址"
+                    )
+
+            except asyncio.CancelledError:
+                # 使用者手動取消時，前面已完成的案件已經逐筆存入 partial。
+                # 再額外保存一次，避免剛完成的狀態遺失。
+                print()
+                print("⚠️ 偵測到手動取消，正在保存目前續跑進度……")
+                save_resume_checkpoint(
+                    data,
+                    results_by_input_index,
+                    query_result_map,
+                )
+                print(f"已保存輕量續跑檔：{V7_CHECKPOINT_JSONL}")
+                raise
+
+            except Exception as e:
+
+                error_text = (
+                    f"{type(e).__name__}: {e}"
+                )
+
+                print(
+                    f"  [ERROR] {error_text}"
+                )
+
+                result = {
+                    "縣市": city,
+                    "鄉鎮市區": area,
+                    "地段": section,
+                    "查詢地段": query_section_for_log,
+                    "地號": landno,
+                    "地址": address,
+                    "查詢方式": query_mode,
+                    "定位來源": "",
+                    "完整查詢地址": (
+                        build_full_address(city, area, address)
+                        if query_mode == "地址"
+                        else ""
+                    ),
+                    "命中地址": "",
+                    "定位品質": "",
+                    "查詢地號": normalize_landno(landno),
+                    "office": "",
+                    "sect": "",
+                    "狀態": "ERROR",
+                    "HTTP狀態": "",
+                    "經度": "",
+                    "緯度": "",
+                    "TWD97_X": "",
+                    "TWD97_Y": "",
+                    "左下經度": "",
+                    "左下緯度": "",
+                    "右上經度": "",
+                    "右上緯度": "",
+                    "response_url": "",
+                    "raw_file": "",
+                    "錯誤": error_text,
+                    "嘗試次數": "",
+                }
+
+                print(
+                    traceback.format_exc()
+                )
+
+            # ------------------------------------------------
+            # 輸入檔欄位永遠以目前 input.xlsx 為準
+            # ------------------------------------------------
+
+            result = apply_input_fields_to_result(
+                result,
+                row,
+                idx,
+            )
+
+            # v8.4.1：統一補齊雙座標欄位；地址案件主／次座標相同。
+            ensure_dual_coordinate_fields(result)
+
+            query_result_map[idx] = result
+
+            if clean_text(result.get("狀態", "")) == "OK":
+                print(
+                    f"  OK "
+                    f"HTTP={result.get('HTTP狀態', '')} "
+                    f"lon={float(result['經度']):.6f} "
+                    f"lat={float(result['緯度']):.6f} "
+                    f"TWD97=({float(result['TWD97_X']):.3f}, "
+                    f"{float(result['TWD97_Y']):.3f})"
+                )
+            else:
+                print(
+                    f"  {result.get('狀態', '')} "
+                    f"HTTP={result.get('HTTP狀態', '')} "
+                    f"錯誤={result.get('錯誤', '')}"
+                )
+
+            # ★ 核心：每完成 1 筆立即保存。
+            save_resume_checkpoint(
+                data,
+                results_by_input_index,
+                query_result_map,
+            )
+
+            # 每筆待查案件之間稍停。
+            if pending_pos < len(pending_rows):
+                await page.wait_for_timeout(
+                    int(DELAY_BETWEEN_ROWS * 1000)
+                )
+
+        await context.close()
+        await browser.close()
+
+    # ========================================================
+    # 合併：成功沿用資料 + 本次重查資料
+    # ========================================================
+
+    results = []
+
+    for idx in range(1, len(data) + 1):
+        if idx in query_result_map:
+            results.append(query_result_map[idx])
+        elif idx in results_by_input_index:
+            results.append(results_by_input_index[idx])
+        else:
+            # 理論上不應發生；保留完整輸出結構以免中斷後無法產檔。
+            row = data[idx - 1]
+            city = clean_text(row.get("縣市", ""))
+            area = clean_text(row.get("鄉鎮市區", ""))
+            section = clean_text(row.get("地段", ""))
+            landno = clean_text(row.get("地號", ""))
+            address = clean_text(row.get("地址", ""))
+
+            if section and landno:
+                query_mode = "地號"
+            elif address:
+                query_mode = "地址"
+            else:
+                query_mode = ""
+
+            results.append({
+                "名稱": clean_text(row.get("名稱", "")),
+                "查詢方式": query_mode,
+                "縣市": city,
+                "鄉鎮市區": area,
+                "地段": section,
+                "查詢地段": normalize_section_for_query(
+                    city,
+                    area,
+                    section,
+                ),
+                "地號": landno,
+                "本筆面積(公頃)": parse_area_value(
+                    row.get("本筆面積(公頃)", "")
+                ),
+                "申請面積(公頃)": parse_area_value(
+                    row.get("申請面積(公頃)", "")
+                ),
+                "勘查狀態": normalize_inspection_status(
+                    row.get("勘查狀態", "")
+                ),
+                "地址": address,
+                "定位來源": "",
+                "完整查詢地址": (
+                    build_full_address(city, area, address)
+                    if query_mode == "地址"
+                    else ""
+                ),
+                "命中地址": "",
+                "定位品質": "",
+                "查詢地號": normalize_landno(landno),
+                "案件ID": build_case_id(
+                    query_mode,
+                    {
+                        "縣市": city,
+                        "鄉鎮市區": area,
+                        "地段": section,
+                        "地號": landno,
+                        "地址": address,
+                    },
+                    idx,
+                ),
+                "顯示名稱": build_display_name({
+                    "查詢方式": query_mode,
+                    "縣市": city,
+                    "鄉鎮市區": area,
+                    "地段": section,
+                    "地號": landno,
+                    "查詢地號": normalize_landno(landno),
+                    "地址": address,
+                    "名稱": clean_text(row.get("名稱", "")),
+                }),
+                "office": "",
+                "sect": "",
+                "狀態": "ERROR",
+                "HTTP狀態": "",
+                "經度": "",
+                "緯度": "",
+                "TWD97_X": "",
+                "TWD97_Y": "",
+                "左下經度": "",
+                "左下緯度": "",
+                "右上經度": "",
+                "右上緯度": "",
+                "response_url": "",
+                "raw_file": "",
+                "錯誤": "缺少處理結果",
+                "嘗試次數": "",
+            })
+
+    success_results = [
+        result
+        for result in results
+        if clean_text(result.get("狀態", "")) == "OK"
+    ]
+
+    error_results = [
+        result
+        for result in results
+        if clean_text(result.get("狀態", "")) != "OK"
+    ]
+
+    # v1.2.4：重複土地不是 NLSC 查詢失敗。
+    # 重複列仍保留於 result_error.xlsx 供人工檢核，但不應阻止
+    # 唯一且正常的案件建立正式 result.xlsx。
+    hard_error_results = [
+        result
+        for result in error_results
+        if clean_text(result.get("狀態", "")) != "重複土地"
+    ]
+
+    duplicate_results = [
+        result
+        for result in error_results
+        if clean_text(result.get("狀態", "")) == "重複土地"
+    ]
+
+    # ========================================================
+    # 正式結果／部分結果
+    # ========================================================
+
+    # 只有真正的查詢／處理錯誤才算未完成。
+    # 「重複土地」屬於輸入資料檢核結果，不阻止正式成功檔輸出。
+    complete_run = (
+        len(results) > 0
+        and len(hard_error_results) == 0
+    )
+
+    batch_fingerprint = hashlib.sha256(
+        "\n".join(
+            str(r.get("案件ID", ""))
+            for r in results
+        ).encode("utf-8")
+    ).hexdigest()
+
+    if complete_run:
+
+        save_excel_openpyxl(
+            success_results,
+            RESULT_TEMP_XLSX,
+        )
+
+        RESULT_TEMP_XLSX.replace(
+            SUCCESS_OUTPUT_XLSX
+        )
+
+        print(
+            f"正式結果 Excel：{SUCCESS_OUTPUT_XLSX}"
+        )
+
+        save_gmap_csv(
+            success_results,
+            GMAP_OUTPUT_CSV,
+        )
+
+        print(
+            f"Google Maps CSV：{GMAP_OUTPUT_CSV}"
+        )
+
+        # 正式結果建立後，刪除舊 partial。
+        # 若本批存在「重複土地」，仍保留 result_error.xlsx 供人工檢核；
+        # 僅在本批完全沒有檢核異常時才移除舊 error 檔。
+        try:
+            if RESULT_PARTIAL_XLSX.exists():
+                RESULT_PARTIAL_XLSX.unlink()
+        except Exception:
+            pass
+
+        if duplicate_results:
+            save_excel_openpyxl(
+                duplicate_results,
+                ERROR_OUTPUT_XLSX,
+            )
+            print(
+                f"資料檢核結果 Excel：{ERROR_OUTPUT_XLSX}"
+            )
+        else:
+            try:
+                if ERROR_OUTPUT_XLSX.exists():
+                    ERROR_OUTPUT_XLSX.unlink()
+            except Exception:
+                pass
+
+        manifest = {
+            "schema_version": "1.9-completed-inspection-exclusion",
+            "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+            "input_file": str(input_file),
+            "input_total": input_total_count,
+            "eligible_total": len(data),
+            "completed_excluded": len(completed_excluded_rows),
+            "completed_status_counts": completed_status_counts,
+            "total": len(results),
+            "success": len(success_results),
+            "failed": len(hard_error_results),
+            "complete": True,
+            "reused_success": reused_count,
+            "duplicate_land": duplicate_count,
+            "queried_this_run": len(pending_rows),
+            "batch_fingerprint": batch_fingerprint,
+            "result_path": str(SUCCESS_OUTPUT_XLSX),
+            "partial_result_path": "",
+            "error_result_path": str(ERROR_OUTPUT_XLSX) if duplicate_results else "",
+        }
+
+    else:
+
+        save_excel_openpyxl(
+            results,
+            RESULT_PARTIAL_XLSX,
+        )
+
+        print(
+            f"⚠️ 仍有真正失敗案件，正式 result.xlsx 不更新。"
+        )
+        print(
+            f"部分結果：{RESULT_PARTIAL_XLSX}"
+        )
+
+        if error_results:
+            save_excel_openpyxl(
+                error_results,
+                ERROR_OUTPUT_XLSX,
+            )
+            print(
+                f"失敗結果 Excel：{ERROR_OUTPUT_XLSX}"
+            )
+
+        manifest = {
+            "schema_version": "1.9-completed-inspection-exclusion",
+            "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+            "input_file": str(input_file),
+            "input_total": input_total_count,
+            "eligible_total": len(data),
+            "completed_excluded": len(completed_excluded_rows),
+            "completed_status_counts": completed_status_counts,
+            "total": len(results),
+            "success": len(success_results),
+            "failed": len(hard_error_results),
+            "complete": False,
+            "reused_success": reused_count,
+            "queried_this_run": len(pending_rows),
+            "batch_fingerprint": batch_fingerprint,
+            "result_path": "",
+            "partial_result_path": str(RESULT_PARTIAL_XLSX),
+            "error_result_path": str(ERROR_OUTPUT_XLSX) if error_results else "",
+        }
+
+        print(
+            "下次重新執行 Cell2 時，所有 OK 案件直接沿用既有結果；不因正式段／小段欄位差異重新查詢 NLSC。"
+        )
+
+    RESULT_MANIFEST.write_text(
+        json.dumps(
+            manifest,
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    # 完整成功後才輸出 Google Maps；部分成功沿用原本設計。
+    if not complete_run:
+        print(
+            "本次仍有失敗資料，因此暫不更新 gmap.csv。"
+        )
+
+    # ========================================================
+    # 正式地段／顯示名稱驗證
+    # ========================================================
+    land_ok = [
+        r for r in success_results
+        if clean_text(r.get("查詢方式", "")) == "地號"
+    ]
+
+    formal_section_missing = [
+        r for r in land_ok
+        if not has_formal_section_marker(r.get("查詢地段", ""))
+    ]
+
+    display_name_missing = [
+        r for r in land_ok
+        if not clean_text(r.get("顯示名稱", ""))
+    ]
+
+    print()
+    print("正式地段／顯示名稱驗證：")
+    print(f"  地號成功案件：{len(land_ok)} 筆")
+    print(f"  缺少正式段／小段：{len(formal_section_missing)} 筆")
+    print(f"  缺少顯示名稱：{len(display_name_missing)} 筆")
+
+    for sample in land_ok[:5]:
+        print(
+            "  範例："
+            f"{sample.get('縣市','')}"
+            f"{sample.get('鄉鎮市區','')}"
+            f"{sample.get('地段','')}"
+            f"{normalize_landno(sample.get('查詢地號', sample.get('地號','')))}"
+            f" | 顯示名稱={sample.get('顯示名稱','')}"
+        )
+
+    # ========================================================
+    # 統計
+    # ========================================================
+
+    status_counts = {}
+
+    for result in results:
+        status = clean_text(
+            result.get("狀態", "")
+        )
+        status_counts[status] = (
+            status_counts.get(status, 0) + 1
+        )
+
+    elapsed = time.time() - start_time
+
+    print()
+    print("=" * 70)
+    print("查詢完成")
+    print("=" * 70)
+    print(f"總筆數：{len(results)}")
+    print(f"本次直接沿用成功：{reused_count}")
+    print(f"本次重新查詢：{len(pending_rows)}")
+    print(f"目前成功：{len(success_results)}")
+    print(f"目前真正失敗：{len(hard_error_results)}")
+    print(f"重複土地：{len(duplicate_results)}")
+    print(
+        "狀態統計："
+        + ", ".join(
+            f"{k}:{v}"
+            for k, v in status_counts.items()
+        )
+    )
+
+    if complete_run:
+        print(
+            f"正式成功檔案：{SUCCESS_OUTPUT_XLSX}"
+        )
+        print(
+            f"Google Maps：{GMAP_OUTPUT_CSV}"
+        )
+
+    if error_results:
+        if hard_error_results:
+            print(
+                f"失敗檔案：{ERROR_OUTPUT_XLSX}"
+            )
+        elif duplicate_results:
+            print(
+                f"資料檢核結果：{ERROR_OUTPUT_XLSX}"
+            )
+
+    print(f"原始回應：{RAW_DIR}")
+    print(f"結果狀態檔：{RESULT_MANIFEST}")
+    print(f"耗時：{elapsed:.1f} 秒")
+    print("=" * 70)
+
+    if hard_error_results:
+        print()
+        print("真正失敗項目：")
+
+        for result in hard_error_results:
+            print(
+                f"  {result.get('縣市')} / "
+                f"{result.get('鄉鎮市區')} / "
+                f"{result.get('地段')} / "
+                f"{result.get('地號')} "
+                f"-> {result.get('狀態')} "
+                f"HTTP={result.get('HTTP狀態')} "
+                f"{result.get('錯誤')}"
+            )
+
+    if duplicate_results:
+        print()
+        print(f"重複土地檢核項目：{len(duplicate_results)} 筆（不列為查詢失敗）")
+
+    print()
+    print("全部處理結束。")
+
+    return results
+
+
+# ============================================================
+# 26. 執行
+# ============================================================
+
+
+
+# ============================================================
+# Cell 2 v8.5 雙座標版：沿用既有 DIRECT + 鄉鎮目錄 + JSONL 續跑架構
+# ------------------------------------------------------------
+# 目的：
+#   1. 完全忽略既有 result.xlsx / result_partial.xlsx / error，
+#      強制重新查詢全部輸入案件。
+#   2. 所有測試輸出集中到 /content/CELL2_SPEED_TEST/v8.5_v4_section_cache/
+#      絕不覆蓋正式 Cell 2 v8.4 輸出。
+#   3. 保留 v3 已驗證的 qryTileMapIndex DIRECT 查詢。
+#   4. 將 v3 的「單一目前地段 cache」提升為「本次執行的
+#      鄉鎮／區域 → 完整地段 option 目錄 cache」。
+#   5. 同一鄉鎮內切換不同地段時，不再重新執行完整
+#      set_nlsc_section()；只直接套用已快取的地段 option，
+#      再等待 sectioncode 更新。
+#   6. 新鄉鎮第一次出現時，仍使用 v8.4 原始 set_nlsc_section()
+#      建立該鄉鎮的完整地段目錄，降低風險。
+#   7. 若快取切換失敗，立即退回原始 set_nlsc_section()；
+#      頁面重新初始化後也會清除「目前 DOM 狀態」，但保留
+#      本次執行已建立的目錄資料。
+#
+# 不改：
+#   - DIRECT endpoint 與 parse_nlsc_response()
+#   - retry 次數與 backoff
+#   - 地址查詢流程
+#   - checkpoint / Excel / raw response 行為
+#   - 輸入欄位與正式輸出結構
+# ============================================================
+
+_SPEED_ROOT = BASE_DIR / "CELL2_SPEED_TEST"
+_SPEED_RUN_DIR = _SPEED_ROOT / "v8.5_v9_rate_safe"
+_SPEED_RUN_DIR.mkdir(parents=True, exist_ok=True)
+
+SUCCESS_OUTPUT_XLSX = _SPEED_RUN_DIR / "result.xlsx"
+ERROR_OUTPUT_XLSX = _SPEED_RUN_DIR / "result_error.xlsx"
+GMAP_OUTPUT_CSV = _SPEED_RUN_DIR / "gmap.csv"
+RAW_DIR = _SPEED_RUN_DIR / "nlsc_raw"
+RESULT_PARTIAL_XLSX = _SPEED_RUN_DIR / "result_partial.xlsx"
+RESULT_MANIFEST = _SPEED_RUN_DIR / "result_manifest.json"
+RESULT_TEMP_XLSX = _SPEED_RUN_DIR / "result.__tmp__.xlsx"
+# v7：每筆只寫 append-only JSONL checkpoint，不再每筆重建 XLSX。
+V7_CHECKPOINT_JSONL = _SPEED_RUN_DIR / "checkpoint_state.jsonl"
+_V7_CHECKPOINT_SEQ = 0
+_V7_CHECKPOINT_WRITTEN_REUSED = set()
+
+
+def _speed_test_no_resume():
+    return []
+
+load_all_resume_results = _speed_test_no_resume
+
+_SPEED_TIMING = {
+    "script_start": time.perf_counter(),
+    "initialize_calls": 0,
+    "initialize_seconds": 0.0,
+    "area_resolve_calls": 0,
+    "area_resolve_seconds": 0.0,
+    "section_set_calls": 0,
+    "section_set_seconds": 0.0,
+    "section_full_set_calls": 0,
+    "section_full_set_seconds": 0.0,
+    "section_cached_switch_calls": 0,
+    "section_cached_switch_seconds": 0.0,
+    "area_catalog_build_calls": 0,
+    "area_catalog_build_seconds": 0.0,
+    "area_catalog_count": 0,
+    "area_restore_calls": 0,
+    "area_restore_seconds": 0.0,
+    "catalog_direct_resolve_calls": 0,
+    "catalog_direct_resolve_seconds": 0.0,
+    "land_query_calls": 0,
+    "land_query_seconds": 0.0,
+    "address_query_calls": 0,
+    "address_query_seconds": 0.0,
+    "checkpoint_calls": 0,
+    "checkpoint_seconds": 0.0,
+    "v7_checkpoint_records_appended": 0,
+    "excel_write_calls": 0,
+    "excel_write_seconds": 0.0,
+    "raw_write_calls": 0,
+    "raw_write_seconds": 0.0,
+    "query_rows": [],
+}
+
+
+def _speed_now():
+    return time.perf_counter()
+
+
+_original_initialize_nlsc_page = initialize_nlsc_page
+_original_resolve_nlsc_area_name = resolve_nlsc_area_name
+_original_set_nlsc_section = set_nlsc_section
+_original_query_one_browser = query_one_browser
+_original_query_one_address_browser = query_one_address_browser
+_original_save_resume_checkpoint = save_resume_checkpoint
+_original_save_excel_openpyxl = save_excel_openpyxl
+_original_save_raw_response = save_raw_response
+
+
+async def _speed_initialize_nlsc_page(page):
+    t0 = _speed_now()
+    try:
+        result = await _original_initialize_nlsc_page(page)
+        return result
+    finally:
+        _SPEED_TIMING["initialize_calls"] += 1
+        _SPEED_TIMING["initialize_seconds"] += _speed_now() - t0
+        # DOM 已被重新建立；保留 section catalog，但清除目前頁面的
+        # active area 狀態，下一筆會重新把該鄉鎮套回頁面。
+        _V4_SECTION_CATALOG_STATE["active_area_key"] = None
+        _V4_SECTION_CATALOG_STATE["active_section_key"] = None
+        _V4_SECTION_CATALOG_STATE["active_section_code"] = ""
+
+
+async def _speed_resolve_nlsc_area_name(page, city, area):
+    t0 = _speed_now()
+    try:
+        return await _original_resolve_nlsc_area_name(page, city, area)
+    finally:
+        _SPEED_TIMING["area_resolve_calls"] += 1
+        _SPEED_TIMING["area_resolve_seconds"] += _speed_now() - t0
+
+
+async def _speed_query_one_address_browser(*args, **kwargs):
+    t0 = _speed_now()
+    row_number = kwargs.get("row_number")
+    if row_number is None and len(args) >= 2:
+        row_number = args[1]
+    try:
+        return await _original_query_one_address_browser(*args, **kwargs)
+    finally:
+        elapsed = _speed_now() - t0
+        _SPEED_TIMING["address_query_calls"] += 1
+        _SPEED_TIMING["address_query_seconds"] += elapsed
+        _SPEED_TIMING["query_rows"].append({
+            "row_number": int(row_number) if row_number is not None else "",
+            "query_mode": "地址",
+            "seconds": elapsed,
+        })
+
+
+def _speed_save_resume_checkpoint(data, results_by_input_index, query_result_map):
+    """
+    v7 輕量續跑 checkpoint：
+    - 不再每筆建立 / 寫入 result_partial.xlsx。
+    - 已沿用的成功資料只寫一次。
+    - 本次查詢結果以 append-only JSONL 逐筆追加。
+    - 最終 result.xlsx 仍由原 main 正常產生。
+    """
+    global _V7_CHECKPOINT_SEQ
+
+    t0 = _speed_now()
+    appended = 0
+
+    V7_CHECKPOINT_JSONL.parent.mkdir(parents=True, exist_ok=True)
+    file_exists = V7_CHECKPOINT_JSONL.exists()
+
+    with V7_CHECKPOINT_JSONL.open("a", encoding="utf-8") as f:
+        if not file_exists:
+            _V7_CHECKPOINT_SEQ += 1
+            f.write(json.dumps({
+                "type": "meta",
+                "version": "Cell2 v8.6 SPEED TEST v7 light checkpoint",
+                "input_rows": len(data),
+            }, ensure_ascii=False) + "\n")
+
+        # 已成功沿用的資料：只需要記錄第一次。
+        for idx in sorted(results_by_input_index):
+            if idx in _V7_CHECKPOINT_WRITTEN_REUSED:
+                continue
+            result = dict(results_by_input_index[idx])
+            _V7_CHECKPOINT_SEQ += 1
+            f.write(json.dumps({
+                "type": "result",
+                "seq": _V7_CHECKPOINT_SEQ,
+                "index": int(idx),
+                "result": result,
+                "source": "reused",
+            }, ensure_ascii=False, default=str) + "\n")
+            _V7_CHECKPOINT_WRITTEN_REUSED.add(idx)
+            appended += 1
+
+        # 本次查詢：每次 checkpoint 都追加目前的最新結果。
+        # 通常每次只有 1 筆，取消／例外時也能留下最新狀態。
+        for idx in sorted(query_result_map):
+            result = dict(query_result_map[idx])
+            _V7_CHECKPOINT_SEQ += 1
+            f.write(json.dumps({
+                "type": "result",
+                "seq": _V7_CHECKPOINT_SEQ,
+                "index": int(idx),
+                "result": result,
+                "source": "query",
+            }, ensure_ascii=False, default=str) + "\n")
+            appended += 1
+
+        f.flush()
+        try:
+            os.fsync(f.fileno())
+        except Exception:
+            pass
+
+    _SPEED_TIMING["checkpoint_calls"] += 1
+    _SPEED_TIMING["checkpoint_seconds"] += _speed_now() - t0
+    _SPEED_TIMING["v7_checkpoint_records_appended"] = (
+        _SPEED_TIMING.get("v7_checkpoint_records_appended", 0) + appended
+    )
+    return []
+
+
+def _speed_save_excel_openpyxl(*args, **kwargs):
+    t0 = _speed_now()
+    try:
+        return _original_save_excel_openpyxl(*args, **kwargs)
+    finally:
+        _SPEED_TIMING["excel_write_calls"] += 1
+        _SPEED_TIMING["excel_write_seconds"] += _speed_now() - t0
+
+
+def _speed_save_raw_response(*args, **kwargs):
+    t0 = _speed_now()
+    try:
+        return _original_save_raw_response(*args, **kwargs)
+    finally:
+        _SPEED_TIMING["raw_write_calls"] += 1
+        _SPEED_TIMING["raw_write_seconds"] += _speed_now() - t0
+
+
+# ============================================================
+# v4 鄉鎮／地段完整目錄 cache
+# ============================================================
+_V4_SECTION_CATALOG_STATE = {
+    "catalog": {},
+    "active_area_key": None,
+    "active_section_key": None,
+    "active_section_code": "",
+}
+
+
+def _v4_area_key(city, area):
+    return (
+        clean_text(city),
+        clean_text(area),
+    )
+
+
+def _v4_section_key(city, area, section):
+    return (
+        clean_text(city),
+        clean_text(area),
+        clean_text(normalize_section_for_query(city, area, section)),
+    )
+
+
+def _v4_section_catalog_option(catalog, query_section):
+    options = catalog.get("sections", [])
+    return find_option_value(options, query_section)
+
+
+async def _v4_build_area_catalog(page, city, area, query_section):
+    """第一次遇到某鄉鎮：沿用 v8.4 原始設定一次，然後快取完整地段 option。"""
+    area_key = _v4_area_key(city, area)
+    t0 = _speed_now()
+    try:
+        section_info = await _original_set_nlsc_section(
+            page,
+            city,
+            area,
+            query_section,
+        )
+
+        options = await get_options(page, "#land_section option")
+        sections = [
+            {
+                "text": clean_text(option.get("text", "")),
+                "value": clean_text(option.get("value", "")),
+            }
+            for option in options
+            if clean_text(option.get("text", ""))
+            and clean_text(option.get("value", ""))
+        ]
+
+        if not sections:
+            raise RuntimeError(
+                f"建立地段目錄失敗：{city} / {area} 沒有可用地段 option"
+            )
+
+        catalog = {
+            "city": clean_text(city),
+            "requested_area": clean_text(area),
+            "area_text": clean_text(section_info.get("area_text", area)),
+            "area_value": clean_text(section_info.get("area_value", "")),
+            "sections": sections,
+            "section_info_first": dict(section_info),
+        }
+        _V4_SECTION_CATALOG_STATE["catalog"][area_key] = catalog
+        _SPEED_TIMING["area_catalog_count"] = len(
+            _V4_SECTION_CATALOG_STATE["catalog"]
+        )
+        return catalog, section_info
+    finally:
+        elapsed = _speed_now() - t0
+        _SPEED_TIMING["area_catalog_build_calls"] += 1
+        _SPEED_TIMING["area_catalog_build_seconds"] += elapsed
+
+
+async def _v4_restore_area_from_catalog(page, catalog):
+    """目前 DOM 不在目標鄉鎮時，用已快取 area_value 恢復，不重跑名稱匹配。"""
+    t0 = _speed_now()
+    try:
+        city = clean_text(catalog.get("city", ""))
+        area_value = clean_text(catalog.get("area_value", ""))
+        if not city or not area_value:
+            raise RuntimeError("快取缺少 city / area_value，無法恢復鄉鎮")
+
+        current_city_value = ""
+        try:
+            current_city_value = clean_text(
+                await page.input_value("#land_city")
+            )
+        except Exception:
+            pass
+
+        # land_city 通常 value 與 label 相同；若已在同一縣市就不重選。
+        if current_city_value != city:
+            await page.select_option(
+                "#land_city",
+                label=city,
+                force=True,
+            )
+
+        # 等待 area option 出現。
+        area_found = False
+        for _ in range(SECTION_MAX_POLLS):
+            try:
+                options = await get_options(page, "#land_area_office option")
+                if any(
+                    clean_text(x.get("value", "")) == area_value
+                    for x in options
+                ):
+                    area_found = True
+                    break
+            except Exception:
+                pass
+            await page.wait_for_timeout(
+                int(SECTION_POLL_INTERVAL * 1000)
+            )
+
+        if not area_found:
+            raise RuntimeError(
+                f"快取鄉鎮 value 未出現在 NLSC：{city} / {area_value}"
+            )
+
+        await page.evaluate(
+            """
+            ({value}) => {
+                const el = document.querySelector('#land_area_office');
+                if (!el) throw new Error('#land_area_office not found');
+                el.value = value;
+                el.dispatchEvent(new Event('change', {bubbles: true}));
+            }
+            """,
+            {"value": area_value},
+        )
+
+        # 等 section 目錄重新載入，並用 cached option 驗證 DOM 已恢復。
+        cached_values = {
+            clean_text(x.get("value", ""))
+            for x in catalog.get("sections", [])
+            if clean_text(x.get("value", ""))
+        }
+        restored = False
+        for _ in range(SECTION_MAX_POLLS):
+            try:
+                options = await get_options(page, "#land_section option")
+                current_values = {
+                    clean_text(x.get("value", ""))
+                    for x in options
+                    if clean_text(x.get("value", ""))
+                }
+                # 用交集而非完整相等，避免網站增加/刪除 placeholder 影響判定。
+                if cached_values and current_values.intersection(cached_values):
+                    restored = True
+                    break
+            except Exception:
+                pass
+            await page.wait_for_timeout(
+                int(SECTION_POLL_INTERVAL * 1000)
+            )
+
+        if not restored:
+            raise RuntimeError(
+                f"快取地段目錄恢復失敗：{city} / {catalog.get('area_text', '')}"
+            )
+    finally:
+        elapsed = _speed_now() - t0
+        _SPEED_TIMING["area_restore_calls"] += 1
+        _SPEED_TIMING["area_restore_seconds"] += elapsed
+
+
+async def _v4_apply_cached_section(page, catalog, query_section, section_key):
+    """同一鄉鎮已建目錄時，直接套用 section option，並讀取新的 sectioncode。"""
+    t0 = _speed_now()
+    try:
+        option = _v4_section_catalog_option(catalog, query_section)
+        if option is None:
+            raise RuntimeError(
+                f"快取找不到地段：{catalog.get('city')} / "
+                f"{catalog.get('area_text', '')} / {query_section}"
+            )
+
+        previous_code = ""
+        try:
+            previous_code = clean_text(
+                await page.input_value("#land_sectioncode")
+            )
+        except Exception:
+            pass
+
+        await page.evaluate(
+            """
+            ({value}) => {
+                const el = document.querySelector('#land_section');
+                if (!el) throw new Error('#land_section not found');
+                el.value = value;
+                el.dispatchEvent(new Event('change', {bubbles: true}));
+            }
+            """,
+            {"value": option["value"]},
+        )
+
+        section_code = ""
+        for _ in range(SECTION_MAX_POLLS):
+            try:
+                current_value = clean_text(
+                    await page.input_value("#land_section")
+                )
+                current_code = clean_text(
+                    await page.input_value("#land_sectioncode")
+                )
+                if current_value == clean_text(option["value"]):
+                    # 若 code 本身沒有變動也允許直接使用；有些頁面會重設成同值。
+                    if current_code and (
+                        not previous_code or current_code != previous_code
+                    ):
+                        section_code = current_code
+                        break
+                    if current_code:
+                        section_code = current_code
+                        break
+            except Exception:
+                pass
+            await page.wait_for_timeout(
+                int(SECTION_POLL_INTERVAL * 1000)
+            )
+
+        if not section_code:
+            raise RuntimeError(
+                f"套用快取地段後未取得 sectioncode：{query_section}"
+            )
+
+        return {
+            "area_text": catalog.get("area_text", ""),
+            "area_value": catalog.get("area_value", ""),
+            "section_text": clean_text(option["text"]),
+            "section_value": clean_text(option["value"]),
+            "section_code": section_code,
+        }
+    finally:
+        elapsed = _speed_now() - t0
+        _SPEED_TIMING["section_cached_switch_calls"] += 1
+        _SPEED_TIMING["section_cached_switch_seconds"] += elapsed
+
+
+async def _v6_prepare_section(page, city, area, query_section, section_cache):
+    """v5：只在第一次遇到鄉鎮時操作 NLSC DOM；之後直接從 catalog 取得 office/sect。"""
+    area_key = _v4_area_key(city, area)
+    catalog = _V4_SECTION_CATALOG_STATE["catalog"].get(area_key)
+
+    if catalog is None:
+        # 新鄉鎮：需要進一次 NLSC DOM，建立完整地段目錄。
+        t0 = _speed_now()
+        try:
+            catalog, first_info = await _v4_build_area_catalog(
+                page,
+                city,
+                area,
+                query_section,
+            )
+        finally:
+            elapsed = _speed_now() - t0
+            _SPEED_TIMING["section_full_set_calls"] += 1
+            _SPEED_TIMING["section_full_set_seconds"] += elapsed
+        section_info = first_info
+    else:
+        # 已有完整鄉鎮目錄：完全不碰 page DOM。
+        t0 = _speed_now()
+        try:
+            option = _v4_section_catalog_option(catalog, query_section)
+            if option is None:
+                raise RuntimeError(
+                    f"鄉鎮目錄找不到地段：{city} / {catalog.get('area_text', area)} / {query_section}"
+                )
+
+            section_value = clean_text(option.get("value", ""))
+            section_text = clean_text(option.get("text", query_section))
+            if not section_value:
+                raise RuntimeError(
+                    f"鄉鎮目錄地段 option 沒有 value：{city} / {area} / {query_section}"
+                )
+
+            # NLSC option value 已在 v3/v4 DIRECT 測試驗證可拆成 office + sect。
+            if "_" in section_value:
+                derived_sect = clean_text(section_value.split("_", 1)[1])
+            else:
+                derived_sect = section_value
+
+            section_info = {
+                "area_text": catalog.get("area_text", area),
+                "area_value": catalog.get("area_value", ""),
+                "section_text": section_text,
+                "section_value": section_value,
+                "section_code": derived_sect,
+            }
+        finally:
+            _SPEED_TIMING["catalog_direct_resolve_calls"] += 1
+            _SPEED_TIMING["catalog_direct_resolve_seconds"] += _speed_now() - t0
+
+    section_cache.clear()
+    section_cache.update({
+        "key": _v4_section_key(city, area, query_section),
+        "area_text": clean_text(section_info.get("area_text", area)),
+        "area_value": clean_text(section_info.get("area_value", "")),
+        "section_text": clean_text(section_info.get("section_text", query_section)),
+        "section_value": clean_text(section_info.get("section_value", "")),
+        "section_code": clean_text(section_info.get("section_code", "")),
+    })
+    return section_info
+
+
+
+# ============================================================
+# v6 地號 DIRECT query
+# ============================================================
+LAND_DIRECT_FALLBACK = True
+
+_V4_LAND_STATE = {
+    "direct_calls": 0,
+    "direct_seconds": 0.0,
+    "fallback_calls": 0,
+    "fallback_seconds": 0.0,
+    "direct_429_count": 0,
+    "direct_cooldown_skips": 0,
+    "direct_429_cooldown_seconds": 0.0,
+    "direct_429_server_retry_after_seconds": 0.0,
+}
+
+
+# v8.7 DIRECT 429 全域斷路器：冷卻期間不再逐筆等待，也不呼叫 DIRECT；
+# 每筆案件直接走既有瀏覽器備援，冷卻到期後才恢復 DIRECT。
+_V8_DIRECT_429_COOLDOWN_UNTIL = 0.0
+_V9_DIRECT_NEXT_ALLOWED = 0.0
+_DIRECT_429_STREAK = 0
+
+
+def _parse_direct_retry_after(response_headers):
+    """解析 Retry-After 秒數或 HTTP-date；沒有有效值時回傳 None。"""
+    raw_value = ""
+    try:
+        for key, value in (response_headers or {}).items():
+            if str(key).strip().lower() == "retry-after":
+                raw_value = str(value).strip()
+                break
+    except Exception:
+        raw_value = ""
+
+    if not raw_value:
+        return None
+
+    try:
+        seconds = float(raw_value)
+    except (TypeError, ValueError):
+        try:
+            retry_dt = parsedate_to_datetime(raw_value)
+            if retry_dt.tzinfo is None:
+                retry_dt = retry_dt.replace(tzinfo=timezone.utc)
+            seconds = (retry_dt - datetime.now(timezone.utc)).total_seconds()
+        except Exception:
+            return None
+
+    if not (seconds == seconds) or seconds in (float("inf"), float("-inf")):
+        return None
+    return max(0.0, min(float(seconds), DIRECT_429_MAX_SERVER_WAIT_SECONDS))
+
+
+async def _v6_direct_query_one_browser(
+    page,
+    row_number,
+    city,
+    area,
+    section,
+    landno,
+    section_cache,
+):
+    global _V8_DIRECT_429_COOLDOWN_UNTIL, _V9_DIRECT_NEXT_ALLOWED, _DIRECT_429_STREAK
+
+    original_landno = clean_text(landno)
+    normalized_landno = normalize_landno(original_landno)
+    query_section = normalize_section_for_query(city, area, section)
+
+    section_info = await _v6_prepare_section(
+        page,
+        city,
+        area,
+        query_section,
+        section_cache,
+    )
+
+    matched_section_text = clean_text(
+        section_info.get("section_text", query_section)
+    )
+    matched_area_text = clean_text(
+        section_info.get("area_text", area)
+    )
+
+    section_value = clean_text(section_info.get("section_value", ""))
+    section_code = clean_text(section_info.get("section_code", ""))
+
+    if "_" in section_value:
+        office = section_value.split("_", 1)[0]
+        value_sect = section_value.split("_", 1)[1]
+    else:
+        office = ""
+        value_sect = section_value
+
+    sect = section_code or value_sect
+
+    last_error = ""
+    last_status = None
+    last_url = ""
+    last_body = ""
+    last_raw_file = ""
+    direct_attempt = 0
+
+    async def _direct_once():
+        global _V9_DIRECT_NEXT_ALLOWED
+
+        now = _speed_now()
+        if now < _V9_DIRECT_NEXT_ALLOWED:
+            wait_seconds = _V9_DIRECT_NEXT_ALLOWED - now
+            print(f"  DIRECT 節流間隔：等待 {wait_seconds:.3f} 秒...")
+            await page.wait_for_timeout(int(wait_seconds * 1000))
+
+        callback_nonce = int(time.time() * 1000)
+        query_url = (
+            f"https://landmaps.nlsc.gov.tw/S_Maps/qryTileMapIndex"
+            f"?type=2&flag=2"
+            f"&office={office}"
+            f"&sect={sect}"
+            f"&landno={normalized_landno}"
+            f"&alpah=0.5f"
+            f"&callback=_jqjsp"
+            f"&_{callback_nonce}="
+        )
+
+        response = await page.context.request.get(
+            query_url,
+            timeout=RESPONSE_TIMEOUT,
+            headers={"Referer": NLSC_URL, "Accept": "*/*"},
+            fail_on_status_code=False,
+        )
+        return response.status, response.url, await response.text(), response.headers
+
+    direct_cooldown_remaining = max(
+        0.0, _V8_DIRECT_429_COOLDOWN_UNTIL - _speed_now()
+    )
+    if direct_cooldown_remaining > 0:
+        _V4_LAND_STATE["direct_cooldown_skips"] += 1
+        print(
+            f"  [DIRECT COOLDOWN] 尚餘 {direct_cooldown_remaining:.1f} 秒；"
+            "本筆跳過 DIRECT，立即改用瀏覽器備援（不等待）。"
+        )
+
+    while (
+        direct_attempt < DIRECT_MAX_ATTEMPTS
+        and _speed_now() >= _V8_DIRECT_429_COOLDOWN_UNTIL
+    ):
+        direct_attempt += 1
+
+        try:
+            print(
+                f"  第 {direct_attempt}/{DIRECT_MAX_ATTEMPTS} 次查詢："
+                f"地號={normalized_landno} [DIRECT]"
+            )
+            direct_t0 = _speed_now()
+            _V4_LAND_STATE["direct_calls"] += 1
+            try:
+                status_code, response_url, body, response_headers = await _direct_once()
+            finally:
+                _V4_LAND_STATE["direct_seconds"] += _speed_now() - direct_t0
+                _V9_DIRECT_NEXT_ALLOWED = max(
+                    _V9_DIRECT_NEXT_ALLOWED,
+                    _speed_now() + DIRECT_MIN_INTERVAL_SECONDS,
+                )
+
+            last_status = status_code
+            last_url = response_url
+            last_body = body
+            print(f"  HTTP={status_code} [DIRECT]")
+
+            # HTTP 200 代表 DIRECT 端點已不再回 429；即使內容沒有座標，
+            # 也應與速率限制錯誤分開處理，並重置連續 429 計數。
+            if status_code == 200:
+                _DIRECT_429_STREAK = 0
+                _V8_DIRECT_429_COOLDOWN_UNTIL = 0.0
+
+            parsed = parse_nlsc_response(body)
+
+            if status_code == 200 and parsed["ok"]:
+                record = parsed["record"]
+                lon = float(record["cx"])
+                lat = float(record["cy"])
+                twd97_x, twd97_y = convert_to_twd97(lon, lat)
+                raw_file = save_raw_response(
+                    row_number, status_code, response_url, body
+                )
+                return {
+                    "縣市": city,
+                    "鄉鎮市區": matched_area_text or area,
+                    "地段": matched_section_text or section,
+                    "查詢地段": matched_section_text or section,
+                    "地號": original_landno,
+                    "地址": "",
+                    "查詢方式": "地號",
+                    "定位來源": "NLSC地號定位",
+                    "完整查詢地址": "",
+                    "命中地址": "",
+                    "定位品質": "地號宗地定位",
+                    "查詢地號": normalized_landno,
+                    "office": get_query_parameter(response_url, "office") or office,
+                    "sect": get_query_parameter(response_url, "sect") or sect,
+                    "狀態": "OK",
+                    "HTTP狀態": status_code,
+                    "經度": lon,
+                    "緯度": lat,
+                    "TWD97_X": twd97_x,
+                    "TWD97_Y": twd97_y,
+                    "左下經度": record.get("lx", ""),
+                    "左下緯度": record.get("ly", ""),
+                    "右上經度": record.get("rx", ""),
+                    "右上緯度": record.get("ry", ""),
+                    "response_url": response_url,
+                    "raw_file": raw_file,
+                    "錯誤": "",
+                    "嘗試次數": direct_attempt,
+                }
+
+            if status_code == 429:
+                last_error = "HTTP_429"
+                last_raw_file = save_raw_response(
+                    row_number, status_code, response_url, body
+                )
+
+                _DIRECT_429_STREAK += 1
+                _V4_LAND_STATE["direct_429_count"] += 1
+
+                # Retry-After 優先；沒有有效 header 才用連續 429 的本地退避。
+                server_retry_after = _parse_direct_retry_after(response_headers)
+                if server_retry_after is not None:
+                    wait_seconds = max(1.0, server_retry_after)
+                    _V4_LAND_STATE["direct_429_server_retry_after_seconds"] += wait_seconds
+                    wait_source = "SERVER_RETRY_AFTER"
+                else:
+                    fallback_wait = DIRECT_429_BACKOFF[
+                        min(_DIRECT_429_STREAK - 1, len(DIRECT_429_BACKOFF) - 1)
+                    ]
+                    wait_seconds = float(fallback_wait)
+                    wait_source = "LOCAL_BACKOFF"
+
+                cooldown_until = _speed_now() + wait_seconds
+                _V8_DIRECT_429_COOLDOWN_UNTIL = max(
+                    _V8_DIRECT_429_COOLDOWN_UNTIL,
+                    cooldown_until,
+                )
+                _V4_LAND_STATE["direct_429_cooldown_seconds"] += wait_seconds
+
+                print(
+                    f"  HTTP 429：{wait_source}={wait_seconds:.1f} 秒；"
+                    "本筆不再重試 DIRECT，立即切換瀏覽器備援。"
+                )
+                print(
+                    "  [DIRECT CIRCUIT BREAKER] 冷卻期間後續案件跳過 DIRECT，"
+                    "直接使用瀏覽器備援，不逐筆等待冷卻。"
+                )
+                break
+
+            # 其他暫時性 HTTP 維持原本 retry/backoff。
+            if status_code in RETRY_STATUS_CODES and direct_attempt < DIRECT_MAX_ATTEMPTS:
+                last_error = f"HTTP_{status_code}"
+                last_raw_file = save_raw_response(
+                    row_number, status_code, response_url, body
+                )
+                wait_seconds = RETRY_BACKOFF[
+                    min(direct_attempt - 1, len(RETRY_BACKOFF) - 1)
+                ]
+                print(f"  HTTP {status_code}，{wait_seconds} 秒後自動重試...")
+                await page.wait_for_timeout(wait_seconds * 1000)
+                continue
+
+            last_raw_file = save_raw_response(
+                row_number, status_code, response_url, body
+            )
+            last_error = parsed["error"] if status_code == 200 else f"HTTP_{status_code}"
+            break
+
+        except Exception as e:
+            last_error = f"{type(e).__name__}: {e}"
+            print(f"  Direct 查詢例外：{last_error}")
+            if direct_attempt < DIRECT_MAX_ATTEMPTS:
+                wait_seconds = RETRY_BACKOFF[
+                    min(direct_attempt - 1, len(RETRY_BACKOFF) - 1)
+                ]
+                print(f"  {wait_seconds} 秒後自動重試...")
+                await page.wait_for_timeout(wait_seconds * 1000)
+                continue
+            break
+
+    if LAND_DIRECT_FALLBACK:
+        if last_status == 429:
+            fallback_reason = "本筆 DIRECT HTTP 429"
+        elif direct_cooldown_remaining > 0:
+            fallback_reason = f"DIRECT 全域冷卻尚餘 {direct_cooldown_remaining:.1f} 秒"
+        else:
+            fallback_reason = last_error or "DIRECT 未取得有效座標"
+        print(
+            "  [DIRECT FALLBACK] 改用 v8.4 原始瀏覽器查詢流程；"
+            f"原因={fallback_reason}"
+        )
+        fallback_t0 = _speed_now()
+        _V4_LAND_STATE["fallback_calls"] += 1
+        try:
+            return await _original_query_one_browser(
+                page=page,
+                row_number=row_number,
+                city=city,
+                area=area,
+                section=section,
+                landno=landno,
+                section_cache=section_cache,
+            )
+        finally:
+            _V4_LAND_STATE["fallback_seconds"] += _speed_now() - fallback_t0
+
+    if last_status == 429:
+        status_text = "HTTP_ERROR"
+    elif last_status in RETRY_STATUS_CODES:
+        status_text = "HTTP_ERROR"
+    elif "Timeout" in last_error or "timeout" in last_error.lower():
+        status_text = "TIMEOUT"
+    else:
+        status_text = "ERROR"
+
+    return {
+        "縣市": city,
+        "鄉鎮市區": area,
+        "地段": section,
+        "查詢地段": matched_section_text,
+        "地號": original_landno,
+        "地址": "",
+        "查詢方式": "地號",
+        "定位來源": "NLSC地號定位",
+        "完整查詢地址": "",
+        "命中地址": "",
+        "定位品質": "",
+        "查詢地號": normalized_landno,
+        "office": office,
+        "sect": sect,
+        "狀態": status_text,
+        "HTTP狀態": last_status if last_status is not None else "",
+        "經度": "",
+        "緯度": "",
+        "TWD97_X": "",
+        "TWD97_Y": "",
+        "左下經度": "",
+        "左下緯度": "",
+        "右上經度": "",
+        "右上緯度": "",
+        "response_url": last_url,
+        "raw_file": last_raw_file,
+        "錯誤": last_error,
+        "嘗試次數": direct_attempt,
+    }
+
+
+async def _speed_query_one_browser_v5(*args, **kwargs):
+    t0 = _speed_now()
+    row_number = kwargs.get("row_number")
+    if row_number is None and len(args) >= 2:
+        row_number = args[1]
+    try:
+        return await _v6_direct_query_one_browser(*args, **kwargs)
+    finally:
+        elapsed = _speed_now() - t0
+        _SPEED_TIMING["land_query_calls"] += 1
+        _SPEED_TIMING["land_query_seconds"] += elapsed
+        _SPEED_TIMING["query_rows"].append({
+            "row_number": int(row_number) if row_number is not None else "",
+            "query_mode": "地號",
+            "seconds": elapsed,
+        })
+
+
+# v6 對外只替換本次測試需要的函式；正式 v8.4 原始碼完全不變。
+initialize_nlsc_page = _speed_initialize_nlsc_page
+resolve_nlsc_area_name = _speed_resolve_nlsc_area_name
+query_one_address_browser = _speed_query_one_address_browser
+query_one_browser = _speed_query_one_browser_v5
+save_resume_checkpoint = _speed_save_resume_checkpoint
+save_excel_openpyxl = _speed_save_excel_openpyxl
+save_raw_response = _speed_save_raw_response
+
+print("=" * 70)
+
+# ============================================================
+# Cell 2 v8.7 正式整合層
+# ------------------------------------------------------------
+# 正式候選整合：
+#   1. CATALOG DIRECT：首次遇到鄉鎮時建立完整地段目錄；後續直接解析。
+#   2. DIRECT qryTileMapIndex：沿用已驗證的後端 HTTP 查詢。
+#   3. DELAY_BETWEEN_ROWS = 0：取消固定逐筆等待。
+#   4. DIRECT_MIN_INTERVAL_SECONDS = 1.0：降低連續 DIRECT 請求密度。
+#   5. HTTP 429：同筆第一次即切換瀏覽器備援；冷卻期間跳過 DIRECT、不逐筆等待。
+#      優先尊重 Retry-After 秒數／HTTP-date；缺少時採 15/30/60 秒退避。
+#   6. 輕量 JSONL checkpoint：每筆只追加，不再每筆重建 XLSX。
+#   7. 正式續跑：優先讀取 JSONL checkpoint + result.xlsx/result_error.xlsx。
+#   8. 完整成功後才建立 /content/result.xlsx；失敗時保留 partial/error。
+#   9. 保留 v8.4 正式輸出結構與 input 欄位處理。
+#  10. 不強制 full requery；正式版恢復原本續跑語意。
+# ------------------------------------------------------------
+# 正式輸出：
+#   /content/result.xlsx
+#   /content/result_error.xlsx
+#   /content/result_partial.xlsx（僅不完整執行時）
+#   /content/gmap.csv
+#   /content/nlsc_raw/
+#   /content/nlsc_raw_address/（地號＋地址案件的次要門牌查詢 response）
+#   /content/result_manifest.json
+#   /content/cell2_checkpoint_state.jsonl（未完成時保留；完整成功後刪除）
+#   /content/cell2_timing_report.json
+# ============================================================
+
+FORMAL_CHECKPOINT_JSONL = BASE_DIR / "cell2_checkpoint_state.jsonl"
+FORMAL_TIMING_JSON = BASE_DIR / "cell2_timing_report.json"
+
+# 正式版改回 /content 正式輸出；不使用 SPEED_TEST 子目錄。
+SUCCESS_OUTPUT_XLSX = BASE_DIR / "result.xlsx"
+ERROR_OUTPUT_XLSX = BASE_DIR / "result_error.xlsx"
+GMAP_OUTPUT_CSV = BASE_DIR / "gmap.csv"
+RAW_DIR = BASE_DIR / "nlsc_raw"
+RESULT_PARTIAL_XLSX = BASE_DIR / "result_partial.xlsx"
+RESULT_MANIFEST = BASE_DIR / "result_manifest.json"
+RESULT_TEMP_XLSX = BASE_DIR / "result.__tmp__.xlsx"
+
+# 避免同一 notebook 內若曾執行其他 SPEED TEST，沿用舊 checkpoint 計數。
+_V7_CHECKPOINT_SEQ = 0
+_V7_CHECKPOINT_WRITTEN_REUSED = set()
+
+
+def _formal_load_jsonl_results():
+    """讀取正式 JSONL checkpoint，取各 input index 最新一筆 result。"""
+    path = FORMAL_CHECKPOINT_JSONL
+    if not path.exists():
+        return {}
+
+    latest = {}
+    try:
+        with path.open("r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    obj = json.loads(line)
+                except Exception:
+                    continue
+                if obj.get("type") != "result":
+                    continue
+                try:
+                    idx = int(obj.get("index"))
+                except Exception:
+                    continue
+                result = obj.get("result")
+                if not isinstance(result, dict):
+                    continue
+                seq = obj.get("seq", 0)
+                try:
+                    seq_num = int(seq)
+                except Exception:
+                    seq_num = 0
+                old = latest.get(idx)
+                if old is None or seq_num >= old[0]:
+                    latest[idx] = (seq_num, result)
+    except Exception as e:
+        print(f"⚠️ 讀取 JSONL checkpoint 失敗：{path} -> {e}")
+
+    return {
+        idx: dict(payload[1])
+        for idx, payload in latest.items()
+    }
+
+
+def _formal_load_all_resume_results():
+    """
+    正式續跑來源：
+      1. JSONL checkpoint（最新逐筆狀態）
+      2. result_partial.xlsx
+      3. result.xlsx
+      4. result_error.xlsx
+
+    同案件以 OK 優先；同狀態時後讀來源覆蓋前者。
+    """
+    combined = {}
+
+    jsonl_results = _formal_load_jsonl_results()
+    for idx, item in jsonl_results.items():
+        try:
+            key = build_resume_key_from_result(item)
+        except Exception:
+            key = ""
+        if not key:
+            continue
+        old = combined.get(key)
+        if old is None:
+            combined[key] = item
+        else:
+            old_ok = clean_text(old.get("狀態", "")) == "OK"
+            new_ok = clean_text(item.get("狀態", "")) == "OK"
+            if new_ok and not old_ok:
+                combined[key] = item
+            elif new_ok == old_ok:
+                combined[key] = item
+
+    # 與 v8.4 相容：既有正式 Excel 仍可直接續跑。
+    for path in (RESULT_PARTIAL_XLSX, SUCCESS_OUTPUT_XLSX, ERROR_OUTPUT_XLSX):
+        if not path.exists():
+            continue
+        try:
+            items = load_existing_result_xlsx(path)
+        except Exception as e:
+            print(f"⚠️ 讀取既有結果失敗：{path} -> {e}")
+            continue
+
+        print(f"  續跑讀取：{path.name} -> {len(items)} 筆")
+        for item in items:
+            try:
+                key = build_resume_key_from_result(item)
+            except Exception:
+                continue
+            if not key:
+                continue
+            old = combined.get(key)
+            if old is None:
+                combined[key] = item
+                continue
+            old_ok = clean_text(old.get("狀態", "")) == "OK"
+            new_ok = clean_text(item.get("狀態", "")) == "OK"
+            if new_ok and not old_ok:
+                combined[key] = item
+            elif new_ok == old_ok:
+                combined[key] = item
+
+    if combined:
+        print(f"既有結果合併後：{len(combined)} 筆")
+
+    return list(combined.values())
+
+
+def _formal_save_resume_checkpoint(data, results_by_input_index, query_result_map):
+    """正式版 JSONL checkpoint：每筆只追加，不重建 XLSX。"""
+    global _V7_CHECKPOINT_SEQ
+
+    t0 = _speed_now()
+    appended = 0
+    FORMAL_CHECKPOINT_JSONL.parent.mkdir(parents=True, exist_ok=True)
+    file_exists = FORMAL_CHECKPOINT_JSONL.exists()
+
+    # 找出目前檔案最後 seq，容許 notebook 重跑時繼續追加。
+    if file_exists and _V7_CHECKPOINT_SEQ == 0:
+        try:
+            with FORMAL_CHECKPOINT_JSONL.open("r", encoding="utf-8") as f:
+                for line in f:
+                    try:
+                        obj = json.loads(line)
+                        seq = obj.get("seq")
+                        if seq is not None:
+                            _V7_CHECKPOINT_SEQ = max(_V7_CHECKPOINT_SEQ, int(seq))
+                    except Exception:
+                        continue
+        except Exception:
+            pass
+
+    with FORMAL_CHECKPOINT_JSONL.open("a", encoding="utf-8") as f:
+        if not file_exists:
+            f.write(json.dumps({
+                "type": "meta",
+                "version": "Cell2 v8.7 429 circuit-breaker dual-coordinate completed-status exclusion formal",
+                "input_rows": len(data),
+            }, ensure_ascii=False) + "\n")
+
+        # 已成功沿用資料只需在這次執行第一次記錄。
+        for idx in sorted(results_by_input_index):
+            if idx in _V7_CHECKPOINT_WRITTEN_REUSED:
+                continue
+            result = dict(results_by_input_index[idx])
+            _V7_CHECKPOINT_SEQ += 1
+            f.write(json.dumps({
+                "type": "result",
+                "seq": _V7_CHECKPOINT_SEQ,
+                "index": int(idx),
+                "result": result,
+                "source": "reused",
+            }, ensure_ascii=False, default=str) + "\n")
+            _V7_CHECKPOINT_WRITTEN_REUSED.add(idx)
+            appended += 1
+
+        # 本次查詢只追加目前 query_result_map 的最新狀態。
+        for idx in sorted(query_result_map):
+            result = dict(query_result_map[idx])
+            _V7_CHECKPOINT_SEQ += 1
+            f.write(json.dumps({
+                "type": "result",
+                "seq": _V7_CHECKPOINT_SEQ,
+                "index": int(idx),
+                "result": result,
+                "source": "query",
+            }, ensure_ascii=False, default=str) + "\n")
+            appended += 1
+
+        f.flush()
+        try:
+            os.fsync(f.fileno())
+        except Exception:
+            pass
+
+    _SPEED_TIMING["checkpoint_calls"] += 1
+    _SPEED_TIMING["checkpoint_seconds"] += _speed_now() - t0
+    _SPEED_TIMING["v7_checkpoint_records_appended"] = (
+        _SPEED_TIMING.get("v7_checkpoint_records_appended", 0) + appended
+    )
+    return []
+
+
+# 正式版恢復續跑，不再強制 full requery。
+load_all_resume_results = _formal_load_all_resume_results
+save_resume_checkpoint = _formal_save_resume_checkpoint
+
+# 正式版重新初始化本輪 timing 計數，避免同一 notebook 先前 SPEED TEST 殘留。
+for _k in list(_SPEED_TIMING.keys()):
+    if _k == "query_rows":
+        _SPEED_TIMING[_k] = []
+    elif _k == "script_start":
+        _SPEED_TIMING[_k] = time.perf_counter()
+    elif isinstance(_SPEED_TIMING[_k], (int, float)):
+        _SPEED_TIMING[_k] = 0.0
+
+print("=" * 70)
+print("Cell 2 v8.7：429 首次即切換瀏覽器備援＋DIRECT 全域冷卻斷路器＋JSONL 續跑＋雙座標")
+print(f"正式輸出：{BASE_DIR}")
+print(f"DIRECT 最小間隔：{DIRECT_MIN_INTERVAL_SECONDS:.2f} 秒")
+print(f"429 策略：同筆 429 不重試、立即備援；其他暫時錯誤最多 {DIRECT_MAX_ATTEMPTS} 次 DIRECT；無 Retry-After 時冷卻={DIRECT_429_BACKOFF} 秒")
+print(f"JSONL checkpoint：{FORMAL_CHECKPOINT_JSONL}")
+print("=" * 70)
+
+run_results = None
+try:
+    run_results = await main()
+finally:
+    total_seconds = time.perf_counter() - _SPEED_TIMING["script_start"]
+    status_counts = {}
+    for r in run_results if isinstance(run_results, list) else []:
+        status = clean_text(r.get("狀態", ""))
+        status_counts[status] = status_counts.get(status, 0) + 1
+
+    report = {
+        "version": "Cell2 v8.7 429 circuit-breaker dual-coordinate completed-status exclusion formal",
+        "test_mode": "FORMAL_RESUME_CACHE_FIRST",
+        "output_dir": str(BASE_DIR),
+        "total_seconds_including_setup": total_seconds,
+        "status_counts": status_counts,
+        "status_filter": dict(_CELL2_STATUS_FILTER_STATS),
+        "timing": {
+            **_SPEED_TIMING,
+            "direct_min_interval_seconds": DIRECT_MIN_INTERVAL_SECONDS,
+            "direct_429_backoff_seconds": DIRECT_429_BACKOFF,
+            "direct_max_attempts_for_non_429": DIRECT_MAX_ATTEMPTS,
+            "direct_429_same_case_retry_count": 0,
+            "direct_429_policy": "FIRST_429_IMMEDIATE_BROWSER_FALLBACK; SKIP_DIRECT_DURING_GLOBAL_COOLDOWN; NO_PER_ROW_COOLDOWN_WAIT",
+            "direct_429_count": _V4_LAND_STATE["direct_429_count"],
+            "direct_cooldown_skips": _V4_LAND_STATE["direct_cooldown_skips"],
+            "direct_429_cooldown_seconds": _V4_LAND_STATE["direct_429_cooldown_seconds"],
+            "direct_429_server_retry_after_seconds": _V4_LAND_STATE["direct_429_server_retry_after_seconds"],
+            "checkpoint_mode": "append_only_jsonl",
+            "checkpoint_state_file": str(FORMAL_CHECKPOINT_JSONL),
+            "land_direct_calls": _V4_LAND_STATE["direct_calls"],
+            "land_direct_seconds": _V4_LAND_STATE["direct_seconds"],
+            "land_fallback_calls": _V4_LAND_STATE["fallback_calls"],
+            "land_fallback_seconds": _V4_LAND_STATE["fallback_seconds"],
+            "query_total_seconds": _SPEED_TIMING["land_query_seconds"] + _SPEED_TIMING["address_query_seconds"],
+        },
+    }
+    try:
+        FORMAL_TIMING_JSON.write_text(
+            json.dumps(report, ensure_ascii=False, indent=2, default=str),
+            encoding="utf-8",
+        )
+        print(f"Timing JSON：{FORMAL_TIMING_JSON}")
+    except Exception as e:
+        print(f"⚠️ Timing JSON 寫入失敗：{e}")
+
+    # 完整成功後，JSONL 只作中斷續跑用途，避免下次留下陳舊狀態。
+    if isinstance(run_results, list) and run_results:
+        complete_statuses = {"OK", "重複土地"}
+        all_complete = all(
+            clean_text(r.get("狀態", "")) in complete_statuses
+            for r in run_results
+        )
+        if all_complete:
+            try:
+                if FORMAL_CHECKPOINT_JSONL.exists():
+                    FORMAL_CHECKPOINT_JSONL.unlink()
+                print("完整完成（OK／重複土地皆已處理）：已清除 JSONL checkpoint。")
+            except Exception as e:
+                print(f"⚠️ 無法清除 JSONL checkpoint：{e}")
