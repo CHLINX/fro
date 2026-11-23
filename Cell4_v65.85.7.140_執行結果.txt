@@ -1,0 +1,97 @@
+==============================================================================
+CELL4_VERSION=v65.85.7.140
+CELL4_LOG_PATH=/content/Cell4_v65.85.7.140_執行結果.txt
+CELL4_RUN_STARTED_TW=2026-11-23T09:12:33+08:00
+==============================================================================
+[GITHUB_TOKEN_PREFLIGHT]=AVAILABLE
+INPUT_FRESHNESS_STATUS=PASS_SELECTED_LATEST_MODIFIED
+INPUT_SELECTED_PATH=/content/result.xlsx
+INPUT_SELECTED_SHA256=b4a5ea26ffbf4904093c857531f5bd5e8baebb473b6253a32b2ecac4e2a5fcd3
+INPUT_SELECTED_SIZE_BYTES=33479
+INPUT_SELECTED_MTIME_NS=1795392983653753176
+INPUT_CANDIDATE_AUDIT=[{"mtime_ns": 1795392983653753176, "path": "/content/result.xlsx", "sha256": "b4a5ea26ffbf4904093c857531f5bd5e8baebb473b6253a32b2ecac4e2a5fcd3", "size_bytes": 33479}]
+ROUTE_CONFIG_SELECTION=NEW_UPLOAD | PATH=/content/input_route_config.xlsx
+已使用本次上傳的路線設定檔：/content/input_route_config.xlsx
+Cell 4 v65.85.7.140｜Cell 2 輸入：/content/result.xlsx
+CELL4_PROGRESS_REPORTING=ENABLED | interval=20s | heartbeat=30s | upload_card=INLINE_CELL_OUTPUT
+======================================================================
+Cell 4 儲存模式： CONTENT
+Cell 4 OSM 快取： /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE
+v82 OSM 來源策略：MOTOR cache miss 優先 Geofabrik 每日 PBF；Overpass 作備援；水體快取依同一 PBF 版本識別。
+v81 跨日重複道路：不設舊基準硬上限；仍列入全域最佳化目標。
+Google Drive 未預先掛載；本次快取、檢查點及診斷備份改存 /content。
+注意：/content 是 Colab 暫存空間，Runtime 中斷或重啟後資料可能消失。
+======================================================================
+[CELL4_READ_START] 路線設定檔 RouteConfig | path=/content/input_route_config.xlsx | source_size=12.20 KiB
+[CELL4_STAGE_START] 讀取 Excel：路線設定檔 RouteConfig
+[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | elapsed=0.06s | status=PASS
+[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.18 MiB/s | elapsed=0.07s
+路線設定檔關鍵值檢查：
+  交通工具 = '只算機車'
+  每點停留時間 = 3
+  每日可勘查時間 = 5
+  機車平均速度 = 30
+  汽車平面道路平均速度 = 40
+  汽車高速公路平均速度 = 100
+  汽車快速公路平均速度 = 70
+  臺31～臺39高鐵橋下道路成本倍率 = ×0.95
+  臺61～臺89快速公路平面側車道成本倍率 = ×0.95
+  Motorcycle designated 道路成本倍率 = ×0.85
+  Motor_vehicle designated 道路成本倍率 = ×0.90
+  Service 道路成本倍率 = ×1.00
+  Living Street 道路成本倍率 = ×1.00
+  Track 產業道路成本倍率 = ×2.00
+  未鋪面路面成本倍率 = ×2.00
+  Destination 限制道路成本倍率 = ×1.15
+  汽車 Service 一般道路成本倍率 = ×1.30
+  汽車 Service Alley 成本倍率 = ×3.50
+  汽車 Service Driveway 成本倍率 = ×3.00
+  汽車 Service Parking Aisle 成本倍率 = ×4.00
+  汽車 Living Street 成本倍率 = ×1.20
+  汽車 Track 產業道路成本倍率 = ×6.00
+  汽車 Track grade4／grade5 附加倍率 = ×1.30
+  汽車 Track／Service narrow=yes 附加倍率 = ×1.25
+  汽車未鋪面道路成本倍率 = ×3.00
+  汽車未鋪面窄幅道路附加倍率 = ×1.50
+  汽車 Destination 道路成本倍率 = ×1.20
+  汽車 Conditional 限制道路成本倍率 = ×5.00
+  汽車窄幅 Service／Track 成本倍率 = ×4.00
+  汽車人工指定避免道路成本倍率 = ×20.00
+  汽車窄幅道路判定寬度 = 3.50 m
+======================================================================
+載入路線規劃設定檔
+設定檔： /content/input_route_config.xlsx
+交通工具設定：只算機車
+每點停留時間：3 分鐘
+每日可勘查時間：5 小時
+機車平均速度：30 km/h
+機車路網資格：普通重型機車｜高速／快速公路主線與匝道：禁止
+機車道路成本倍率：臺31～39橋下×0.95 | 臺61～89平面側車道×0.95 | Motorcycle designated×0.85 | Motor_vehicle designated×0.90 | Service×1.00 | Living Street×1.00 | Track×2.00 | Unpaved×2.00 | Destination×1.15
+汽車平面道路平均速度：40 km/h
+汽車高速公路平均速度：100 km/h
+汽車快速公路平均速度：70 km/h
+汽車道路成本倍率：Service×1.30 | Alley×3.50 | Driveway×3.00 | Parking Aisle×4.00 | Living Street×1.20 | Track×6.00 | Unpaved×3.00 | Destination×1.20 | Conditional×5.00 | 窄幅加權×4.00 | 人工避免×20.00
+汽車人工路段設定檔：找不到 /content/input_car_forbidden_segments.xlsx → 略過
+
+======================================================================
+Cell 4 續跑進度
+======================================================================
+進度檔案位置： /content/巡田最速適_Cell4_Fallback/CELL4_CHECKPOINTS
+儲存位置：/content（未掛載 Drive）
+
+======================================================================
+Cell 4 RAM 安全檢查
+======================================================================
+RAM 總量：12.67 GB
+RAM 可用：10.45 GB
+BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
+[V139_LIVE_OSM_CSV] generation_gate=START
+[V139_LIVE_OSM_PARCELS] 有效=124 | 略過=1 | 略過原因樣本=[{'地籍資料列索引': '0', '原因': '空幾何或非 Polygon'}]
+[CELL4_TERMINATION]=NORMAL_ABORT | 未進入路線最佳化；未寫入新的 Cell5 handoff。
+
+[CELL4_EXECUTION_ERROR]
+前置檢查未通過：v139 即時 OSM 幾何分析無法確認 Geofabrik 台灣 PBF：RuntimeError: Geofabrik HEAD 失敗且沒有可用的本機 PBF 快取：TimeoutError('The read operation timed out')
+
+[CELL4_EXECUTION_STATUS]=FAILED_PRECHECK
+[CELL4_RUN_FINISHED_TW]=2026-11-23T09:13:05+08:00
+[GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-23/Cell4_v65.85.7.140_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
