@@ -1,7 +1,7 @@
 ==============================================================================
 CELL4_VERSION=v65.85.7.154
 CELL4_LOG_PATH=/content/Cell4_v65.85.7.154_執行結果.txt
-CELL4_RUN_STARTED_TW=2026-11-24T14:02:33+08:00
+CELL4_RUN_STARTED_TW=2026-11-24T14:27:04+08:00
 ==============================================================================
 [GITHUB_TOKEN_PREFLIGHT]=AVAILABLE
 INPUT_FRESHNESS_STATUS=PASS_SELECTED_LATEST_MODIFIED
@@ -24,8 +24,8 @@ Google Drive 未預先掛載；本次快取、檢查點及診斷備份改存 /co
 ======================================================================
 [CELL4_READ_START] 路線設定檔 RouteConfig | path=/content/input_route_config.xlsx | source_size=12.20 KiB
 [CELL4_STAGE_START] 讀取 Excel：路線設定檔 RouteConfig
-[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | elapsed=0.09s | status=PASS
-[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.13 MiB/s | elapsed=0.09s
+[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | elapsed=0.06s | status=PASS
+[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.19 MiB/s | elapsed=0.06s
 路線設定檔關鍵值檢查：
   交通工具 = '只算機車'
   每點停留時間 = 3
@@ -83,15 +83,15 @@ Cell 4 續跑進度
 Cell 4 RAM 安全檢查
 ======================================================================
 RAM 總量：12.67 GB
-RAM 可用：7.84 GB
+RAM 可用：7.78 GB
 BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V139_LIVE_OSM_CSV] generation_gate=START
 [V139_LIVE_OSM_PARCELS] 有效=3659 | 略過=1 | 略過原因樣本=[{'地籍資料列索引': '0', '原因': '空幾何或非 Polygon'}]
 [GEOFABRIK_REMOTE_VERSION] FETCH | method=HEAD | Last-Modified=Mon, 23 Nov 2026 23:44:30 GMT | size=328841607 | ETag="1399b987-660fa2cd2010d" | validator=STRONG_ETAG
 [V139_PBF_FEATURE_CACHE] LOCAL_PBF_ETAG_SHA_VERIFIED | sha256=4cf99960699a7531... | ETag="1399b987-660fa2cd2010d" | Last-Modified=Mon, 23 Nov 2026 23:44:30 GMT
 [V139_PBF_FEATURE_CACHE] HIT_WITHOUT_PBF_DOWNLOAD | validation=STRONG_ETAG_AND_SIZE | file=v139_pbf_highway_water_8ba2e306501557049ef287bf.pkl.gz | highway_ways=7,668 | water_features=8,057 | pbf_sha256=4cf99960699a7531... | verified_local_pbf_path=YES
-[V139_PBF_FEATURE_CACHE] HIT | highway_ways=7,668 | water_features=8,057 | pbf_sha256=4cf99960699a7531... | cache_read_elapsed=26.76s
-[V139_PBF_NEAREST] 地籍=3659 | highway候選=7668 | 搜尋半徑=250m | PBF age=6.31h
+[V139_PBF_FEATURE_CACHE] HIT | highway_ways=7,668 | water_features=8,057 | pbf_sha256=4cf99960699a7531... | cache_read_elapsed=25.52s
+[V139_PBF_NEAREST] 地籍=3659 | highway候選=7668 | 搜尋半徑=250m | PBF age=6.71h
 [V139_PBF_NEAREST] 20/3659 parcels | selected_Way_rows=20 | no_road=0
 [V139_PBF_NEAREST] 40/3659 parcels | selected_Way_rows=40 | no_road=0
 [V139_PBF_NEAREST] 60/3659 parcels | selected_Way_rows=60 | no_road=0
@@ -275,11 +275,11 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V139_PBF_NEAREST] 3620/3659 parcels | selected_Way_rows=3682 | no_road=0
 [V139_PBF_NEAREST] 3640/3659 parcels | selected_Way_rows=3703 | no_road=0
 [V139_PBF_NEAREST] 3659/3659 parcels | selected_Way_rows=3722 | no_road=0
-[V139_PBF_HIGHWAY_CSV] status=GENERATED | parcels=3659 | ways=7668 | rows=3722 | zero_distance=505 | cache_hit=True | pbf_age=6.31h | csv=/content/FRO_v133_雙軌最近道路分析_v1.1_幾何最近OSM_Way.csv | sha256=e9a98e9d446b937a9abae88059f7219c63ec4bf0f932ff3ddc7d7f3a0e2729be
+[V139_PBF_HIGHWAY_CSV] status=GENERATED | parcels=3659 | ways=7668 | rows=3722 | zero_distance=505 | cache_hit=True | pbf_age=6.71h | csv=/content/FRO_v133_雙軌最近道路分析_v1.1_幾何最近OSM_Way.csv | sha256=e9a98e9d446b937a9abae88059f7219c63ec4bf0f932ff3ddc7d7f3a0e2729be
 [V139_PBF_EVIDENCE] source=Geofabrik Taiwan PBF | last_modified=Mon, 23 Nov 2026 23:44:30 GMT | pbf_sha256=4cf99960699a7531c60a4120915a484c07f5ba4ea90ff496fbf554a54c721b47 | feature_cache=/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/v139_pbf_highway_water_8ba2e306501557049ef287bf.pkl.gz | water_features=8057
 [MOTOR_LIVE_OSM_CSV_PREFLIGHT] checkpoint_gate=START
 [MOTOR_LIVE_OSM_CSV_PREFLIGHT] status=PASS | path=/content/FRO_v133_雙軌最近道路分析_v1.1_幾何最近OSM_Way.csv | rows=3722 | unique_way_ids=1136 | sha256=e9a98e9d446b937a9abae88059f7219c63ec4bf0f932ff3ddc7d7f3a0e2729be | parcel_coverage=None/None
-CELL4_RUN_ID=20261124T060319465772Z_27fd72bda9
+CELL4_RUN_ID=20261124T062746809443Z_0c3f7c5c7c
 CELL4_SOURCE_SHA256=8fb1afbbe4d64f162950e4a99f5bc846dd9ec65aeec2ab996bf495293fc74450
 CELL4_SOURCE_KIND=PYTHON_FILE
 CELL4_SOURCE_DETECTION=CURRENT_VERSION_CONTENT_MATCH
@@ -304,8 +304,8 @@ NetworkX 版本： 3.7
 道路網類型：MOTOR 專屬自訂 drive_service+track | cache_profile=fro_motor_drive_service_track_v2_water_crossing
 [CELL4_READ_START] 機車 Cell2 result.xlsx | path=/content/result.xlsx | source_size=766.25 KiB
 [CELL4_STAGE_START] 讀取 Excel：機車 Cell2 result.xlsx
-[CELL4_STAGE_DONE] 讀取 Excel：機車 Cell2 result.xlsx | elapsed=2.03s | status=PASS
-[CELL4_READ_DONE] 機車 Cell2 result.xlsx | rows=3,660 | columns=37 | source_size=766.25 KiB | source_read_rate=0.37 MiB/s | elapsed=2.04s
+[CELL4_STAGE_DONE] 讀取 Excel：機車 Cell2 result.xlsx | elapsed=2.11s | status=PASS
+[CELL4_READ_DONE] 機車 Cell2 result.xlsx | rows=3,660 | columns=37 | source_size=766.25 KiB | source_read_rate=0.35 MiB/s | elapsed=2.12s
 原始資料筆數： 3660
 
 ======================================================================
@@ -319,12 +319,12 @@ NetworkX 版本： 3.7
 [MOTOR_LIVE_OSM_CSV_PREFLIGHT] status=PASS | path=/content/FRO_v133_雙軌最近道路分析_v1.1_幾何最近OSM_Way.csv | rows=3722 | unique_way_ids=1136 | sha256=e9a98e9d446b937a9abae88059f7219c63ec4bf0f932ff3ddc7d7f3a0e2729be | parcel_coverage=3659/3659
 v65.66 RAM 預檢：3,660 點；座標跨度約 32.8 × 19.6 km；距離矩陣輸出約 102.2 MiB，採列分塊計算。
 Haversine 直線距離矩陣完成。
-[RAM] Haversine 完成 | process RSS=3.92 GiB | system available=7.72 GiB
-[RAM] Local XY 完成 | process RSS=3.92 GiB | system available=7.72 GiB
-[RAM] 開始建立 OSM 下載範圍 | process RSS=3.92 GiB | system available=7.72 GiB
+[RAM] Haversine 完成 | process RSS=4.75 GiB | system available=7.67 GiB
+[RAM] Local XY 完成 | process RSS=4.75 GiB | system available=7.67 GiB
+[RAM] 開始建立 OSM 下載範圍 | process RSS=4.75 GiB | system available=7.67 GiB
 下載範圍幾何：3,660 點；改採投影後凸包 buffer（7000 m + 1 m 安全餘裕），避免逐點 buffer/union。
 下載範圍幾何建立完成。
-[RAM] OSM 下載範圍幾何完成 | process RSS=3.92 GiB | system available=7.72 GiB
+[RAM] OSM 下載範圍幾何完成 | process RSS=4.75 GiB | system available=7.68 GiB
 
 ======================================================================
 OSM 下載範圍
@@ -332,29 +332,29 @@ OSM 下載範圍
 west/south/east/north： (120.91462610787218, 24.82509927941323, 121.37866940781743, 25.1290065564323)
 buffer：7000 m
 下載方式：先用矩形範圍；失敗時改用區域範圍
-[RAM] OSM graph 載入／下載前 | process RSS=3.92 GiB | system available=7.72 GiB
+[RAM] OSM graph 載入／下載前 | process RSS=4.75 GiB | system available=7.68 GiB
 
 ======================================================================
 下載 OpenStreetMap 道路圖（v35：矩形範圍 優先；快取可由 FORCE_REFRESH_OSM_CACHE 控制）
 ======================================================================
 [CELL4_STAGE_START] MOTOR OSM 快取新鮮度驗證／載入
-[GEOFABRIK_REMOTE_VERSION] REUSE | age=33.2s | Last-Modified=Mon, 23 Nov 2026 23:44:30 GMT | size=328841607
+[GEOFABRIK_REMOTE_VERSION] REUSE | age=34.4s | Last-Modified=Mon, 23 Nov 2026 23:44:30 GMT | size=328841607
 [CELL4_CACHE_READ_START] /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_ecd1806f90f7bc9c.pkl.gz | compressed_size=19.67 MiB
 [CELL4_STAGE_START] 解壓／讀取 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_ecd1806f90f7bc9c.pkl.gz
-[CELL4_STAGE_DONE] 解壓／讀取 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_ecd1806f90f7bc9c.pkl.gz | elapsed=12.50s | status=PASS
-[CELL4_CACHE_READ_DONE] /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_ecd1806f90f7bc9c.pkl.gz | compressed_size=19.67 MiB | source_rate=1.57 MiB/s | elapsed=12.50s
+[CELL4_STAGE_DONE] 解壓／讀取 OSM 快取 /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_ecd1806f90f7bc9c.pkl.gz | elapsed=18.82s | status=PASS
+[CELL4_CACHE_READ_DONE] /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_ecd1806f90f7bc9c.pkl.gz | compressed_size=19.67 MiB | source_rate=1.04 MiB/s | elapsed=18.83s
 使用 Geofabrik PBF 路網快取：/content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE/osm_graph_ecd1806f90f7bc9c.pkl.gz
 快取 OSM 圖：節點=90,158 | 道路段=219,616
 Geofabrik 快照版本檢查：PASS
-[CELL4_STAGE_DONE] MOTOR OSM 快取新鮮度驗證／載入 | elapsed=12.71s | status=PASS
+[CELL4_STAGE_DONE] MOTOR OSM 快取新鮮度驗證／載入 | elapsed=19.03s | status=PASS
 [MOTOR_OSM_FRESHNESS_PREFLIGHT] status=PASS | source=VERIFIED_GEOFABRIK_PBF_CACHE | cached MOTOR graph is remotely verified
 V65.82 MOTOR 專用路網快取命中；CAR drive_service 快取未使用此圖。
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 1/219,616 edges (0.0%) | speed=11,402.25 edges/s | elapsed=0.0s | ETA=19.3s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 54,904/219,616 edges (25.0%) | speed=144,843.46 edges/s | elapsed=0.4s | ETA=1.1s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 109,808/219,616 edges (50.0%) | speed=147,068.88 edges/s | elapsed=0.7s | ETA=0.7s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 164,712/219,616 edges (75.0%) | speed=148,667.74 edges/s | elapsed=1.1s | ETA=0.4s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 219,616/219,616 edges (100.0%) | speed=147,795.47 edges/s | elapsed=1.5s | ETA=0.0s
-[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 219,616/219,616 edges (100.0%) | speed=147,540.54 edges/s | elapsed=1.5s | ETA=0.0s | highway counts ready
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 1/219,616 edges (0.0%) | speed=11,710.42 edges/s | elapsed=0.0s | ETA=18.8s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 54,904/219,616 edges (25.0%) | speed=158,374.85 edges/s | elapsed=0.3s | ETA=1.0s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 109,808/219,616 edges (50.0%) | speed=151,118.01 edges/s | elapsed=0.7s | ETA=0.7s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 164,712/219,616 edges (75.0%) | speed=118,354.09 edges/s | elapsed=1.4s | ETA=0.5s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 219,616/219,616 edges (100.0%) | speed=109,166.78 edges/s | elapsed=2.0s | ETA=0.0s
+[CELL4_PROGRESS] MOTOR 原始 OSM highway 類型掃描 | 219,616/219,616 edges (100.0%) | speed=109,003.01 edges/s | elapsed=2.0s | ETA=0.0s | highway counts ready
 V65.82 MOTOR 原始自訂路網：節點=90,158 | directed edges=219,616 | track=3,868 | service=111,759 | residential=47,164 | living_street=1,447
 本次不下載 OSM，直接使用已取得的路網快取／圖形。
 [CELL4_OSM_PROVENANCE] {"evidence_status": "PBF_REMOTE_SIGNATURE_RECORDED", "fingerprint_sha256": null, "fingerprint_status": null, "freshness_verified_for_this_run": true, "graph_edges": 219616, "graph_nodes": 90158, "mode": "MOTOR", "network_type": "fro_motor_drive_service_track_v2_water_crossing", "pbf_remote_version_signature": "ed07959023e90dca1ef59aa518ce0631a4a67e9aba01b0d78c0f5a752c334b63", "runtime_freshness_status": "VERIFIED_GEOFABRIK_PBF_CACHE", "source_type": "geofabrik_taiwan_pbf", "source_type_inferred": false}
@@ -365,11 +365,11 @@ V65.82 MOTOR 原始自訂路網：節點=90,158 | directed edges=219,616 | track
 ======================================================================
 [MOTOR_WATER_CROSSING_POLICY] disabled | 不檢查道路與線狀／面狀水路交叉；不因水路交叉移除任何 MOTOR edge。
 [V140_MOTOR_WATER_CROSSING_AUDIT] {"allowed_samples": [], "areal_water_part_count": 0, "blocked_samples": [], "edges_allowed_with_explicit_structure": 0, "edges_blocked_unverifiable_geometry": 0, "edges_blocked_without_structure": 0, "edges_crossing_water": 0, "enabled": false, "graph_edges_checked": 0, "node_crossing_edges_blocked": 0, "node_crossing_junctions_detected": 0, "node_crossing_pairs_detected": 0, "node_crossing_unpaired_segments_preserved": 0, "policy": "ALLOW_ALL_OSM_MOTOR_EDGES_REGARDLESS_OF_WATERWAY_INTERSECTION", "scan_status": "SKIPPED_BY_USER_POLICY_NO_WATERWAY_AVOIDANCE", "structure_rule": "bridge=yes|viaduct|aqueduct|movable|swing|bascule|lift|drawbridge OR tunnel=yes|culvert OR culvert=yes; layer-only, ford-only and covered-only are NOT accepted; endpoint nodes block only matched opposite-side road continuations", "waterway_line_count": 0, "waterway_types": {}}
-[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 1/219,616 edges (0.0%) | speed=15,485.87 edges/s | elapsed=0.0s | ETA=14.2s
-[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 54,904/219,616 edges (25.0%) | speed=23,898.01 edges/s | elapsed=2.3s | ETA=6.9s
-[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 109,808/219,616 edges (50.0%) | speed=22,182.77 edges/s | elapsed=5.0s | ETA=5.0s
-[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 164,712/219,616 edges (75.0%) | speed=25,442.91 edges/s | elapsed=6.5s | ETA=2.2s
-[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 219,616/219,616 edges (100.0%) | speed=27,467.16 edges/s | elapsed=8.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 1/219,616 edges (0.0%) | speed=18,341.22 edges/s | elapsed=0.0s | ETA=12.0s
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 54,904/219,616 edges (25.0%) | speed=23,991.16 edges/s | elapsed=2.3s | ETA=6.9s
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 109,808/219,616 edges (50.0%) | speed=27,116.40 edges/s | elapsed=4.0s | ETA=4.0s
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 164,712/219,616 edges (75.0%) | speed=29,470.91 edges/s | elapsed=5.6s | ETA=1.9s
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 219,616/219,616 edges (100.0%) | speed=30,845.07 edges/s | elapsed=7.1s | ETA=0.0s
 排除道路： 10556
 [MOTOR_WATER_CROSSING_REMOVAL] disabled | blocked_edges=0 | 規則=不因道路與水路交叉而移除道路
 保留加權 edges： 209060
@@ -384,7 +384,7 @@ MOTOR 台66側車道離開成本：已移除 | 額外固定成本=0m
 目前道路段數： 209060
 移除沒有道路連接的節點： 3772
 最大連通區塊節點數： 84395 nodes
-[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 219,616/219,616 edges (100.0%) | speed=24,726.71 edges/s | elapsed=8.9s | ETA=0.0s | edge scan and weights complete
+[CELL4_PROGRESS] 機車 道路通行權限／權重掃描 | 219,616/219,616 edges (100.0%) | speed=27,433.46 edges/s | elapsed=8.0s | ETA=0.0s | edge scan and weights complete
 
 ======================================================================
 將地籍點接到「最近道路段的實際位置」，避免只接道路端點造成超過 100 公尺的偏移
@@ -431,12 +431,12 @@ MOTOR 台66側車道離開成本：已移除 | 額外固定成本=0m
 [MOTOR_ROUTE_ACCESS_ANCHOR_V134] Cell3=/content/CELL3_HANDOFF.pkl | parcels_anchored=3659 | live_nearest_way_matched=3585 | water_blocked_anchor_candidates=725 | current_motor_graph_fallback=74 | no_motor_road_fallback=0 | polygon_missing=0 | fixed_start_unchanged=1 | non_parcel_unchanged=0 | live_geometry_csv=LOADED
 [MOTOR_ROUTE_ACCESS_ANCHOR_V134] route coordinates replaced for 3659 parcels; fixed start remains [121.30936300, 24.98845400]
 建立本模式道路圖的最近節點基準（MOTOR track 圖不沿用 CAR node ID）。
-[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 1/3,660 rows (0.0%) | speed=82.86 rows/s | elapsed=0.0s | ETA=44.2s
-[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 915/3,660 rows (25.0%) | speed=13,942.34 rows/s | elapsed=0.1s | ETA=0.2s
-[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 1,830/3,660 rows (50.0%) | speed=15,467.41 rows/s | elapsed=0.1s | ETA=0.1s
-[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 2,745/3,660 rows (75.0%) | speed=15,820.63 rows/s | elapsed=0.2s | ETA=0.1s
-[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 3,660/3,660 rows (100.0%) | speed=16,062.47 rows/s | elapsed=0.2s | ETA=0.0s
-[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 3,660/3,660 rows (100.0%) | speed=15,791.25 rows/s | elapsed=0.2s | ETA=0.0s | address_road_hits=1
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 1/3,660 rows (0.0%) | speed=45.34 rows/s | elapsed=0.0s | ETA=80.7s
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 915/3,660 rows (25.0%) | speed=8,881.08 rows/s | elapsed=0.1s | ETA=0.3s
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 1,830/3,660 rows (50.0%) | speed=9,878.94 rows/s | elapsed=0.2s | ETA=0.2s
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 2,745/3,660 rows (75.0%) | speed=10,481.55 rows/s | elapsed=0.3s | ETA=0.1s
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 3,660/3,660 rows (100.0%) | speed=10,741.69 rows/s | elapsed=0.3s | ETA=0.0s
+[CELL4_PROGRESS] 機車 地址道路欄位掃描 | 3,660/3,660 rows (100.0%) | speed=10,646.90 rows/s | elapsed=0.3s | ETA=0.0s | address_road_hits=1
 [V65.85.7.14_PARCEL_NEAREST_ROAD_RULE] parcel cases: selected edge = argmin(metric distance from primary parcel point to complete geometry of all MOTOR-routable OSM edges); address/main-road/branch/dead-end overrides disabled for parcel snap; virtual anchor forced to the nearest-edge projection
 主要定位最近道路段：3660 筆 | 平均道路距離=0.0 m | 最大=15.3 m
 [V65.77_SNAP_COLLISION] candidate_pairs=5356 | forced_anchor_cases=2928 | point_threshold=10.0m | projection_threshold=5.0m
@@ -5814,12 +5814,12 @@ MOTOR 台66側車道離開成本：已移除 | 額外固定成本=0m
 最大 snap： 27.3440523010063 m
 超過 500m： 0
 相同 OSM snap node 群組： 32
-[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 1/3,660 points (0.0%) | speed=132,890.38 points/s | elapsed=0.0s | ETA=0.0s
-[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 915/3,660 points (25.0%) | speed=83,177.41 points/s | elapsed=0.0s | ETA=0.0s
-[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 1,830/3,660 points (50.0%) | speed=84,646.54 points/s | elapsed=0.0s | ETA=0.0s
-[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 2,745/3,660 points (75.0%) | speed=72,953.69 points/s | elapsed=0.0s | ETA=0.0s
-[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 3,660/3,660 points (100.0%) | speed=67,007.13 points/s | elapsed=0.1s | ETA=0.0s
-[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 3,660/3,660 points (100.0%) | speed=62,671.19 points/s | elapsed=0.1s | ETA=0.0s | virtual_nodes=3,501; owner_errors=0
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 1/3,660 points (0.0%) | speed=94,723.88 points/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 915/3,660 points (25.0%) | speed=42,518.08 points/s | elapsed=0.0s | ETA=0.1s
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 1,830/3,660 points (50.0%) | speed=47,686.43 points/s | elapsed=0.0s | ETA=0.0s
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 2,745/3,660 points (75.0%) | speed=48,479.83 points/s | elapsed=0.1s | ETA=0.0s
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 3,660/3,660 points (100.0%) | speed=49,292.36 points/s | elapsed=0.1s | ETA=0.0s
+[CELL4_PROGRESS] 機車 virtual anchor owner 掃描 | 3,660/3,660 points (100.0%) | speed=44,502.63 points/s | elapsed=0.1s | ETA=0.0s | virtual_nodes=3,501; owner_errors=0
 V65.64.23 virtual anchor reuse：0 筆（通過）
 V65.64.23 virtual anchor owner 驗證：3501 筆（通過）
 V65.64.23 同一路名鄰近低階道路保護案件： 1733 筆
@@ -5829,484 +5829,484 @@ V65.64.23 同一路名鄰近低階道路保護案件： 1733 筆
 建立本機 OSM 道路成本矩陣（機車）
 ======================================================================
 建立路徑／旅行時間矩陣（每條道路只計算一次）...
-[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 1/227,322 edges (0.0%) | speed=18,689.49 edges/s | elapsed=0.0s | ETA=12.2s
-[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 56,831/227,322 edges (25.0%) | speed=46,969.44 edges/s | elapsed=1.2s | ETA=3.6s
-[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 113,661/227,322 edges (50.0%) | speed=46,113.66 edges/s | elapsed=2.5s | ETA=2.5s
-[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 170,492/227,322 edges (75.0%) | speed=44,968.84 edges/s | elapsed=3.8s | ETA=1.3s
-[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 227,322/227,322 edges (100.0%) | speed=43,214.26 edges/s | elapsed=5.3s | ETA=0.0s
-[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 227,322/227,322 edges (100.0%) | speed=43,166.78 edges/s | elapsed=5.3s | ETA=0.0s | route_pairs=225,477; time_pairs=225,477; length_edges=227,322
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 1/227,322 edges (0.0%) | speed=17,232.17 edges/s | elapsed=0.0s | ETA=13.2s
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 56,831/227,322 edges (25.0%) | speed=38,255.86 edges/s | elapsed=1.5s | ETA=4.5s
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 113,661/227,322 edges (50.0%) | speed=38,286.64 edges/s | elapsed=3.0s | ETA=3.0s
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 170,492/227,322 edges (75.0%) | speed=38,779.15 edges/s | elapsed=4.4s | ETA=1.5s
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 227,322/227,322 edges (100.0%) | speed=38,995.76 edges/s | elapsed=5.8s | ETA=0.0s
+[CELL4_PROGRESS] 機車 ROUTE/TIME CSR 道路 edge 掃描 | 227,322/227,322 edges (100.0%) | speed=38,971.67 edges/s | elapsed=5.8s | ETA=0.0s | route_pairs=225,477; time_pairs=225,477; length_edges=227,322
   CSR 節點=89,887 | directed 道路段=225,477
 [V154_ROUTE_COMPONENT_PREFLIGHT] weak_components=334 | strong_components=622 | route_edges=225477
 計算各查核點之間的最短道路路線...
 ROUTE Dijkstra：來源 3,660 筆分成 229 批，每批最多 16 筆；predecessor 磁碟映射
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 1/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 1/229 | elapsed=0.44s | status=PASS
-[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 16/3,660 sources (0.4%) | speed=35.57 sources/s | elapsed=0.4s | ETA=102.4s | batch=1/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 1/229 | elapsed=0.37s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 16/3,660 sources (0.4%) | speed=40.87 sources/s | elapsed=0.4s | ETA=89.2s | batch=1/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 2/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 2/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 2/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 3/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 3/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 3/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 4/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 4/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 4/229 | elapsed=0.37s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 5/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 5/229 | elapsed=0.46s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 5/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 6/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 6/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 6/229 | elapsed=0.35s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 7/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 7/229 | elapsed=0.47s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 7/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 8/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 8/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 8/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 9/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 9/229 | elapsed=0.52s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 9/229 | elapsed=0.39s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 10/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 10/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 10/229 | elapsed=0.37s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 11/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 11/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 11/229 | elapsed=0.36s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 12/229
 [CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 12/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 13/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 13/229 | elapsed=0.45s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 13/229 | elapsed=0.37s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 14/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 14/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 14/229 | elapsed=0.38s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 15/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 15/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 15/229 | elapsed=0.58s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 16/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 16/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 16/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 17/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 17/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 17/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 18/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 18/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 18/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 19/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 19/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 19/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 20/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 20/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 20/229 | elapsed=0.52s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 21/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 21/229 | elapsed=0.61s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 21/229 | elapsed=0.50s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 22/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 22/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 22/229 | elapsed=0.54s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 23/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 23/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 23/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 24/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 24/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 24/229 | elapsed=0.39s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 25/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 25/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 25/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 26/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 26/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 26/229 | elapsed=0.35s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 27/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 27/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 27/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 28/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 28/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 28/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 29/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 29/229 | elapsed=0.46s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 29/229 | elapsed=0.54s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 30/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 30/229 | elapsed=0.45s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 30/229 | elapsed=0.38s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 31/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 31/229 | elapsed=0.42s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 31/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 32/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 32/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 32/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 33/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 33/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 33/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 34/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 34/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 34/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 35/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 35/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 35/229 | elapsed=0.61s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 36/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 36/229 | elapsed=0.53s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 36/229 | elapsed=0.39s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 37/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 37/229 | elapsed=0.48s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 37/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 38/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 38/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 38/229 | elapsed=0.35s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 39/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 39/229 | elapsed=0.42s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 39/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 40/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 40/229 | elapsed=0.42s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 40/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 41/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 41/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 41/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 42/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 42/229 | elapsed=0.46s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 42/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 43/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 43/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 43/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 44/229
 [CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 44/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 45/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 45/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 45/229 | elapsed=0.37s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 720/3,660 sources (19.7%) | speed=35.11 sources/s | elapsed=20.5s | ETA=83.7s | batch=45/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 46/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 46/229 | elapsed=0.41s | status=PASS
-[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 736/3,660 sources (20.1%) | speed=35.62 sources/s | elapsed=20.7s | ETA=82.1s | batch=46/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 46/229 | elapsed=0.38s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 47/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 47/229 | elapsed=0.60s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 47/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 48/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 48/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 48/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 49/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 49/229 | elapsed=0.46s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 49/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 50/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 50/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 50/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 51/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 51/229 | elapsed=0.49s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 51/229 | elapsed=0.55s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 52/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 52/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 52/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 53/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 53/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 53/229 | elapsed=0.39s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 54/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 54/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 54/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 55/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 55/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 55/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 56/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 56/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 56/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 57/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 57/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 57/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 58/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 58/229 | elapsed=0.36s | status=PASS
-[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 928/3,660 sources (25.4%) | speed=35.67 sources/s | elapsed=26.0s | ETA=76.6s | batch=58/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 58/229 | elapsed=0.50s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 928/3,660 sources (25.4%) | speed=34.76 sources/s | elapsed=26.7s | ETA=78.6s | batch=58/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 59/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 59/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 59/229 | elapsed=0.50s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 60/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 60/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 60/229 | elapsed=0.47s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 61/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 61/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 61/229 | elapsed=0.51s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 62/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 62/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 62/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 63/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 63/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 63/229 | elapsed=0.51s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 64/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 64/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 64/229 | elapsed=0.48s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 65/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 65/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 65/229 | elapsed=0.56s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 66/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 66/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 66/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 67/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 67/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 67/229 | elapsed=0.51s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 68/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 68/229 | elapsed=0.51s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 68/229 | elapsed=0.50s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 69/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 69/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 69/229 | elapsed=0.50s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 70/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 70/229 | elapsed=0.42s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 70/229 | elapsed=0.55s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 71/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 71/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 71/229 | elapsed=0.50s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 72/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 72/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 72/229 | elapsed=0.54s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 73/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 73/229 | elapsed=0.42s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 73/229 | elapsed=0.48s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 74/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 74/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 74/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 75/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 75/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 75/229 | elapsed=0.37s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 76/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 76/229 | elapsed=0.46s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 76/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 77/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 77/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 77/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 78/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 78/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 78/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 79/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 79/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 79/229 | elapsed=0.55s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 80/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 80/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 80/229 | elapsed=0.57s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 81/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 81/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 81/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 82/229
 [CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 82/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 83/229
 [CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 83/229 | elapsed=0.38s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 84/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 84/229 | elapsed=0.42s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 84/229 | elapsed=0.36s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 85/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 85/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 85/229 | elapsed=0.38s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 86/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 86/229 | elapsed=0.51s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 86/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 87/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 87/229 | elapsed=0.51s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 87/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 88/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 88/229 | elapsed=0.49s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 88/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 89/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 89/229 | elapsed=0.49s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 89/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 90/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 90/229 | elapsed=0.45s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 90/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 91/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 91/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 91/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 92/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 92/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 92/229 | elapsed=0.56s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 93/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 93/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 93/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 94/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 94/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 94/229 | elapsed=0.39s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 95/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 95/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 95/229 | elapsed=0.52s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 96/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 96/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 96/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 97/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 97/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 97/229 | elapsed=0.47s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 98/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 98/229 | elapsed=0.51s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 98/229 | elapsed=0.50s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 1,568/3,660 sources (42.8%) | speed=33.47 sources/s | elapsed=46.9s | ETA=62.5s | batch=98/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 99/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 99/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 99/229 | elapsed=0.53s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 100/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 100/229 | elapsed=0.42s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 100/229 | elapsed=0.54s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 101/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 101/229 | elapsed=0.45s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 101/229 | elapsed=0.63s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 102/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 102/229 | elapsed=0.50s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 102/229 | elapsed=0.48s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 103/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 103/229 | elapsed=0.51s | status=PASS
-[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 1,648/3,660 sources (45.0%) | speed=35.45 sources/s | elapsed=46.5s | ETA=56.8s | batch=103/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 103/229 | elapsed=0.50s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 104/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 104/229 | elapsed=0.45s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 104/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 105/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 105/229 | elapsed=0.45s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 105/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 106/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 106/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 106/229 | elapsed=0.57s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 107/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 107/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 107/229 | elapsed=0.67s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 108/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 108/229 | elapsed=0.49s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 108/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 109/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 109/229 | elapsed=0.42s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 109/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 110/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 110/229 | elapsed=0.46s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 110/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 111/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 111/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 111/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 112/229
 [CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 112/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 113/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 113/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 113/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 114/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 114/229 | elapsed=0.50s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 114/229 | elapsed=0.39s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 115/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 115/229 | elapsed=0.45s | status=PASS
-[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 1,840/3,660 sources (50.3%) | speed=35.13 sources/s | elapsed=52.4s | ETA=51.8s | batch=115/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 115/229 | elapsed=0.43s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 1,840/3,660 sources (50.3%) | speed=33.02 sources/s | elapsed=55.7s | ETA=55.1s | batch=115/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 116/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 116/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 116/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 117/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 117/229 | elapsed=0.45s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 117/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 118/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 118/229 | elapsed=0.47s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 118/229 | elapsed=0.38s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 119/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 119/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 119/229 | elapsed=0.37s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 120/229
 [CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 120/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 121/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 121/229 | elapsed=0.48s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 121/229 | elapsed=0.39s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 122/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 122/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 122/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 123/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 123/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 123/229 | elapsed=0.53s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 124/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 124/229 | elapsed=0.48s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 124/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 125/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 125/229 | elapsed=0.50s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 125/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 126/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 126/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 126/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 127/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 127/229 | elapsed=0.48s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 127/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 128/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 128/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 128/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 129/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 129/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 129/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 130/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 130/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 130/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 131/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 131/229 | elapsed=0.42s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 131/229 | elapsed=0.57s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 132/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 132/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 132/229 | elapsed=0.47s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 133/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 133/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 133/229 | elapsed=0.58s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 134/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 134/229 | elapsed=0.49s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 134/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 135/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 135/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 135/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 136/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 136/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 136/229 | elapsed=0.47s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 137/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 137/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 137/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 138/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 138/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 138/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 139/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 139/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 139/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 140/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 140/229 | elapsed=0.45s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 140/229 | elapsed=0.47s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 141/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 141/229 | elapsed=0.52s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 141/229 | elapsed=0.50s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 142/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 142/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 142/229 | elapsed=0.49s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 143/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 143/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 143/229 | elapsed=0.52s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 144/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 144/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 144/229 | elapsed=0.65s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 145/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 145/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 145/229 | elapsed=0.49s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 146/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 146/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 146/229 | elapsed=0.38s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 147/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 147/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 147/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 148/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 148/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 148/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 149/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 149/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 149/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 150/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 150/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 150/229 | elapsed=0.48s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 151/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 151/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 151/229 | elapsed=0.48s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 152/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 152/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 152/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 153/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 153/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 153/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 154/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 154/229 | elapsed=0.46s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 154/229 | elapsed=0.38s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 155/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 155/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 155/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 156/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 156/229 | elapsed=0.42s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 156/229 | elapsed=0.38s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 157/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 157/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 157/229 | elapsed=0.39s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 2,512/3,660 sources (68.6%) | speed=33.06 sources/s | elapsed=76.0s | ETA=34.7s | batch=157/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 158/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 158/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 158/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 159/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 159/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 159/229 | elapsed=0.47s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 160/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 160/229 | elapsed=0.42s | status=PASS
-[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 2,560/3,660 sources (69.9%) | speed=35.36 sources/s | elapsed=72.4s | ETA=31.1s | batch=160/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 160/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 161/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 161/229 | elapsed=0.64s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 161/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 162/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 162/229 | elapsed=0.48s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 162/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 163/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 163/229 | elapsed=0.55s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 163/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 164/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 164/229 | elapsed=0.69s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 164/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 165/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 165/229 | elapsed=0.47s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 165/229 | elapsed=0.38s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 166/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 166/229 | elapsed=0.51s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 166/229 | elapsed=0.52s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 167/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 167/229 | elapsed=0.46s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 167/229 | elapsed=0.38s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 168/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 168/229 | elapsed=0.47s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 168/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 169/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 169/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 169/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 170/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 170/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 170/229 | elapsed=0.49s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 171/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 171/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 171/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 172/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 172/229 | elapsed=0.36s | status=PASS
-[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 2,752/3,660 sources (75.2%) | speed=35.01 sources/s | elapsed=78.6s | ETA=25.9s | batch=172/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 172/229 | elapsed=0.50s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 2,752/3,660 sources (75.2%) | speed=33.12 sources/s | elapsed=83.1s | ETA=27.4s | batch=172/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 173/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 173/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 173/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 174/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 174/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 174/229 | elapsed=0.47s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 175/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 175/229 | elapsed=0.48s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 175/229 | elapsed=0.49s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 176/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 176/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 176/229 | elapsed=0.50s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 177/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 177/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 177/229 | elapsed=0.48s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 178/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 178/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 178/229 | elapsed=0.55s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 179/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 179/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 179/229 | elapsed=0.48s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 180/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 180/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 180/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 181/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 181/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 181/229 | elapsed=0.57s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 182/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 182/229 | elapsed=0.35s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 182/229 | elapsed=0.50s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 183/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 183/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 183/229 | elapsed=0.49s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 184/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 184/229 | elapsed=0.51s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 184/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 185/229
 [CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 185/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 186/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 186/229 | elapsed=0.50s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 186/229 | elapsed=0.55s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 187/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 187/229 | elapsed=0.46s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 187/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 188/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 188/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 188/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 189/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 189/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 189/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 190/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 190/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 190/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 191/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 191/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 191/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 192/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 192/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 192/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 193/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 193/229 | elapsed=0.50s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 193/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 194/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 194/229 | elapsed=0.50s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 194/229 | elapsed=0.36s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 195/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 195/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 195/229 | elapsed=0.36s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 196/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 196/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 196/229 | elapsed=0.36s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 197/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 197/229 | elapsed=0.44s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 197/229 | elapsed=0.36s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 198/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 198/229 | elapsed=0.53s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 198/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 199/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 199/229 | elapsed=0.46s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 199/229 | elapsed=0.60s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 200/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 200/229 | elapsed=0.45s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 200/229 | elapsed=0.52s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 201/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 201/229 | elapsed=0.47s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 201/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 202/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 202/229 | elapsed=0.49s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 202/229 | elapsed=0.43s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 203/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 203/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 203/229 | elapsed=0.47s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 204/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 204/229 | elapsed=0.43s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 204/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 205/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 205/229 | elapsed=0.67s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 205/229 | elapsed=0.47s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 206/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 206/229 | elapsed=0.46s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 206/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 207/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 207/229 | elapsed=0.49s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 207/229 | elapsed=0.50s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 208/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 208/229 | elapsed=0.47s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 208/229 | elapsed=0.48s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 209/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 209/229 | elapsed=0.47s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 209/229 | elapsed=0.53s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 210/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 210/229 | elapsed=0.41s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 210/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 211/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 211/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 211/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 212/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 212/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 212/229 | elapsed=0.45s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 213/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 213/229 | elapsed=0.36s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 213/229 | elapsed=0.48s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 214/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 214/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 214/229 | elapsed=0.52s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 3,424/3,660 sources (93.6%) | speed=33.05 sources/s | elapsed=103.6s | ETA=7.1s | batch=214/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 215/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 215/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 215/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 216/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 216/229 | elapsed=0.42s | status=PASS
-[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 3,456/3,660 sources (94.4%) | speed=34.96 sources/s | elapsed=98.9s | ETA=5.8s | batch=216/229; chunk_sources=16; working_set≈16.46 MiB; predecessor=disk-memmap
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 216/229 | elapsed=0.47s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 217/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 217/229 | elapsed=0.39s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 217/229 | elapsed=0.51s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 218/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 218/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 218/229 | elapsed=0.51s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 219/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 219/229 | elapsed=0.40s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 219/229 | elapsed=0.62s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 220/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 220/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 220/229 | elapsed=0.49s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 221/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 221/229 | elapsed=0.48s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 221/229 | elapsed=0.49s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 222/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 222/229 | elapsed=0.37s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 222/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 223/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 223/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 223/229 | elapsed=0.46s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 224/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 224/229 | elapsed=0.38s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 224/229 | elapsed=0.41s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 225/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 225/229 | elapsed=0.54s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 225/229 | elapsed=0.42s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 226/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 226/229 | elapsed=0.50s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 226/229 | elapsed=0.44s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 227/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 227/229 | elapsed=0.42s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 227/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 228/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 228/229 | elapsed=0.64s | status=PASS
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 228/229 | elapsed=0.40s | status=PASS
 [CELL4_STAGE_START] ROUTE Dijkstra Dijkstra batch 229/229
-[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 229/229 | elapsed=0.32s | status=PASS
-[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 3,660/3,660 sources (100.0%) | speed=34.91 sources/s | elapsed=104.8s | ETA=0.0s | batch=229/229; chunk_sources=12; working_set≈12.34 MiB; predecessor=disk-memmap
-[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 3,660/3,660 sources (100.0%) | speed=34.91 sources/s | elapsed=104.8s | ETA=0.0s | batches=229; predecessor=disk-memmap
+[CELL4_STAGE_DONE] ROUTE Dijkstra Dijkstra batch 229/229 | elapsed=0.27s | status=PASS
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 3,660/3,660 sources (100.0%) | speed=33.05 sources/s | elapsed=110.7s | ETA=0.0s | batch=229/229; chunk_sources=12; working_set≈12.34 MiB; predecessor=disk-memmap
+[CELL4_PROGRESS] ROUTE Dijkstra Dijkstra 多來源矩陣 | 3,660/3,660 sources (100.0%) | speed=33.05 sources/s | elapsed=110.8s | ETA=0.0s | batches=229; predecessor=disk-memmap
 最短道路路線計算完成。
 可達元素：13388282/13395600
 可達率：99.95%
@@ -6326,13 +6326,13 @@ ROUTE Dijkstra：來源 3,660 筆分成 229 批，每批最多 16 筆；predeces
 
 [CELL4_EXECUTION_ERROR]
 Traceback (most recent call last):
-  File "/content/Cell4_v65.85.7.154.py", line 38372, in <module>
+  File "/content/Cell4_v65.85.7.154 (1).py", line 38372, in <module>
     _payload = run_vehicle_mode(
         vehicle_mode=_mode,
     ...<8 lines>...
         shared_context=None,
     )
-  File "/content/Cell4_v65.85.7.154.py", line 14487, in run_vehicle_mode
+  File "/content/Cell4_v65.85.7.154 (1).py", line 14487, in run_vehicle_mode
     raise RuntimeError(
     ...<4 lines>...
     )
@@ -6340,12 +6340,5 @@ RuntimeError: 固定起點無法依目前 OSM 有向道路網到達全部地籍�
 
 
 [CELL4_EXECUTION_STATUS]=FAILED
-[CELL4_RUN_FINISHED_TW]=2026-11-24T14:08:01+08:00
+[CELL4_RUN_FINISHED_TW]=2026-11-24T14:32:43+08:00
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-24/Cell4_v65.85.7.154_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
-[GITHUB_UPLOAD_STATUS]=SUCCESS
-[GITHUB_READBACK_STATUS]=PASS
-[GITHUB_BLOB_SHA]=76fdfac70b99bbf0e8fe6f775f70b5a7270d47ab
-[GITHUB_READBACK_SHA256]=51e12b70868e56221fd778c8afcbcdcd7e9d7a58a416e55f0fd8803b59eefd86
-[GITHUB_BRANCH]=fro-upload/2026-11-24
-[GITHUB_FILE_URL]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-24/Cell4_v65.85.7.154_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
-[執行備忘錄] GitHub 執行結果：https://github.com/CHLINX/fro/blob/fro-upload/2026-11-24/Cell4_v65.85.7.154_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
