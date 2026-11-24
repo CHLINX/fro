@@ -1,0 +1,111 @@
+==============================================================================
+CELL4_VERSION=v65.85.7.156
+CELL4_LOG_PATH=/content/Cell4_v65.85.7.156_執行結果.txt
+CELL4_RUN_STARTED_TW=2026-11-24T16:57:47+08:00
+==============================================================================
+[GITHUB_TOKEN_PREFLIGHT]=AVAILABLE
+INPUT_FRESHNESS_STATUS=PASS_SELECTED_LATEST_MODIFIED
+INPUT_SELECTED_PATH=/content/result.xlsx
+INPUT_SELECTED_SHA256=d85fb651769e173ab921f180b36a6630fbd3d9dbc3b7e9437ae38cc750fec66e
+INPUT_SELECTED_SIZE_BYTES=784640
+INPUT_SELECTED_MTIME_NS=1795485263417668850
+INPUT_CANDIDATE_AUDIT=[{"mtime_ns": 1795485263417668850, "path": "/content/result.xlsx", "sha256": "d85fb651769e173ab921f180b36a6630fbd3d9dbc3b7e9437ae38cc750fec66e", "size_bytes": 784640}]
+ROUTE_CONFIG_SELECTION=USER_CANCEL | REASON=user | TIMEOUT_SECONDS=30
+使用既有路線設定檔：/content/input_route_config.xlsx
+Cell 4 v65.85.7.156｜Cell 2 輸入：/content/result.xlsx
+CELL4_PROGRESS_REPORTING=ENABLED | interval=20s | heartbeat=30s | upload_card=INLINE_CELL_OUTPUT
+======================================================================
+Cell 4 儲存模式： CONTENT
+Cell 4 OSM 快取： /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE
+v156 OSM 來源策略：MOTOR 強制使用達指定時間的 Overpass；前置驗證與 MOTOR graph 有限重試；拒絕舊 Geofabrik PBF。
+v81 跨日重複道路：不設舊基準硬上限；仍列入全域最佳化目標。
+Google Drive 未預先掛載；本次快取、檢查點及診斷備份改存 /content。
+注意：/content 是 Colab 暫存空間，Runtime 中斷或重啟後資料可能消失。
+======================================================================
+[CELL4_READ_START] 路線設定檔 RouteConfig | path=/content/input_route_config.xlsx | source_size=12.20 KiB
+[CELL4_STAGE_START] 讀取 Excel：路線設定檔 RouteConfig
+[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | elapsed=0.02s | status=PASS
+[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.51 MiB/s | elapsed=0.02s
+路線設定檔關鍵值檢查：
+  交通工具 = '只算機車'
+  每點停留時間 = 3
+  每日可勘查時間 = 5
+  機車平均速度 = 30
+  汽車平面道路平均速度 = 40
+  汽車高速公路平均速度 = 100
+  汽車快速公路平均速度 = 70
+  臺31～臺39高鐵橋下道路成本倍率 = ×0.95
+  臺61～臺89快速公路平面側車道成本倍率 = ×0.95
+  Motorcycle designated 道路成本倍率 = ×0.85
+  Motor_vehicle designated 道路成本倍率 = ×0.90
+  Service 道路成本倍率 = ×1.00
+  Living Street 道路成本倍率 = ×1.00
+  Track 產業道路成本倍率 = ×2.00
+  未鋪面路面成本倍率 = ×2.00
+  Destination 限制道路成本倍率 = ×1.15
+  汽車 Service 一般道路成本倍率 = ×1.30
+  汽車 Service Alley 成本倍率 = ×3.50
+  汽車 Service Driveway 成本倍率 = ×3.00
+  汽車 Service Parking Aisle 成本倍率 = ×4.00
+  汽車 Living Street 成本倍率 = ×1.20
+  汽車 Track 產業道路成本倍率 = ×6.00
+  汽車 Track grade4／grade5 附加倍率 = ×1.30
+  汽車 Track／Service narrow=yes 附加倍率 = ×1.25
+  汽車未鋪面道路成本倍率 = ×3.00
+  汽車未鋪面窄幅道路附加倍率 = ×1.50
+  汽車 Destination 道路成本倍率 = ×1.20
+  汽車 Conditional 限制道路成本倍率 = ×5.00
+  汽車窄幅 Service／Track 成本倍率 = ×4.00
+  汽車人工指定避免道路成本倍率 = ×20.00
+  汽車窄幅道路判定寬度 = 3.50 m
+======================================================================
+載入路線規劃設定檔
+設定檔： /content/input_route_config.xlsx
+交通工具設定：只算機車
+每點停留時間：3 分鐘
+每日可勘查時間：5 小時
+機車平均速度：30 km/h
+機車路網資格：普通重型機車｜高速／快速公路主線與匝道：禁止
+機車道路成本倍率：臺31～39橋下×0.95 | 臺61～89平面側車道×0.95 | Motorcycle designated×0.85 | Motor_vehicle designated×0.90 | Service×1.00 | Living Street×1.00 | Track×2.00 | Unpaved×2.00 | Destination×1.15
+汽車平面道路平均速度：40 km/h
+汽車高速公路平均速度：100 km/h
+汽車快速公路平均速度：70 km/h
+汽車道路成本倍率：Service×1.30 | Alley×3.50 | Driveway×3.00 | Parking Aisle×4.00 | Living Street×1.20 | Track×6.00 | Unpaved×3.00 | Destination×1.20 | Conditional×5.00 | 窄幅加權×4.00 | 人工避免×20.00
+汽車人工路段設定檔：找不到 /content/input_car_forbidden_segments.xlsx → 略過
+
+======================================================================
+Cell 4 續跑進度
+======================================================================
+進度檔案位置： /content/巡田最速適_Cell4_Fallback/CELL4_CHECKPOINTS
+儲存位置：/content（未掛載 Drive）
+
+======================================================================
+Cell 4 RAM 安全檢查
+======================================================================
+RAM 總量：12.67 GB
+RAM 可用：7.65 GB
+BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
+[V139_LIVE_OSM_CSV] generation_gate=START
+[V139_LIVE_OSM_PARCELS] 有效=3659 | 略過=1 | 略過原因樣本=[{'地籍資料列索引': '0', '原因': '空幾何或非 Polygon'}]
+[V156_OVERPASS_REQUIRED_CONNECTION] {"status": "PASS", "endpoint": "https://overpass-api.de/api/interpreter", "snapshot_osm_base_utc": "2026-11-24T08:57:15Z", "snapshot_age_hours": 0.0229, "way_a": 851557101, "way_a_version": 2, "way_b": 444660785, "way_b_version": 4, "shared_nodes": [4421237201], "required_shared_node": 4421237201, "endpoint_attempt": 1, "endpoint_max_attempts": 3, "elapsed_seconds": 33.64}
+[V144_GEOFABRIK_FAILOVER] v156 強制使用已驗證的新鮮 Overpass；snapshot=2026-11-24T08:57:15Z | Way 851557101 ↔ Way 444660785 shared_node=4421237201；改由具有 timestamp_osm_base 新鮮度驗證的 Overpass 分批道路幾何備援。
+[V144_OVERPASS_GEOMETRY_FALLBACK] START | parcels=3659 | initial_batch_size=6 | batches=610 | endpoint_priority=https://overpass-api.de/api
+[V144_OVERPASS_ADAPTIVE_SPLIT] parent_batch=1 | depth=0 | targets=6 -> 3+3 | reason=all_endpoints_failed
+[V144_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=19 | file=65ece483d9c6b622502261845064ac97e59ff6941dbfdb034061874e0f216432.json.gz
+[V144_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=12 | file=8e15543851f5d09c09cabc12978bdd9f5b4af7605ddd534cae0c62a6f687450f.json.gz
+[V144_OVERPASS_GEOMETRY_FALLBACK] base_batch=1/610 | completed_query_groups=2 | parcels_completed=6/3659 | distinct_ways=26
+[V144_OVERPASS_ADAPTIVE_SPLIT] parent_batch=2 | depth=0 | targets=6 -> 3+3 | reason=all_endpoints_failed
+[V144_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=18 | file=6451a15d0f6b6e7a8d41f38f6c8fc8d9b856d7d7b718ee9c9ae1c25310793416.json.gz
+[V144_OVERPASS_ADAPTIVE_SPLIT] parent_batch=2 | depth=1 | targets=3 -> 1+2 | reason=all_endpoints_failed
+[CELL4_TERMINATION]=NORMAL_ABORT | 未進入路線最佳化；未寫入新的 Cell5 handoff。
+
+[CELL4_EXECUTION_ERROR]
+前置檢查未通過：v144 Overpass 道路查詢在最小單地籍批次仍無法取得新鮮資料；已保留此前成功子批檢查點。
+原始批次=2 | 地籍索引=10 | endpoint=https://overpass-api.de/api/interpreter HTTPError: HTTP Error 502: Bad Gateway | elapsed=0.5s
+endpoint=https://ovp.dresel.systems/api-as/interpreter ValueError: OSM 快照早於本次必要道路修正：snapshot=2026-11-23T21:21:17+00:00 | required>=2026-11-24T08:07:04+00:00 | elapsed=1.1s
+endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | elapsed=75.6s
+endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | elapsed=1.2s
+
+[CELL4_EXECUTION_STATUS]=FAILED_PRECHECK
+[CELL4_RUN_FINISHED_TW]=2026-11-24T17:07:38+08:00
+[GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-24/Cell4_v65.85.7.156_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
