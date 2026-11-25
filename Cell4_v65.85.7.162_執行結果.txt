@@ -1,0 +1,168 @@
+==============================================================================
+CELL4_VERSION=v65.85.7.162
+CELL4_LOG_PATH=/content/Cell4_v65.85.7.162_執行結果.txt
+[CELL4_OUTPUT_VIEW]=ROLLING_LAST_60_LINES | full_log=ENABLED
+[CELL4_OUTPUT_RENDERER]=LAUNCHER_ONLY | nested_display=DISABLED
+CELL4_RUN_STARTED_TW=2026-11-25T11:53:25+08:00
+==============================================================================
+[GITHUB_TOKEN_PREFLIGHT]=AVAILABLE
+INPUT_FRESHNESS_STATUS=PASS_SELECTED_LATEST_MODIFIED
+INPUT_SELECTED_PATH=/content/result.xlsx
+INPUT_SELECTED_SHA256=62778fcff4bb3262625caad9ac0f7d99af0870134b10cd1ca94cfc3c255a8835
+INPUT_SELECTED_SIZE_BYTES=758254
+INPUT_SELECTED_MTIME_NS=1795572517967081588
+INPUT_CANDIDATE_AUDIT=[{"mtime_ns": 1795572517967081588, "path": "/content/result.xlsx", "sha256": "62778fcff4bb3262625caad9ac0f7d99af0870134b10cd1ca94cfc3c255a8835", "size_bytes": 758254}]
+ROUTE_CONFIG_SELECTION=USER_CANCEL | REASON=user | TIMEOUT_SECONDS=30
+使用既有路線設定檔：/content/input_route_config.xlsx
+Cell 4 v65.85.7.162｜Cell 2 輸入：/content/result.xlsx
+CELL4_PROGRESS_REPORTING=ENABLED | interval=20s | heartbeat=30s | upload_card=INLINE_CELL_OUTPUT
+======================================================================
+Cell 4 儲存模式：固定 /content（CONTENT_ONLY）
+Cell 4 OSM 快取： /content/巡田最速適_Cell4_Fallback/CELL4_OSM_CACHE
+Google Drive：完全不偵測、不掛載、不讀寫。
+跨 Runtime 保存方式：下載 Cell4 續跑備份 ZIP；下次執行時可上傳還原。
+注意：若未下載備份，/content 被 Runtime 清除後無法復原。
+======================================================================
+[CELL4_READ_START] 路線設定檔 RouteConfig | path=/content/input_route_config.xlsx | source_size=12.20 KiB
+[CELL4_STAGE_START] 讀取 Excel：路線設定檔 RouteConfig
+[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | stage_elapsed=0.02s | run_elapsed=3.5s | status=PASS
+[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.55 MiB/s | elapsed=0.02s
+路線設定檔關鍵值檢查：
+  交通工具 = '只算機車'
+  每點停留時間 = 3
+  每日可勘查時間 = 5
+  機車平均速度 = 30
+  汽車平面道路平均速度 = 40
+  汽車高速公路平均速度 = 100
+  汽車快速公路平均速度 = 70
+  臺31～臺39高鐵橋下道路成本倍率 = ×0.95
+  臺61～臺89快速公路平面側車道成本倍率 = ×0.95
+  Motorcycle designated 道路成本倍率 = ×0.85
+  Motor_vehicle designated 道路成本倍率 = ×0.90
+  Service 道路成本倍率 = ×1.00
+  Living Street 道路成本倍率 = ×1.00
+  Track 產業道路成本倍率 = ×2.00
+  未鋪面路面成本倍率 = ×2.00
+  Destination 限制道路成本倍率 = ×1.15
+  汽車 Service 一般道路成本倍率 = ×1.30
+  汽車 Service Alley 成本倍率 = ×3.50
+  汽車 Service Driveway 成本倍率 = ×3.00
+  汽車 Service Parking Aisle 成本倍率 = ×4.00
+  汽車 Living Street 成本倍率 = ×1.20
+  汽車 Track 產業道路成本倍率 = ×6.00
+  汽車 Track grade4／grade5 附加倍率 = ×1.30
+  汽車 Track／Service narrow=yes 附加倍率 = ×1.25
+  汽車未鋪面道路成本倍率 = ×3.00
+  汽車未鋪面窄幅道路附加倍率 = ×1.50
+  汽車 Destination 道路成本倍率 = ×1.20
+  汽車 Conditional 限制道路成本倍率 = ×5.00
+  汽車窄幅 Service／Track 成本倍率 = ×4.00
+  汽車人工指定避免道路成本倍率 = ×20.00
+  汽車窄幅道路判定寬度 = 3.50 m
+======================================================================
+載入路線規劃設定檔
+設定檔： /content/input_route_config.xlsx
+交通工具設定：只算機車
+每點停留時間：3 分鐘
+每日可勘查時間：5 小時
+機車平均速度：30 km/h
+機車路網資格：普通重型機車｜高速／快速公路主線與匝道：禁止
+機車道路成本倍率：臺31～39橋下×0.95 | 臺61～89平面側車道×0.95 | Motorcycle designated×0.85 | Motor_vehicle designated×0.90 | Service×1.00 | Living Street×1.00 | Track×2.00 | Unpaved×2.00 | Destination×1.15
+汽車平面道路平均速度：40 km/h
+汽車高速公路平均速度：100 km/h
+汽車快速公路平均速度：70 km/h
+汽車道路成本倍率：Service×1.30 | Alley×3.50 | Driveway×3.00 | Parking Aisle×4.00 | Living Street×1.20 | Track×6.00 | Unpaved×3.00 | Destination×1.20 | Conditional×5.00 | 窄幅加權×4.00 | 人工避免×20.00
+汽車人工路段設定檔：找不到 /content/input_car_forbidden_segments.xlsx → 略過
+
+======================================================================
+Cell 4 續跑進度
+======================================================================
+進度檔案位置： /content/巡田最速適_Cell4_Fallback/CELL4_CHECKPOINTS
+儲存位置：/content（v161 固定 CONTENT_ONLY；不使用 Google Drive）
+
+======================================================================
+Cell 4 RAM 安全檢查
+======================================================================
+RAM 總量：12.67 GB
+RAM 可用：10.10 GB
+BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
+[V139_LIVE_OSM_CSV] generation_gate=START
+[V139_LIVE_OSM_PARCELS] 有效=3659 | 略過=1 | 略過原因樣本=[{'地籍資料列索引': '0', '原因': '空幾何或非 Polygon'}]
+[V156_OVERPASS_REQUIRED_CONNECTION] {"status": "PASS", "endpoint": "https://overpass-api.de/api/interpreter", "snapshot_osm_base_utc": "2026-11-25T03:52:57Z", "snapshot_age_hours": 0.0232, "way_a": 851557101, "way_a_version": 2, "way_b": 444660785, "way_b_version": 4, "shared_nodes": [4421237201], "required_shared_node": 4421237201, "endpoint_attempt": 1, "endpoint_max_attempts": 3, "elapsed_seconds": 43.91}
+[V144_GEOFABRIK_FAILOVER] v156 強制使用已驗證的新鮮 Overpass；snapshot=2026-11-25T03:52:57Z | Way 851557101 ↔ Way 444660785 shared_node=4421237201；改由具有 timestamp_osm_base 新鮮度驗證的 Overpass 分批道路幾何備援。
+[CELL4_RESUME_RESTORE] 若有先前下載的 Cell4 續跑備份 ZIP，請在檔案選擇器中上傳；沒有備份請直接取消。
+[CELL4_RESUME_RESTORE] NO_FILE_SELECTED | continue_from_empty=YES
+[V160_OVERPASS_GEOMETRY_FALLBACK] START | parcels=3659 | initial_batch_size=3 | batches=1220 | endpoint_priority=https://overpass-api.de/api | global_circuit_breaker=ENABLED | stable_health_probes=2 | bounded_recovery_cycles=4
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://overpass-api.de/api/interpreter | attempt=1/1 | ways=19 | snapshot=2026-11-25T04:01:18Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=19 | file=c6f19541bd291eb2d37d35b05cbe7747a9b574917af3885b8bf9e7d98c85fe79.json.gz
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1/1220 | completed_query_groups=1 | parcels_completed=3/3659 | deferred_groups=0 | circuit_open=False | distinct_ways=19
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://overpass-api.de/api/interpreter | attempt=1/1 | ways=12 | snapshot=2026-11-25T04:02:20Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=12 | file=a68bfc21b3ff3895172ef812c5407275b500968d457a44d5b28d9bd4c3e0e9a6.json.gz
+
+[CELL4_EXECUTION_ERROR]
+Traceback (most recent call last):
+  File "/content/Cell4_v65.85.7.162.py", line 39280, in <module>
+    _CELL4_V139_LIVE_OSM_META = _cell4_generate_live_osm_geometry_csv(force_refresh=True)
+  File "/content/Cell4_v65.85.7.162.py", line 6789, in _cell4_generate_live_osm_geometry_csv
+    return _v144_overpass_fallback(
+        "v156 強制使用已驗證的新鮮 Overpass；"
+    ...<2 lines>...
+        f"shared_node={_connection_proof['required_shared_node']}"
+    )
+  File "/content/Cell4_v65.85.7.162.py", line 6771, in _v144_overpass_fallback
+    return _cell4_v144_generate_live_osm_geometry_csv_overpass(
+        _parcels, _cell3_source, _cell3_sha, _targets, _out_csv,
+        _to_metric, _to_wgs84, _feature_extract_started,
+    )
+  File "/content/Cell4_v65.85.7.162.py", line 6364, in _cell4_v144_generate_live_osm_geometry_csv_overpass
+    _responses = _fetch_group_adaptive(_batch, 0, _batch_no)
+  File "/content/Cell4_v65.85.7.162.py", line 6293, in _fetch_group_adaptive
+    _payload, _endpoint, _query, _errors, _ways = _query_overpass_small(_group)
+                                                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/content/Cell4_v65.85.7.162.py", line 6087, in _query_overpass_small
+    with urllib.request.urlopen(_req, timeout=_query_http_timeout) as _response:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/urllib/request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/urllib/request.py", line 489, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.13/urllib/request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "/usr/lib/python3.13/urllib/request.py", line 466, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.13/urllib/request.py", line 1379, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/urllib/request.py", line 1335, in do_open
+    r = h.getresponse()
+  File "/usr/lib/python3.13/http/client.py", line 1478, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/client.py", line 343, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/client.py", line 304, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socket.py", line 723, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.13/ssl.py", line 1315, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/ssl.py", line 1149, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+KeyboardInterrupt
+
+
+[CELL4_EXECUTION_STATUS]=FAILED
+[CELL4_RUN_FINISHED_TW]=2026-11-25T12:03:51+08:00
+[CELL4_TOTAL_ELAPSED] seconds=625.98 | hhmmss=00:10:25 | includes_main_execution_before_finalize=YES
+[CELL4_STAGE_TIME_SUMMARY] recorded_stages=1 | showing_slowest=15
+[CELL4_STAGE_TIME] status=PASS | elapsed=0.02s | stage=讀取 Excel：路線設定檔 RouteConfig
+[GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-25/Cell4_v65.85.7.162_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
