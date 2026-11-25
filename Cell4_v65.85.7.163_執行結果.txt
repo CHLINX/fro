@@ -98,3 +98,10 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [CELL4_STAGE_TIME_SUMMARY] recorded_stages=1 | showing_slowest=15
 [CELL4_STAGE_TIME] status=PASS | elapsed=0.02s | stage=讀取 Excel：路線設定檔 RouteConfig
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-25/Cell4_v65.85.7.163_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+[GITHUB_UPLOAD_STATUS]=SUCCESS
+[GITHUB_READBACK_STATUS]=PASS
+[GITHUB_BLOB_SHA]=a21799d09110c5cabd2469ce83d7f4ba45ce944e
+[GITHUB_READBACK_SHA256]=c1787c8f7025f7234abacff4d7d029ea2bed75c49fdba21f0f16c5adf7ffd76a
+[GITHUB_BRANCH]=fro-upload/2026-11-25
+[GITHUB_FILE_URL]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-25/Cell4_v65.85.7.163_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+[執行備忘錄] GitHub 執行結果：https://github.com/CHLINX/fro/blob/fro-upload/2026-11-25/Cell4_v65.85.7.163_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
