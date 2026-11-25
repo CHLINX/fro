@@ -454,3 +454,10 @@ MOTOR 顯示名稱範例：['農業部農糧署北區分署', 'nan', 'nan']
 [CELL4_STAGE_TIME] status=PASS | elapsed=0.02s | stage=讀取 Excel：路線設定檔 RouteConfig
 [CELL4_STAGE_TIME] status=PASS | elapsed=0.02s | stage=讀取 Excel：機車 Cell2 result.xlsx
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-26/Cell4_v65.85.7.168_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+[GITHUB_UPLOAD_STATUS]=SUCCESS
+[GITHUB_READBACK_STATUS]=PASS
+[GITHUB_BLOB_SHA]=f296eaf161f83fb202f54afae53c8d0f870728c2
+[GITHUB_READBACK_SHA256]=181fa86a6741c994c7e7f3062f47f930872ee1fe567e50c754f1dbec483bb934
+[GITHUB_BRANCH]=fro-upload/2026-11-26
+[GITHUB_FILE_URL]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-26/Cell4_v65.85.7.168_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+[執行備忘錄] GitHub 執行結果：https://github.com/CHLINX/fro/blob/fro-upload/2026-11-26/Cell4_v65.85.7.168_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
