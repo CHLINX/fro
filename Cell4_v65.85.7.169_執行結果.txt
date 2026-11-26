@@ -1502,3 +1502,10 @@ remaining_groups=1136 | remaining_parcels=3407 | sample=[{"index": "253", "parce
 [CELL4_STAGE_TIME_SUMMARY] recorded_stages=1 | showing_slowest=15
 [CELL4_STAGE_TIME] status=PASS | elapsed=0.03s | stage=讀取 Excel：路線設定檔 RouteConfig
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-26/Cell4_v65.85.7.169_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+[GITHUB_UPLOAD_STATUS]=SUCCESS
+[GITHUB_READBACK_STATUS]=PASS
+[GITHUB_BLOB_SHA]=5a820331472118e868634040557a4ed29020922f
+[GITHUB_READBACK_SHA256]=7d82128707a51fc1c72dab9cd7fd2234dddcdf09ef2af04928a79fb13e5c80aa
+[GITHUB_BRANCH]=fro-upload/2026-11-26
+[GITHUB_FILE_URL]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-26/Cell4_v65.85.7.169_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
+[執行備忘錄] GitHub 執行結果：https://github.com/CHLINX/fro/blob/fro-upload/2026-11-26/Cell4_v65.85.7.169_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
