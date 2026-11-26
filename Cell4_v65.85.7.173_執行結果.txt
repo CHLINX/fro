@@ -3,7 +3,7 @@ CELL4_VERSION=v65.85.7.173
 CELL4_LOG_PATH=/content/Cell4_v65.85.7.173_執行結果.txt
 [CELL4_OUTPUT_VIEW]=ROLLING_LAST_60_LINES | full_log=ENABLED
 [CELL4_OUTPUT_RENDERER]=LAUNCHER_ONLY | nested_display=DISABLED
-CELL4_RUN_STARTED_TW=2026-11-26T17:19:26+08:00
+CELL4_RUN_STARTED_TW=2026-11-26T18:05:44+08:00
 ==============================================================================
 [GITHUB_TOKEN_PREFLIGHT]=AVAILABLE
 INPUT_FRESHNESS_STATUS=PASS_SELECTED_LATEST_MODIFIED
@@ -25,8 +25,8 @@ Google Drive：完全不偵測、不掛載、不讀寫。
 ======================================================================
 [CELL4_READ_START] 路線設定檔 RouteConfig | path=/content/input_route_config.xlsx | source_size=12.20 KiB
 [CELL4_STAGE_START] 讀取 Excel：路線設定檔 RouteConfig
-[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | stage_elapsed=0.04s | run_elapsed=2.2s | status=PASS
-[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.27 MiB/s | elapsed=0.04s
+[CELL4_STAGE_DONE] 讀取 Excel：路線設定檔 RouteConfig | stage_elapsed=0.06s | run_elapsed=5.0s | status=PASS
+[CELL4_READ_DONE] 路線設定檔 RouteConfig | rows=54 | columns=4 | source_size=12.20 KiB | source_read_rate=0.18 MiB/s | elapsed=0.06s
 路線設定檔關鍵值檢查：
   交通工具 = '只算機車'
   每點停留時間 = 3
@@ -84,7 +84,7 @@ Cell 4 續跑進度
 Cell 4 RAM 安全檢查
 ======================================================================
 RAM 總量：12.67 GB
-RAM 可用：10.26 GB
+RAM 可用：10.13 GB
 BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V139_LIVE_OSM_CSV] generation_gate=START | parcel_rows=3,659 | address_rows=0
 [CELL4_PROJECTED_PARCEL_CACHE_CHECK] START | bundle=/content/CELL4_PROJECTED_PARCELS_EPSG3826.zip | exists=True
@@ -94,118 +94,127 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [CELL4_PROJECTED_PARCEL_CACHE_CHECK] PASS | projection_skipped=True | valid_parcels=3,659 | next=OSM_GEOMETRY_QUERY
 [CELL4_PROJECTED_PARCEL_PREPARED] REUSE_IN_MEMORY | parcels=3,659 | cache_used=True
 [GEOFABRIK_REMOTE_VERSION] FETCH | method=HEAD | Last-Modified=Tue, 24 Nov 2026 23:43:06 GMT | size=328878520 | ETag="139a49b8-6610e45aad5a9" | validator=STRONG_ETAG
-[V144_GEOFABRIK_FAILOVER] Geofabrik PBF 快照過舊：age=33.61h | limit=24.0h | Tue, 24 Nov 2026 23:43:06 GMT；改由具有 timestamp_osm_base 新鮮度驗證的 Overpass 分批道路幾何備援。
-[CELL4_RESUME_RESTORE] LOCAL_CHECKPOINTS_FOUND=75 | IMPORT_OFFERED=YES | merge_mode=KEEP_NEWER_OSM_SNAPSHOT
-[CELL4_RESUME_RESTORE_STAGE] BEFORE_OVERPASS_QUERY | ZIP_ONLY | local_groups=75 | Excel_UPLOAD=DISABLED | ZIP_IMPORT=AVAILABLE
-[CELL4_RESUME_RESTORE] ZIP_CONTENT | file=Cell4_v65.85.7.172_續跑備份_20261126_083207_001.zip | zip_groups=74 | zip_completed_targets=222/3659 | created_at_utc=2026-11-26T08:32:07.160915+00:00 | local_groups_before_merge=75 | source_version=v65.85.7.172
-[CELL4_RESUME_RESTORE] ZIP_SMALLER_THAN_LOCAL | zip_groups=74 | local_groups=75 | merge_will_keep_newer_local_checkpoints=YES
-[CELL4_RESUME_RESTORE] STATUS=MERGED | file=Cell4_v65.85.7.172_續跑備份_20261126_083207_001.zip | imported_groups=0 | kept_newer_local=74 | replaced_local=0 | available_groups_total=75 | completed_targets_in_manifest=222 | source_version=v65.85.7.172
+[V144_GEOFABRIK_FAILOVER] Geofabrik PBF 快照過舊：age=34.38h | limit=24.0h | Tue, 24 Nov 2026 23:43:06 GMT；改由具有 timestamp_osm_base 新鮮度驗證的 Overpass 分批道路幾何備援。
+[CELL4_RESUME_RESTORE] LOCAL_CHECKPOINTS_FOUND=79 | IMPORT_OFFERED=YES | merge_mode=KEEP_NEWER_OSM_SNAPSHOT
+[CELL4_RESUME_RESTORE_STAGE] BEFORE_OVERPASS_QUERY | ZIP_ONLY | local_groups=79 | Excel_UPLOAD=DISABLED | ZIP_IMPORT=AVAILABLE
+[CELL4_RESUME_RESTORE] ZIP_CONTENT | file=Cell4_v65.85.7.173_續跑備份_20261126_093853_001.zip | zip_groups=79 | zip_completed_targets=237/3659 | created_at_utc=2026-11-26T09:38:53.638159+00:00 | local_groups_before_merge=79 | source_version=v65.85.7.173
+[CELL4_RESUME_RESTORE] STATUS=MERGED | file=Cell4_v65.85.7.173_續跑備份_20261126_093853_001.zip | imported_groups=0 | kept_newer_local=79 | replaced_local=0 | available_groups_total=79 | completed_targets_in_manifest=237 | source_version=v65.85.7.173
 [CELL4_RESUME_RESTORE_STAGE] READY | restored_groups=0 | next=OVERPASS_GEOMETRY_QUERY
 [V160_OVERPASS_GEOMETRY_FALLBACK] START | parcels=3659 | initial_batch_size=3 | batches=1220 | endpoint_priority=LAST_FRESH_SUCCESS_FIRST | fallback=https://overpass-api.de/api | global_circuit_breaker=ENABLED | stable_health_probes=2 | bounded_recovery_cycles=4
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T07:05:10Z | age=2.36h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T07:05:10Z | age=3.02h
 [V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1/1220 | completed_query_groups=1 | parcels_completed=3/3659 | deferred_groups=0 | circuit_open=False | distinct_ways=19
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T07:07:13Z | age=2.32h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=18 | snapshot=2026-11-26T07:07:13Z | age=2.32h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T07:07:13Z | age=2.32h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T07:07:13Z | age=2.32h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=14 | snapshot=2026-11-26T07:07:13Z | age=2.32h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=27 | snapshot=2026-11-26T07:07:13Z | age=2.32h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=29 | snapshot=2026-11-26T07:07:13Z | age=2.32h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=20 | snapshot=2026-11-26T07:07:13Z | age=2.32h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:07:13Z | age=2.32h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:08:10Z | age=2.31h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=30 | snapshot=2026-11-26T07:08:10Z | age=2.31h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=37 | snapshot=2026-11-26T07:15:15Z | age=2.19h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=38 | snapshot=2026-11-26T07:15:15Z | age=2.19h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=45 | snapshot=2026-11-26T07:15:15Z | age=2.19h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=15 | snapshot=2026-11-26T07:15:15Z | age=2.19h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T07:15:15Z | age=2.19h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=13 | snapshot=2026-11-26T07:16:16Z | age=2.17h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:16:16Z | age=2.17h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=24 | snapshot=2026-11-26T07:16:16Z | age=2.17h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=24 | snapshot=2026-11-26T07:16:16Z | age=2.17h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=22 | snapshot=2026-11-26T07:22:34Z | age=2.07h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=18 | snapshot=2026-11-26T07:22:34Z | age=2.07h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=23 | snapshot=2026-11-26T07:43:02Z | age=1.72h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=25 | snapshot=2026-11-26T07:43:02Z | age=1.72h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T07:07:13Z | age=2.99h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=18 | snapshot=2026-11-26T07:07:13Z | age=2.99h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T07:07:13Z | age=2.99h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T07:07:13Z | age=2.99h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=14 | snapshot=2026-11-26T07:07:13Z | age=2.99h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=27 | snapshot=2026-11-26T07:07:13Z | age=2.99h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=29 | snapshot=2026-11-26T07:07:13Z | age=2.99h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=20 | snapshot=2026-11-26T07:07:13Z | age=2.99h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:07:13Z | age=2.99h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:08:10Z | age=2.97h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=30 | snapshot=2026-11-26T07:08:10Z | age=2.97h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=37 | snapshot=2026-11-26T07:15:15Z | age=2.85h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=38 | snapshot=2026-11-26T07:15:15Z | age=2.85h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=45 | snapshot=2026-11-26T07:15:15Z | age=2.85h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=15 | snapshot=2026-11-26T07:15:15Z | age=2.85h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T07:15:15Z | age=2.85h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=13 | snapshot=2026-11-26T07:16:16Z | age=2.84h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:16:16Z | age=2.84h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=24 | snapshot=2026-11-26T07:16:16Z | age=2.84h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=24 | snapshot=2026-11-26T07:16:16Z | age=2.84h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=22 | snapshot=2026-11-26T07:22:34Z | age=2.73h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=18 | snapshot=2026-11-26T07:22:34Z | age=2.73h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=23 | snapshot=2026-11-26T07:43:02Z | age=2.39h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=25 | snapshot=2026-11-26T07:43:02Z | age=2.39h
 [V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=25/1220 | completed_query_groups=25 | parcels_completed=75/3659 | deferred_groups=0 | circuit_open=False | distinct_ways=127
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:43:02Z | age=1.72h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T07:43:02Z | age=1.72h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=22 | snapshot=2026-11-26T07:43:02Z | age=1.72h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T07:43:02Z | age=1.72h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=16 | snapshot=2026-11-26T07:43:02Z | age=1.72h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=20 | snapshot=2026-11-26T07:44:01Z | age=1.71h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=18 | snapshot=2026-11-26T07:44:01Z | age=1.71h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=13 | snapshot=2026-11-26T07:44:01Z | age=1.71h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=18 | snapshot=2026-11-26T07:44:01Z | age=1.71h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=15 | snapshot=2026-11-26T07:44:01Z | age=1.71h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:45:06Z | age=1.69h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=28 | snapshot=2026-11-26T07:45:06Z | age=1.69h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=7 | snapshot=2026-11-26T07:45:06Z | age=1.69h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T07:45:06Z | age=1.69h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=8 | snapshot=2026-11-26T07:46:06Z | age=1.67h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=10 | snapshot=2026-11-26T07:47:06Z | age=1.66h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=9 | snapshot=2026-11-26T07:48:05Z | age=1.64h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T07:48:05Z | age=1.64h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T07:49:09Z | age=1.62h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=10 | snapshot=2026-11-26T07:49:09Z | age=1.62h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:50:09Z | age=1.61h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=22 | snapshot=2026-11-26T07:51:13Z | age=1.59h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=17 | snapshot=2026-11-26T07:52:15Z | age=1.57h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=15 | snapshot=2026-11-26T07:52:15Z | age=1.57h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=14 | snapshot=2026-11-26T07:52:15Z | age=1.57h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:43:02Z | age=2.39h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T07:43:02Z | age=2.39h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=22 | snapshot=2026-11-26T07:43:02Z | age=2.39h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T07:43:02Z | age=2.39h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=16 | snapshot=2026-11-26T07:43:02Z | age=2.39h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=20 | snapshot=2026-11-26T07:44:01Z | age=2.38h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=18 | snapshot=2026-11-26T07:44:01Z | age=2.38h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=13 | snapshot=2026-11-26T07:44:01Z | age=2.38h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=18 | snapshot=2026-11-26T07:44:01Z | age=2.38h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=15 | snapshot=2026-11-26T07:44:01Z | age=2.38h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:45:06Z | age=2.36h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=28 | snapshot=2026-11-26T07:45:06Z | age=2.36h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=7 | snapshot=2026-11-26T07:45:06Z | age=2.36h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T07:45:06Z | age=2.36h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=8 | snapshot=2026-11-26T07:46:06Z | age=2.34h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=10 | snapshot=2026-11-26T07:47:06Z | age=2.32h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=9 | snapshot=2026-11-26T07:48:05Z | age=2.31h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T07:48:05Z | age=2.31h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T07:49:09Z | age=2.29h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=10 | snapshot=2026-11-26T07:49:09Z | age=2.29h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=21 | snapshot=2026-11-26T07:50:09Z | age=2.27h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=22 | snapshot=2026-11-26T07:51:13Z | age=2.26h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=17 | snapshot=2026-11-26T07:52:15Z | age=2.24h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=15 | snapshot=2026-11-26T07:52:15Z | age=2.24h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=14 | snapshot=2026-11-26T07:52:15Z | age=2.24h
 [V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=50/1220 | completed_query_groups=50 | parcels_completed=150/3659 | deferred_groups=0 | circuit_open=False | distinct_ways=188
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T07:52:15Z | age=1.57h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T07:52:15Z | age=1.57h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=16 | snapshot=2026-11-26T07:53:16Z | age=1.55h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=27 | snapshot=2026-11-26T07:53:16Z | age=1.55h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=14 | snapshot=2026-11-26T07:53:16Z | age=1.55h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T07:53:16Z | age=1.55h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=23 | snapshot=2026-11-26T07:53:16Z | age=1.55h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=16 | snapshot=2026-11-26T07:54:20Z | age=1.54h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T08:00:32Z | age=1.43h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=20 | snapshot=2026-11-26T08:00:32Z | age=1.43h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T08:00:32Z | age=1.43h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T08:00:32Z | age=1.43h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=10 | snapshot=2026-11-26T08:01:36Z | age=1.41h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T08:01:36Z | age=1.41h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=22 | snapshot=2026-11-26T08:01:36Z | age=1.41h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T08:01:36Z | age=1.41h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=44 | snapshot=2026-11-26T08:01:36Z | age=1.41h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=27 | snapshot=2026-11-26T08:01:36Z | age=1.41h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=44 | snapshot=2026-11-26T08:02:36Z | age=1.40h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=54 | snapshot=2026-11-26T08:18:49Z | age=1.13h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=50 | snapshot=2026-11-26T08:19:51Z | age=1.11h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T08:24:56Z | age=1.03h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=31 | snapshot=2026-11-26T08:25:58Z | age=1.01h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=55 | snapshot=2026-11-26T08:30:05Z | age=0.94h
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=22 | snapshot=2026-11-26T08:33:01Z | age=0.89h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T07:52:15Z | age=2.24h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T07:52:15Z | age=2.24h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=16 | snapshot=2026-11-26T07:53:16Z | age=2.22h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=27 | snapshot=2026-11-26T07:53:16Z | age=2.22h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=14 | snapshot=2026-11-26T07:53:16Z | age=2.22h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T07:53:16Z | age=2.22h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=23 | snapshot=2026-11-26T07:53:16Z | age=2.22h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=16 | snapshot=2026-11-26T07:54:20Z | age=2.20h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T08:00:32Z | age=2.10h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=20 | snapshot=2026-11-26T08:00:32Z | age=2.10h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T08:00:32Z | age=2.10h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=12 | snapshot=2026-11-26T08:00:32Z | age=2.10h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=10 | snapshot=2026-11-26T08:01:36Z | age=2.08h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=11 | snapshot=2026-11-26T08:01:36Z | age=2.08h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=22 | snapshot=2026-11-26T08:01:36Z | age=2.08h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T08:01:36Z | age=2.08h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=44 | snapshot=2026-11-26T08:01:36Z | age=2.08h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=27 | snapshot=2026-11-26T08:01:36Z | age=2.08h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=44 | snapshot=2026-11-26T08:02:36Z | age=2.07h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=54 | snapshot=2026-11-26T08:18:49Z | age=1.80h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=50 | snapshot=2026-11-26T08:19:51Z | age=1.78h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=19 | snapshot=2026-11-26T08:24:56Z | age=1.69h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=31 | snapshot=2026-11-26T08:25:58Z | age=1.68h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=55 | snapshot=2026-11-26T08:30:05Z | age=1.61h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=22 | snapshot=2026-11-26T08:33:01Z | age=1.56h
 [V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=75/1220 | completed_query_groups=75 | parcels_completed=225/3659 | deferred_groups=0 | circuit_open=False | distinct_ways=399
-[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://overpass-api.de/api/interpreter | attempt=1/1 | ways=24 | snapshot=2026-11-26T09:25:33Z
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=24 | file=205595ac7b99e956690158025153631bb75c573bb400da6126981a887b662b79.json.gz
-[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://overpass-api.de/api/interpreter | attempt=1/1 | ways=30 | snapshot=2026-11-26T09:26:36Z
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=30 | file=2deb95e4b9f825e3cdeb33f0deecbb6c7e899879f098f65b44ffc9109bffc2ad.json.gz
-[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://overpass-api.de/api/interpreter | attempt=1/1 | ways=30 | snapshot=2026-11-26T09:26:36Z
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=30 | file=34b6c3d1af719d30ae04c3a429ef0557ee6fcf1839ebb204f70599a9eceff135.json.gz
-[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://overpass-api.de/api/interpreter HTTPError: HTTP Error 502: Bad Gateway | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.4s
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=24 | snapshot=2026-11-26T09:25:33Z | age=0.68h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=30 | snapshot=2026-11-26T09:26:36Z | age=0.67h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=30 | snapshot=2026-11-26T09:26:36Z | age=0.67h
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] HIT | targets=3 | ways=22 | snapshot=2026-11-26T09:33:38Z | age=0.55h
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://overpass-api.de/api/interpreter | attempt=1/1 | ways=20 | snapshot=2026-11-26T10:05:19Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=20 | file=d870ec3ccd31ff5b9ab3c8776adb2eb570f37e44acb70e6b8653a0804c9e008b.json.gz
+[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://overpass-api.de/api/interpreter HTTPError: HTTP Error 502: Bad Gateway | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.3s
 [V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://overpass-api.de/api/interpreter | cooldown_seconds=90
-[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://ovp.dresel.systems/api-as/interpreter ValueError: OSM 快照過舊：timestamp=2026-11-24T21:21:23Z | age=36.12h | limit=24.0h | attempt=1/1 | transient=False | stale_snapshot=True | elapsed=1.1s
+[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://ovp.dresel.systems/api-as/interpreter ValueError: OSM 快照過舊：timestamp=2026-11-24T21:21:23Z | age=36.76h | limit=24.0h | attempt=1/1 | transient=False | stale_snapshot=True | elapsed=1.1s
 [V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=75.4s
 [V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://overpass.private.coffee/api/interpreter | cooldown_seconds=90
-[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Timeout | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=21.7s
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | attempt=1/1 | ways=19 | snapshot=2026-11-26T10:07:23Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=19 | file=f0780cb42cc43f2d048d4acd77fed3f5651db7b69b0963065b2342227fd356d7.json.gz
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | attempt=1/1 | ways=30 | snapshot=2026-11-26T10:07:23Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=30 | file=25b5af8c5ef2e23cee0bf08b8598041ee8a153302568eef9b7decefb4bf07039.json.gz
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | attempt=1/1 | ways=40 | snapshot=2026-11-26T10:07:23Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=40 | file=dfdde8cd7aacf69afd8be8d114b7c078a39d2bda91204b95b0c8ea27561155fe.json.gz
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | attempt=1/1 | ways=95 | snapshot=2026-11-26T10:08:21Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=95 | file=d2530b8854b9120154e94042a0eca1de7bed84589f69a3ff93b476b0669566f6.json.gz
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | attempt=1/1 | ways=90 | snapshot=2026-11-26T10:08:21Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=90 | file=b44633c1320410315125f8cdac0145323a571e9a29b897eacca7fbde941608d7.json.gz
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | attempt=1/1 | ways=23 | snapshot=2026-11-26T10:08:21Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=23 | file=7606bbb536709e2aadce1e505c8a57144157deaac0099d1758450318787fa565.json.gz
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | attempt=1/1 | ways=18 | snapshot=2026-11-26T10:08:21Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=18 | file=71eefd62a8ea5881899d82d7ea8e23a3613c31515d7b54406b2136251b45bddf.json.gz
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | attempt=1/1 | ways=27 | snapshot=2026-11-26T10:08:21Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=27 | file=41202cc305779def7aadde3df07f4c46b9c88a9c80b6d5d387a1c3c9ca363577.json.gz
+[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.8s
 [V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | cooldown_seconds=90
-[V160_OVERPASS_CIRCUIT] OPEN | count=1 | reason=ALL_ELIGIBLE_ENDPOINTS_FAILED | pending_groups=0 | detail=endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Timeout | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=21.7s
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=235,236,237 | base_batch=79 | reason=RETRY_AFTER_SERVICE_RECOVERY | saved_successful_checkpoints=YES
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=238,239,240 | base_batch=80 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=241,242,243 | base_batch=81 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=244,245,246 | base_batch=82 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=247,248,249 | base_batch=83 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=250,251,252 | base_batch=84 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=253,254,255 | base_batch=85 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=256,257,258 | base_batch=86 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=259,260,261 | base_batch=87 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=262,263,264 | base_batch=88 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=265,266,267 | base_batch=89 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
+[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://overpass-api.de/api/interpreter HTTPError: HTTP Error 502: Bad Gateway | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.3s
+[V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://overpass-api.de/api/interpreter | cooldown_seconds=90
+[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=75.6s
+[V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://overpass.private.coffee/api/interpreter | cooldown_seconds=90
+[V160_OVERPASS_CIRCUIT] OPEN | count=1 | reason=ALL_ELIGIBLE_ENDPOINTS_FAILED | pending_groups=0 | detail=endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=75.6s
+[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=265,266,267 | base_batch=89 | reason=RETRY_AFTER_SERVICE_RECOVERY | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=268,269,270 | base_batch=90 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=271,272,273 | base_batch=91 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=274,275,276 | base_batch=92 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -217,7 +226,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=292,293,294 | base_batch=98 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=295,296,297 | base_batch=99 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=298,299,300 | base_batch=100 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=100/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=22 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=100/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=12 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=301,302,303 | base_batch=101 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=304,305,306 | base_batch=102 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=307,308,309 | base_batch=103 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -243,7 +252,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=367,368,369 | base_batch=123 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=370,371,372 | base_batch=124 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=373,374,375 | base_batch=125 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=125/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=47 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=125/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=37 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=376,377,378 | base_batch=126 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=379,380,381 | base_batch=127 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=382,383,384 | base_batch=128 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -269,7 +278,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=442,443,444 | base_batch=148 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=445,446,447 | base_batch=149 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=448,449,450 | base_batch=150 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=150/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=72 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=150/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=62 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=451,452,453 | base_batch=151 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=454,455,456 | base_batch=152 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=457,458,459 | base_batch=153 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -295,7 +304,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=517,518,519 | base_batch=173 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=520,521,522 | base_batch=174 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=523,524,525 | base_batch=175 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=175/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=97 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=175/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=87 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=526,527,528 | base_batch=176 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=529,530,531 | base_batch=177 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=532,533,534 | base_batch=178 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -321,7 +330,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=592,593,594 | base_batch=198 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=595,596,597 | base_batch=199 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=598,599,600 | base_batch=200 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=200/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=122 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=200/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=112 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=601,602,603 | base_batch=201 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=604,605,606 | base_batch=202 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=607,608,609 | base_batch=203 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -347,7 +356,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=667,668,669 | base_batch=223 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=670,671,672 | base_batch=224 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=673,674,675 | base_batch=225 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=225/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=147 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=225/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=137 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=676,677,678 | base_batch=226 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=679,680,681 | base_batch=227 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=682,683,684 | base_batch=228 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -373,7 +382,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=742,743,744 | base_batch=248 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=745,746,747 | base_batch=249 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=748,749,750 | base_batch=250 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=250/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=172 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=250/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=162 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=751,752,753 | base_batch=251 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=754,755,756 | base_batch=252 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=757,758,759 | base_batch=253 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -399,7 +408,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=817,818,819 | base_batch=273 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=820,821,822 | base_batch=274 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=823,824,825 | base_batch=275 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=275/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=197 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=275/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=187 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=826,827,828 | base_batch=276 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=829,830,831 | base_batch=277 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=832,833,834 | base_batch=278 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -425,7 +434,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=892,893,894 | base_batch=298 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=895,896,897 | base_batch=299 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=898,899,900 | base_batch=300 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=300/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=222 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=300/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=212 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=901,902,903 | base_batch=301 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=904,905,906 | base_batch=302 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=907,908,909 | base_batch=303 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -451,7 +460,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=967,968,969 | base_batch=323 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=970,971,972 | base_batch=324 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=973,974,975 | base_batch=325 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=325/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=247 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=325/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=237 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=976,977,978 | base_batch=326 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=979,980,981 | base_batch=327 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=982,983,984 | base_batch=328 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -477,7 +486,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1042,1043,1044 | base_batch=348 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1045,1046,1047 | base_batch=349 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1048,1049,1050 | base_batch=350 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=350/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=272 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=350/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=262 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1051,1052,1053 | base_batch=351 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1054,1055,1056 | base_batch=352 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1057,1058,1059 | base_batch=353 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -503,7 +512,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1117,1118,1119 | base_batch=373 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1120,1121,1122 | base_batch=374 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1123,1124,1125 | base_batch=375 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=375/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=297 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=375/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=287 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1126,1127,1128 | base_batch=376 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1129,1130,1131 | base_batch=377 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1132,1133,1134 | base_batch=378 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -529,7 +538,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1192,1193,1194 | base_batch=398 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1195,1196,1197 | base_batch=399 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1198,1199,1200 | base_batch=400 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=400/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=322 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=400/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=312 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1201,1202,1203 | base_batch=401 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1204,1205,1206 | base_batch=402 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1207,1208,1209 | base_batch=403 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -555,7 +564,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1267,1268,1269 | base_batch=423 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1270,1271,1272 | base_batch=424 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1273,1274,1275 | base_batch=425 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=425/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=347 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=425/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=337 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1276,1277,1278 | base_batch=426 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1279,1280,1281 | base_batch=427 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1282,1283,1284 | base_batch=428 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -581,7 +590,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1342,1343,1344 | base_batch=448 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1345,1346,1347 | base_batch=449 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1348,1349,1350 | base_batch=450 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=450/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=372 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=450/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=362 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1351,1352,1353 | base_batch=451 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1354,1355,1356 | base_batch=452 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1357,1358,1359 | base_batch=453 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -607,7 +616,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1417,1418,1419 | base_batch=473 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1420,1421,1422 | base_batch=474 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1423,1424,1425 | base_batch=475 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=475/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=397 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=475/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=387 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1426,1427,1428 | base_batch=476 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1429,1430,1431 | base_batch=477 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1432,1433,1434 | base_batch=478 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -633,7 +642,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1492,1493,1494 | base_batch=498 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1495,1496,1497 | base_batch=499 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1498,1499,1500 | base_batch=500 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=500/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=422 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=500/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=412 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1501,1502,1503 | base_batch=501 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1504,1505,1506 | base_batch=502 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1507,1508,1509 | base_batch=503 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -659,7 +668,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1567,1568,1569 | base_batch=523 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1570,1571,1572 | base_batch=524 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1573,1574,1575 | base_batch=525 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=525/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=447 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=525/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=437 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1576,1577,1578 | base_batch=526 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1579,1580,1581 | base_batch=527 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1582,1583,1584 | base_batch=528 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -685,7 +694,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1642,1643,1644 | base_batch=548 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1645,1646,1647 | base_batch=549 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1648,1649,1650 | base_batch=550 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=550/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=472 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=550/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=462 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1651,1652,1653 | base_batch=551 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1654,1655,1656 | base_batch=552 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1657,1658,1659 | base_batch=553 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -711,7 +720,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1717,1718,1719 | base_batch=573 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1720,1721,1722 | base_batch=574 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1723,1724,1725 | base_batch=575 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=575/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=497 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=575/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=487 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1726,1727,1728 | base_batch=576 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1729,1730,1731 | base_batch=577 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1732,1733,1734 | base_batch=578 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -737,7 +746,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1792,1793,1794 | base_batch=598 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1795,1796,1797 | base_batch=599 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1798,1799,1800 | base_batch=600 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=600/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=522 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=600/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=512 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1801,1802,1803 | base_batch=601 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1804,1805,1806 | base_batch=602 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1807,1808,1809 | base_batch=603 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -763,7 +772,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1867,1868,1869 | base_batch=623 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1870,1871,1872 | base_batch=624 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1873,1874,1875 | base_batch=625 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=625/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=547 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=625/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=537 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1876,1877,1878 | base_batch=626 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1879,1880,1881 | base_batch=627 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1882,1883,1884 | base_batch=628 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -789,7 +798,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1942,1943,1944 | base_batch=648 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1945,1946,1947 | base_batch=649 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1948,1949,1950 | base_batch=650 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=650/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=572 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=650/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=562 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1951,1952,1953 | base_batch=651 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1954,1955,1956 | base_batch=652 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=1957,1958,1959 | base_batch=653 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -815,7 +824,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2017,2018,2019 | base_batch=673 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2020,2021,2022 | base_batch=674 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2023,2024,2025 | base_batch=675 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=675/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=597 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=675/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=587 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2026,2027,2028 | base_batch=676 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2029,2030,2031 | base_batch=677 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2032,2033,2034 | base_batch=678 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -841,7 +850,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2092,2093,2094 | base_batch=698 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2095,2096,2097 | base_batch=699 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2098,2099,2100 | base_batch=700 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=700/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=622 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=700/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=612 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2101,2102,2103 | base_batch=701 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2104,2105,2106 | base_batch=702 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2107,2108,2109 | base_batch=703 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -867,7 +876,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2167,2168,2169 | base_batch=723 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2170,2171,2172 | base_batch=724 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2173,2174,2175 | base_batch=725 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=725/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=647 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=725/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=637 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2176,2177,2178 | base_batch=726 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2179,2180,2181 | base_batch=727 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2182,2183,2184 | base_batch=728 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -893,7 +902,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2242,2243,2244 | base_batch=748 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2245,2246,2247 | base_batch=749 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2248,2249,2250 | base_batch=750 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=750/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=672 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=750/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=662 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2251,2252,2253 | base_batch=751 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2254,2255,2256 | base_batch=752 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2257,2258,2259 | base_batch=753 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -919,7 +928,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2317,2318,2319 | base_batch=773 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2320,2321,2322 | base_batch=774 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2323,2324,2325 | base_batch=775 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=775/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=697 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=775/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=687 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2326,2327,2328 | base_batch=776 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2329,2330,2331 | base_batch=777 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2332,2333,2334 | base_batch=778 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -945,7 +954,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2392,2393,2394 | base_batch=798 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2395,2396,2397 | base_batch=799 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2398,2399,2400 | base_batch=800 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=800/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=722 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=800/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=712 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2401,2402,2403 | base_batch=801 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2404,2405,2406 | base_batch=802 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2407,2408,2409 | base_batch=803 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -971,7 +980,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2467,2468,2469 | base_batch=823 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2470,2471,2472 | base_batch=824 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2473,2474,2475 | base_batch=825 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=825/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=747 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=825/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=737 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2476,2477,2478 | base_batch=826 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2479,2480,2481 | base_batch=827 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2482,2483,2484 | base_batch=828 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -997,7 +1006,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2542,2543,2544 | base_batch=848 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2545,2546,2547 | base_batch=849 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2548,2549,2550 | base_batch=850 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=850/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=772 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=850/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=762 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2551,2552,2553 | base_batch=851 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2554,2555,2556 | base_batch=852 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2557,2558,2559 | base_batch=853 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1023,7 +1032,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2617,2618,2619 | base_batch=873 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2620,2621,2622 | base_batch=874 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2623,2624,2625 | base_batch=875 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=875/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=797 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=875/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=787 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2626,2627,2628 | base_batch=876 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2629,2630,2631 | base_batch=877 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2632,2633,2634 | base_batch=878 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1049,7 +1058,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2692,2693,2694 | base_batch=898 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2695,2696,2697 | base_batch=899 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2698,2699,2700 | base_batch=900 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=900/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=822 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=900/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=812 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2701,2702,2703 | base_batch=901 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2704,2705,2706 | base_batch=902 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2707,2708,2709 | base_batch=903 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1075,7 +1084,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2767,2768,2769 | base_batch=923 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2770,2771,2772 | base_batch=924 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2773,2774,2775 | base_batch=925 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=925/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=847 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=925/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=837 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2776,2777,2778 | base_batch=926 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2779,2780,2781 | base_batch=927 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2782,2783,2784 | base_batch=928 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1101,7 +1110,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2842,2843,2844 | base_batch=948 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2845,2846,2847 | base_batch=949 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2848,2849,2850 | base_batch=950 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=950/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=872 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=950/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=862 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2851,2852,2853 | base_batch=951 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2854,2855,2856 | base_batch=952 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2857,2858,2859 | base_batch=953 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1127,7 +1136,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2917,2918,2919 | base_batch=973 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2920,2921,2922 | base_batch=974 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2923,2924,2925 | base_batch=975 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=975/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=897 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=975/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=887 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2926,2927,2928 | base_batch=976 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2929,2930,2931 | base_batch=977 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2932,2933,2934 | base_batch=978 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1153,7 +1162,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2992,2993,2994 | base_batch=998 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2995,2996,2997 | base_batch=999 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=2998,2999,3000 | base_batch=1000 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1000/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=922 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1000/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=912 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3001,3002,3003 | base_batch=1001 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3004,3005,3006 | base_batch=1002 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3007,3008,3009 | base_batch=1003 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1179,7 +1188,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3067,3068,3069 | base_batch=1023 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3070,3071,3072 | base_batch=1024 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3073,3074,3075 | base_batch=1025 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1025/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=947 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1025/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=937 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3076,3077,3078 | base_batch=1026 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3079,3080,3081 | base_batch=1027 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3082,3083,3084 | base_batch=1028 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1205,7 +1214,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3142,3143,3144 | base_batch=1048 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3145,3146,3147 | base_batch=1049 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3148,3149,3150 | base_batch=1050 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1050/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=972 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1050/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=962 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3151,3152,3153 | base_batch=1051 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3154,3155,3156 | base_batch=1052 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3157,3158,3159 | base_batch=1053 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1231,7 +1240,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3217,3218,3219 | base_batch=1073 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3220,3221,3222 | base_batch=1074 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3223,3224,3225 | base_batch=1075 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1075/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=997 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1075/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=987 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3226,3227,3228 | base_batch=1076 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3229,3230,3231 | base_batch=1077 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3232,3233,3234 | base_batch=1078 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1257,7 +1266,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3292,3293,3294 | base_batch=1098 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3295,3296,3297 | base_batch=1099 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3298,3299,3300 | base_batch=1100 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1100/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=1022 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1100/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=1012 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3301,3302,3303 | base_batch=1101 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3304,3305,3306 | base_batch=1102 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3307,3308,3309 | base_batch=1103 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1283,7 +1292,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3367,3368,3369 | base_batch=1123 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3370,3371,3372 | base_batch=1124 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3373,3374,3375 | base_batch=1125 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1125/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=1047 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1125/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=1037 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3376,3377,3378 | base_batch=1126 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3379,3380,3381 | base_batch=1127 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3382,3383,3384 | base_batch=1128 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1309,7 +1318,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3442,3443,3444 | base_batch=1148 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3445,3446,3447 | base_batch=1149 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3448,3449,3450 | base_batch=1150 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1150/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=1072 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1150/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=1062 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3451,3452,3453 | base_batch=1151 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3454,3455,3456 | base_batch=1152 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3457,3458,3459 | base_batch=1153 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1335,7 +1344,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3517,3518,3519 | base_batch=1173 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3520,3521,3522 | base_batch=1174 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3523,3524,3525 | base_batch=1175 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1175/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=1097 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1175/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=1087 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3526,3527,3528 | base_batch=1176 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3529,3530,3531 | base_batch=1177 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3532,3533,3534 | base_batch=1178 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1361,7 +1370,7 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3592,3593,3594 | base_batch=1198 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3595,3596,3597 | base_batch=1199 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3598,3599,3600 | base_batch=1200 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1200/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=1122 | circuit_open=True | distinct_ways=430
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1200/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=1112 | circuit_open=True | distinct_ways=619
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3601,3602,3603 | base_batch=1201 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3604,3605,3606 | base_batch=1202 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3607,3608,3609 | base_batch=1203 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
@@ -1382,52 +1391,83 @@ BOTH 模式執行方式：逐模式（RAM 安全模式；平行門檻=18 GB）
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3652,3653,3654 | base_batch=1218 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=3655,3656,3657 | base_batch=1219 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
 [V160_OVERPASS_BATCH_DEFERRED] targets=2 | parcel_indices=3658,3659 | base_batch=1220 | reason=GLOBAL_SERVICE_CIRCUIT_OPEN | saved_successful_checkpoints=YES
-[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1220/1220 | completed_query_groups=78 | parcels_completed=234/3659 | deferred_groups=1142 | circuit_open=True | distinct_ways=430
-[V160_OVERPASS_RECOVERY] cycle=1/4 | pending_groups=1142 | pending_parcels=3425 | probe_success_streak=0/2 | wait=90s
-[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://overpass-api.de/api/interpreter TimeoutError: The read operation timed out | transient=True | stale_snapshot=False | elapsed=30.3s
-[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://overpass.private.coffee/api/interpreter ValueError: OSM 快照早於本次必要道路修正：snapshot=2026-07-28T02:16:18+00:00 | required>=2026-11-24T08:07:04+00:00 | transient=False | stale_snapshot=True | elapsed=1.8s
-[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Timeout | transient=True | stale_snapshot=False | elapsed=27.5s
-[V160_OVERPASS_RECOVERY] health_probe=FAIL | pending_groups_unchanged=1142 | pending_parcels=3425 | next_cycle=BOUNDED
-[V160_OVERPASS_RECOVERY] cycle=2/4 | pending_groups=1142 | pending_parcels=3425 | probe_success_streak=0/2 | wait=90s
-[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://overpass-api.de/api/interpreter TimeoutError: The read operation timed out | transient=True | stale_snapshot=False | elapsed=30.2s
-[V160_OVERPASS_HEALTH_PROBE] PASS | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | snapshot=2026-11-26T09:32:31Z | age=0.03h | elapsed=9.1s
-[V160_OVERPASS_RECOVERY] health_probe=PASS | streak=1/2 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter
-[V160_OVERPASS_RECOVERY] cycle=3/4 | pending_groups=1142 | pending_parcels=3425 | probe_success_streak=1/2 | wait=15s
-[V160_OVERPASS_HEALTH_PROBE] PASS | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | snapshot=2026-11-26T09:32:31Z | age=0.04h | elapsed=9.0s
-[V160_OVERPASS_RECOVERY] health_probe=PASS | streak=2/2 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter
-[V160_OVERPASS_CIRCUIT] CLOSED | stable_probes=2 | outage_seconds=303.5 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter
-[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | attempt=1/1 | ways=22 | snapshot=2026-11-26T09:33:38Z
-[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=22 | file=bc08e562ddc13dc5d2d758ea382ea963b79a67ac3f61a90a85bd3c27da8da9dd.json.gz
-[V160_OVERPASS_RECOVERY] processed=1/1142 | pending_parcels=3422 | parcels_completed=237/3659
-[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=1.0s
-[V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | cooldown_seconds=90
-[V160_OVERPASS_CIRCUIT] OPEN | count=2 | reason=ALL_ELIGIBLE_ENDPOINTS_FAILED | pending_groups=1142 | detail=endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=1.0s
-[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=238,239,240 | base_batch=80 | reason=RETRY_AFTER_SERVICE_RECOVERY | saved_successful_checkpoints=YES
-[V160_OVERPASS_RECOVERY] circuit_reopened=YES | remaining_groups=1141 | remaining_parcels=3422
-[V160_OVERPASS_RECOVERY] cycle=3 complete | remaining_groups=1141 | remaining_parcels=3422 | parcels_completed=237/3659 | circuit_open=True
-[V160_OVERPASS_RECOVERY] cycle=4/4 | pending_groups=1141 | pending_parcels=3422 | probe_success_streak=0/2 | wait=180s
+[V160_OVERPASS_GEOMETRY_FALLBACK] base_batch=1220/1220 | completed_query_groups=88 | parcels_completed=264/3659 | deferred_groups=1132 | circuit_open=True | distinct_ways=619
+[V160_OVERPASS_RECOVERY] cycle=1/4 | pending_groups=1132 | pending_parcels=3395 | probe_success_streak=0/2 | wait=90s
 [V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | transient=True | stale_snapshot=False | elapsed=1.0s
-[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://overpass-api.de/api/interpreter TimeoutError: The read operation timed out | transient=True | stale_snapshot=False | elapsed=30.2s
-[V160_OVERPASS_RECOVERY] health_probe=FAIL | pending_groups_unchanged=1141 | pending_parcels=3422 | next_cycle=BOUNDED
-[V160_OVERPASS_RECOVERY] BOUNDED_STOP | cycles=4 | final_confirmation_probe_used=False | post_reopen_probe_attempts=0/4 | post_reopen_recovery_armed=False | remaining_groups=1141 | remaining_parcels=3422 | circuit_open=True
-[CELL4_RESUME_BACKUP_FINAL_READY] path=/content/Cell4_v65.85.7.173_續跑備份_20261126_093853_001.zip | groups=79 | resume_state_groups=79 | completed_targets=237/3659 | manifest_verified=YES | reason=OVERPASS_PENDING_ABORT
+[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://overpass-api.de/api/interpreter TimeoutError: The read operation timed out | transient=True | stale_snapshot=False | elapsed=30.4s
+[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | transient=True | stale_snapshot=False | elapsed=30.4s
+[V160_OVERPASS_RECOVERY] health_probe=FAIL | pending_groups_unchanged=1132 | pending_parcels=3395 | next_cycle=BOUNDED
+[V160_OVERPASS_RECOVERY] cycle=2/4 | pending_groups=1132 | pending_parcels=3395 | probe_success_streak=0/2 | wait=90s
+[V160_OVERPASS_HEALTH_PROBE] PASS | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | snapshot=2026-11-26T10:14:26Z | age=0.02h | elapsed=11.7s
+[V160_OVERPASS_RECOVERY] health_probe=PASS | streak=1/2 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter
+[V160_OVERPASS_RECOVERY] cycle=3/4 | pending_groups=1132 | pending_parcels=3395 | probe_success_streak=1/2 | wait=15s
+[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | transient=True | stale_snapshot=False | elapsed=0.8s
+[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://overpass-api.de/api/interpreter HTTPError: HTTP Error 502: Bad Gateway | transient=True | stale_snapshot=False | elapsed=0.4s
+[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | transient=True | stale_snapshot=False | elapsed=30.5s
+[V160_OVERPASS_RECOVERY] health_probe=FAIL | pending_groups_unchanged=1132 | pending_parcels=3395 | next_cycle=BOUNDED
+[V160_OVERPASS_RECOVERY] cycle=4/4 | pending_groups=1132 | pending_parcels=3395 | probe_success_streak=0/2 | wait=180s
+[V160_OVERPASS_HEALTH_PROBE] PASS | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | snapshot=2026-11-26T10:18:26Z | age=0.02h | elapsed=6.6s
+[V160_OVERPASS_RECOVERY] health_probe=PASS | streak=1/2 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter
+[V160_OVERPASS_RECOVERY] cycle=4/4+FINAL_CONFIRM | pending_groups=1132 | pending_parcels=3395 | probe_success_streak=1/2 | wait=15s
+[V160_OVERPASS_HEALTH_PROBE] PASS | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | snapshot=2026-11-26T10:18:26Z | age=0.03h | elapsed=28.5s
+[V160_OVERPASS_RECOVERY] health_probe=PASS | streak=2/2 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter
+[V160_OVERPASS_CIRCUIT] CLOSED | stable_probes=2 | outage_seconds=530.9 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | attempt=1/1 | ways=20 | snapshot=2026-11-26T10:19:28Z
+[CELL4_RESUME_BACKUP_READY] path=/content/Cell4_v65.85.7.173_續跑備份_20261126_102020_001.zip | groups=89 | 包含本次 Cell3 SHA 的成功道路查詢檢查點及 SHA256 manifest。
+[CELL4_RESUME_BACKUP_DOWNLOAD]=TRIGGERED; 請確認瀏覽器下載清單已完成保存。
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=20 | file=84b8270be42f0942a2dde7f1b8d1fdc91840cec8d7f3111b0707558f11ef932b.json.gz
+[V160_OVERPASS_RECOVERY] processed=1/1132 | pending_parcels=3392 | parcels_completed=267/3659
+[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Timeout | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=23.7s
+[V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | cooldown_seconds=90
+[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://overpass-api.de/api/interpreter HTTPError: HTTP Error 502: Bad Gateway | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.3s
+[V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://overpass-api.de/api/interpreter | cooldown_seconds=90
+[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=75.4s
+[V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://overpass.private.coffee/api/interpreter | cooldown_seconds=90
+[V160_OVERPASS_CIRCUIT] OPEN | count=2 | reason=ALL_ELIGIBLE_ENDPOINTS_FAILED | pending_groups=1132 | detail=endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=75.4s
+[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=268,269,270 | base_batch=90 | reason=RETRY_AFTER_SERVICE_RECOVERY | saved_successful_checkpoints=YES
+[V160_OVERPASS_RECOVERY] circuit_reopened=YES | remaining_groups=1131 | remaining_parcels=3392
+[V160_OVERPASS_RECOVERY] cycle=4 complete | remaining_groups=1131 | remaining_parcels=3392 | parcels_completed=267/3659 | circuit_open=True
+[V170_OVERPASS_POST_REOPEN_RECOVERY] ARMED | max_probe_attempts=4 | requires_two_consecutive_fresh_connectivity_probes=YES
+[V160_OVERPASS_RECOVERY] cycle=4/4+POST_REOPEN_1/4 | pending_groups=1131 | pending_parcels=3392 | probe_success_streak=0/2 | wait=90s
+[V160_OVERPASS_HEALTH_PROBE] PASS | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | snapshot=2026-11-26T10:22:32Z | age=0.02h | elapsed=13.1s
+[V160_OVERPASS_RECOVERY] health_probe=PASS | streak=1/2 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter
+[V160_OVERPASS_RECOVERY] cycle=4/4+POST_REOPEN_2/4 | pending_groups=1131 | pending_parcels=3392 | probe_success_streak=1/2 | wait=15s
+[V160_OVERPASS_HEALTH_PROBE] PASS | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | snapshot=2026-11-26T10:22:32Z | age=0.03h | elapsed=12.4s
+[V160_OVERPASS_RECOVERY] health_probe=PASS | streak=2/2 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter
+[V160_OVERPASS_CIRCUIT] CLOSED | stable_probes=2 | outage_seconds=130.5 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter
+[V160_OVERPASS_GEOMETRY_QUERY] status=PASS | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | attempt=1/1 | ways=28 | snapshot=2026-11-26T10:22:32Z
+[V160_OVERPASS_GEOMETRY_CHECKPOINT] SAVED | targets=3 | ways=28 | file=5f8382c918bad2e0d261a2a8898f0d292b0bc42fa0b68d06f1695931b84869e5.json.gz
+[V160_OVERPASS_RECOVERY] processed=1/1131 | pending_parcels=3389 | parcels_completed=270/3659
+[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.9s
+[V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | cooldown_seconds=90
+[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://overpass-api.de/api/interpreter HTTPError: HTTP Error 502: Bad Gateway | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.4s
+[V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://overpass-api.de/api/interpreter | cooldown_seconds=90
+[V160_OVERPASS_GEOMETRY_QUERY] endpoint failed | targets=3 | endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=75.2s
+[V160_OVERPASS_ENDPOINT_COOLDOWN] endpoint=https://overpass.private.coffee/api/interpreter | cooldown_seconds=90
+[V160_OVERPASS_CIRCUIT] OPEN | count=3 | reason=ALL_ELIGIBLE_ENDPOINTS_FAILED | pending_groups=1133 | detail=endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=75.2s
+[V160_OVERPASS_BATCH_DEFERRED] targets=3 | parcel_indices=271,272,273 | base_batch=91 | reason=RETRY_AFTER_SERVICE_RECOVERY | saved_successful_checkpoints=YES
+[V160_OVERPASS_RECOVERY] circuit_reopened=YES | remaining_groups=1130 | remaining_parcels=3389
+[V160_OVERPASS_RECOVERY] cycle=4 complete | remaining_groups=1130 | remaining_parcels=3389 | parcels_completed=270/3659 | circuit_open=True
+[V160_OVERPASS_RECOVERY] cycle=4/4+POST_REOPEN_3/4 | pending_groups=1130 | pending_parcels=3389 | probe_success_streak=0/2 | wait=90s
+[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | transient=True | stale_snapshot=False | elapsed=1.0s
+[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://overpass-api.de/api/interpreter HTTPError: HTTP Error 502: Bad Gateway | transient=True | stale_snapshot=False | elapsed=0.3s
+[V160_OVERPASS_HEALTH_PROBE] FAIL | endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | transient=True | stale_snapshot=False | elapsed=30.5s
+[V160_OVERPASS_RECOVERY] health_probe=FAIL | pending_groups_unchanged=1130 | pending_parcels=3389 | next_cycle=BOUNDED
+[V160_OVERPASS_RECOVERY] cycle=4/4+POST_REOPEN_4/4 | pending_groups=1130 | pending_parcels=3389 | probe_success_streak=0/2 | wait=90s
+[V160_OVERPASS_HEALTH_PROBE] PASS | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter | snapshot=2026-11-26T10:26:42Z | age=0.05h | elapsed=14.3s
+[V160_OVERPASS_RECOVERY] health_probe=PASS | streak=1/2 | endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter
+[V160_OVERPASS_RECOVERY] BOUNDED_STOP | cycles=4 | final_confirmation_probe_used=True | post_reopen_probe_attempts=4/4 | post_reopen_recovery_armed=True | remaining_groups=1130 | remaining_parcels=3389 | circuit_open=True
+[CELL4_RESUME_BACKUP_FINAL_READY] path=/content/Cell4_v65.85.7.173_續跑備份_20261126_102924_002.zip | groups=90 | resume_state_groups=90 | completed_targets=270/3659 | manifest_verified=YES | reason=OVERPASS_PENDING_ABORT
 [CELL4_RESUME_BACKUP_FINAL_DOWNLOAD]=TRIGGERED; 請確認瀏覽器下載清單已完成保存。
 [CELL4_TERMINATION]=NORMAL_ABORT | 未進入路線最佳化；未寫入新的 Cell5 handoff。
 
 [CELL4_EXECUTION_ERROR]
 前置檢查未通過：v170（沿用 v160 全域熔斷、近期成功端點優先及二次熔斷後有界再確認）仍有整批／單筆地籍無法取得新鮮資料；已保留所有先前成功的 Cell3 SHA／bbox 檢查點，未產生不完整 CSV。
-remaining_groups=1141 | remaining_parcels=3422 | sample=[{"index": "238", "parcel": "新竹縣 湖口鄉 和興段 25370000", "base_batch": 80, "last_errors": ["endpoint=https://overpass-api.de/api/interpreter skipped=TEMPORARY_COOLDOWN remaining=33.5s", "endpoint=https://ovp.dresel.systems/api-as/interpreter skipped=STALE_SNAPSHOT_ALREADY_REJECTED_THIS_RUN", "endpoint=https://overpass.private.coffee/api/interpreter skipped=STALE_SNAPSHOT_ALREADY_REJECTED_THIS_RUN", "endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=1.0s"]}, {"index": "239", "parcel": "新竹縣 湖口鄉 和興段 25380000", "base_batch": 80, "last_errors": ["endpoint=https://overpass-api.de/api/interpreter skipped=TEMPORARY_COOLDOWN remaining=33.5s", "endpoint=https://ovp.dresel.systems/api-as/interpreter skipped=STALE_SNAPSHOT_ALREADY_REJECTED_THIS_RUN", "endpoint=https://overpass.private.coffee/api/interpreter skipped=STALE_SNAPSHOT_ALREADY_REJECTED_THIS_RUN", "endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=1.0s"]}, {"index": "240", "parcel": "新竹縣 湖口鄉 和興段 25570000", "base_batch": 80, "last_errors": ["endpoint=https://overpass-api.de/api/interpreter skipped=TEMPORARY_COOLDOWN remaining=33.5s", "endpoint=https://ovp.dresel.systems/api-as/interpreter skipped=STALE_SNAPSHOT_ALREADY_REJECTED_THIS_RUN", "endpoint=https://overpass.private.coffee/api/interpreter skipped=STALE_SNAPSHOT_ALREADY_REJECTED_THIS_RUN", "endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=1.0s"]}, {"index": "241", "parcel": "新竹縣 湖口鄉 和興段 25580000", "base_batch": 81, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "242", "parcel": "新竹縣 湖口鄉 和興段 25590000", "base_batch": 81, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "243", "parcel": "新竹縣 湖口鄉 和興段 25600000", "base_batch": 81, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "244", "parcel": "新竹縣 湖口鄉 和興段 25610000", "base_batch": 82, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "245", "parcel": "新竹縣 湖口鄉 德盛段 08820001", "base_batch": 82, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "246", "parcel": "新竹縣 湖口鄉 德盛段 08820002", "base_batch": 82, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "247", "parcel": "新竹縣 湖口鄉 長嶺段 10210000", "base_batch": 83, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "248", "parcel": "新竹縣 湖口鄉 長嶺段 10400000", "base_batch": 83, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "249", "parcel": "新竹縣 湖口鄉 長嶺段 10410000", "base_batch": 83, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "250", "parcel": "新竹縣 湖口鄉 長嶺段 10410001", "base_batch": 84, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "251", "parcel": "桃園市 大溪區 員林段 00500000", "base_batch": 84, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "252", "parcel": "桃園市 大溪區 員林段 00500003", "base_batch": 84, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "253", "parcel": "桃園市 大溪區 員林段 00500004", "base_batch": 85, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "254", "parcel": "桃園市 大溪區 員林段 00500005", "base_batch": 85, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "255", "parcel": "桃園市 大溪區 社角段 06880000", "base_batch": 85, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "256", "parcel": "桃園市 大溪區 社角段 06900000", "base_batch": 86, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "257", "parcel": "桃園市 大溪區 社角段 07180000", "base_batch": 86, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "258", "parcel": "桃園市 大溪區 社角段 07190000", "base_batch": 86, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "259", "parcel": "桃園市 大溪區 社角段 07230000", "base_batch": 87, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "260", "parcel": "桃園市 大溪區 社角段 07240000", "base_batch": 87, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "261", "parcel": "桃園市 大溪區 社角段 07250000", "base_batch": 87, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "262", "parcel": "桃園市 大溪區 社角段 08530000", "base_batch": 88, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "263", "parcel": "桃園市 大溪區 仁愛段 01440000", "base_batch": 88, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "264", "parcel": "桃園市 大溪區 仁愛段 01450000", "base_batch": 88, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "265", "parcel": "桃園市 大溪區 仁愛段 01460000", "base_batch": 89, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "266", "parcel": "桃園市 大溪區 仁愛段 01470000", "base_batch": 89, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "267", "parcel": "桃園市 大溪區 仁愛段 01480000", "base_batch": 89, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}]
+remaining_groups=1130 | remaining_parcels=3389 | sample=[{"index": "271", "parcel": "桃園市 大溪區 廣福段 02210000", "base_batch": 91, "last_errors": ["endpoint=https://ovp.dresel.systems/api-as/interpreter skipped=STALE_SNAPSHOT_ALREADY_REJECTED_THIS_RUN", "endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.9s", "endpoint=https://overpass-api.de/api/interpreter HTTPError: HTTP Error 502: Bad Gateway | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.4s", "endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=75.2s"]}, {"index": "272", "parcel": "桃園市 大溪區 廣福段 02360001", "base_batch": 91, "last_errors": ["endpoint=https://ovp.dresel.systems/api-as/interpreter skipped=STALE_SNAPSHOT_ALREADY_REJECTED_THIS_RUN", "endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.9s", "endpoint=https://overpass-api.de/api/interpreter HTTPError: HTTP Error 502: Bad Gateway | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.4s", "endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=75.2s"]}, {"index": "273", "parcel": "桃園市 大溪區 廣福段 02360002", "base_batch": 91, "last_errors": ["endpoint=https://ovp.dresel.systems/api-as/interpreter skipped=STALE_SNAPSHOT_ALREADY_REJECTED_THIS_RUN", "endpoint=https://maps.mail.ru/osm/tools/overpass/api/interpreter HTTPError: HTTP Error 504: Gateway Time-out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.9s", "endpoint=https://overpass-api.de/api/interpreter HTTPError: HTTP Error 502: Bad Gateway | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=0.4s", "endpoint=https://overpass.private.coffee/api/interpreter TimeoutError: The read operation timed out | attempt=1/1 | transient=True | stale_snapshot=False | elapsed=75.2s"]}, {"index": "274", "parcel": "桃園市 大溪區 廣福段 02400000", "base_batch": 92, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "275", "parcel": "桃園市 大溪區 廣福段 02400001", "base_batch": 92, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "276", "parcel": "桃園市 大溪區 廣福段 02410002", "base_batch": 92, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "277", "parcel": "桃園市 大溪區 廣福段 02410003", "base_batch": 93, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "278", "parcel": "桃園市 大溪區 廣福段 02520000", "base_batch": 93, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "279", "parcel": "桃園市 大溪區 廣福段 03360000", "base_batch": 93, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "280", "parcel": "桃園市 大溪區 廣福段 03890000", "base_batch": 94, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "281", "parcel": "桃園市 大溪區 廣福段 03910000", "base_batch": 94, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "282", "parcel": "桃園市 大溪區 廣福段 04080000", "base_batch": 94, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "283", "parcel": "桃園市 大溪區 廣福段 06520000", "base_batch": 95, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "284", "parcel": "桃園市 大溪區 廣福段 07160000", "base_batch": 95, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "285", "parcel": "桃園市 大溪區 廣福段 07200000", "base_batch": 95, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "286", "parcel": "桃園市 大溪區 廣福段 07230000", "base_batch": 96, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "287", "parcel": "桃園市 大溪區 廣福段 07280000", "base_batch": 96, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "288", "parcel": "桃園市 大溪區 廣福段 07290000", "base_batch": 96, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "289", "parcel": "桃園市 大溪區 瑞興段 18960000", "base_batch": 97, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "290", "parcel": "桃園市 大溪區 瑞興段 18970000", "base_batch": 97, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "291", "parcel": "桃園市 大溪區 瑞興段 18980000", "base_batch": 97, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "292", "parcel": "桃園市 大溪區 瑞興段 19290000", "base_batch": 98, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "293", "parcel": "桃園市 大溪區 瑞興段 20000000", "base_batch": 98, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "294", "parcel": "桃園市 大溪區 瑞興段 20010000", "base_batch": 98, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "295", "parcel": "桃園市 大溪區 瑞興段 20020000", "base_batch": 99, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "296", "parcel": "桃園市 大溪區 瑞興段 20020001", "base_batch": 99, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "297", "parcel": "桃園市 大溪區 瑞興段 20030000", "base_batch": 99, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "298", "parcel": "桃園市 大溪區 瑞興段 20100000", "base_batch": 100, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "299", "parcel": "桃園市 大溪區 瑞興段 20230000", "base_batch": 100, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}, {"index": "300", "parcel": "桃園市 大溪區 瑞興段 20240000", "base_batch": 100, "last_errors": ["V160_GLOBAL_CIRCUIT_OPEN reason=ALL_ELIGIBLE_ENDPOINTS_FAILED"]}]
 
 [CELL4_EXECUTION_STATUS]=FAILED_PRECHECK
-[CELL4_RUN_FINISHED_TW]=2026-11-26T17:38:53+08:00
-[CELL4_TOTAL_ELAPSED] seconds=1166.88 | hhmmss=00:19:26 | includes_main_execution_before_finalize=YES
+[CELL4_RUN_FINISHED_TW]=2026-11-26T18:29:24+08:00
+[CELL4_TOTAL_ELAPSED] seconds=1419.35 | hhmmss=00:23:39 | includes_main_execution_before_finalize=YES
 [CELL4_STAGE_TIME_SUMMARY] recorded_stages=1 | showing_slowest=15
-[CELL4_STAGE_TIME] status=PASS | elapsed=0.04s | stage=讀取 Excel：路線設定檔 RouteConfig
+[CELL4_STAGE_TIME] status=PASS | elapsed=0.06s | stage=讀取 Excel：路線設定檔 RouteConfig
 [GITHUB_UPLOAD_TARGET]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-26/Cell4_v65.85.7.173_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
-[GITHUB_UPLOAD_STATUS]=SUCCESS
-[GITHUB_READBACK_STATUS]=PASS
-[GITHUB_BLOB_SHA]=9e76e515f8afdea0cff01337ab8047609e26459b
-[GITHUB_READBACK_SHA256]=ae7d5c65759c81f034b441d68d4c3a73b00e4576392711b9e9eb2e9cd769678a
-[GITHUB_BRANCH]=fro-upload/2026-11-26
-[GITHUB_FILE_URL]=https://github.com/CHLINX/fro/blob/fro-upload/2026-11-26/Cell4_v65.85.7.173_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
-[執行備忘錄] GitHub 執行結果：https://github.com/CHLINX/fro/blob/fro-upload/2026-11-26/Cell4_v65.85.7.173_%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C.txt
